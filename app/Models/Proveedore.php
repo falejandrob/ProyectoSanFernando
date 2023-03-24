@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Proveedore extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'nombre'
+    ];
 }
