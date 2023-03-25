@@ -16,8 +16,9 @@ class ProveedoreFactory extends Factory
      */
     public function definition(): array
     {
+        $proveedores = array("provecaex", "spar", "cerrato perez");
         return [
-            //
+            'nombre' => $this->faker->randomElement($proveedores)
         ];
     }
 }

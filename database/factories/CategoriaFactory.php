@@ -16,8 +16,11 @@ class CategoriaFactory extends Factory
      */
     public function definition(): array
     {
+        $categorias = array("congelados", "conservas", "carnes", "pescados", "charcuteria",
+            "frutas", "verduras", "legumbres", "lacteos y huevos", "frutos secos");
+
         return [
-            //
+            'nombre' => $this->faker->randomElement($categorias)
         ];
     }
 }
