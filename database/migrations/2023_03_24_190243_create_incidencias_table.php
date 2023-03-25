@@ -13,6 +13,10 @@ return new class extends Migration
     {
         Schema::create('incidencias', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('idPedido');
+            $table->foreign('idPedido')->references('id')->on('pedidos')->onUpdate('cascade')->onDelete('cascade');
+            $table->string('incidencia');
+            $table->string('respuesta');
             $table->timestamps();
         });
     }

@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('fecha_maxima_pedidos', function (Blueprint $table) {
             $table->id();
+            $table->date('fechaMaxima');
+            $table->integer('fechaVencida');
             $table->timestamps();
         });
     }
