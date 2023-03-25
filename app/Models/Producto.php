@@ -11,6 +11,8 @@ class Producto extends Model
 
     protected $fillable = [
         'nombre',
+        'validado',
         'idCategoria'
+
     ];
 }

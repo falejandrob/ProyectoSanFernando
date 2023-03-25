@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('productos', function (Blueprint $table) {
             $table->id();
             $table->string('nombre');
+            $table->integer('validado');
             $table->unsignedBigInteger('idCategoria');
             $table->foreign("idCategoria")->references('id')->on('categorias')->onUpdate("cascade")->onDelete("cascade");
             $table->timestamps();
