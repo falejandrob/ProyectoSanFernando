@@ -16,8 +16,8 @@ return new class extends Migration
             $table->string('nick');
             $table->string('nombre');
             $table->string('apellidos');
-            $table->string('contrasenia');
-            $table->string('correo')->unique();
+            $table->string('password');
+            $table->string('email')->unique();
             $table->rememberToken();
             $table->timestamps();
         });

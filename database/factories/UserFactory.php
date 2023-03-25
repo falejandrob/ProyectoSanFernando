@@ -25,8 +25,8 @@ class UserFactory extends Factory
             'nick' => strtolower($this->faker->randomLetter . $this->faker->randomNumber(0, 9) . $this->faker->randomNumber(0, 9)),
             'name' => $nombre,
             'apellidos' => $apellidos,
-            'contrasenia' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi',
-            'correo' => $correo,
+            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi',
+            'email' => $correo,
             'remember_token' => Str::random(10),
         ];
     }
