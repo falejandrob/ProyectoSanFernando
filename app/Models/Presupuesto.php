@@ -17,7 +17,7 @@ class Presupuesto extends Model
     protected $fillable = [
         'idUser',
         'anio',
-        'presupuesto_total',
+        'presupuestoTotal',
     ];
 
     /**
