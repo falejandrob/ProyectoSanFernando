@@ -17,7 +17,9 @@ class PresupuestoFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'idUser' => $this->faker->randomElement(DB::table('users')->pluck('id')),
+            'anio' => $this->faker->year,
+            'presupuestoTotal' => $this->faker->numberBetween(3500, 4000),
         ];
     }
 }

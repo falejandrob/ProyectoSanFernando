@@ -17,7 +17,9 @@ class LineaPedidoFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'idPedido' => $this->faker->randomElement(DB::table('pedidos')->pluck('id')),
+            'idProducto' => $this->faker->randomElement(DB::table('productos')->pluck('id')),
+            'cantidad' => $this->faker->numberBetween(1, 15),
         ];
     }
 }

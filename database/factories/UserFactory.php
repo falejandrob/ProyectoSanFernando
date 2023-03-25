@@ -17,11 +17,16 @@ class UserFactory extends Factory
      */
     public function definition(): array
     {
+        $nombre= UserFactory::quitar_tildes($this->faker->firstName);
+        $apellidos = UserFactory::quitar_tildes($this->faker->lastName);
+        $correo = strtolower($nombre . "." . $apellidos . "@" . $this->faker->freeEmailDomain());
+
         return [
-            'name' => fake()->name(),
-            'email' => fake()->unique()->safeEmail(),
-            'email_verified_at' => now(),
-            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+            'nick' => strtolower($this->faker->randomLetter . $this->faker->randomNumber(0, 9) . $this->faker->randomNumber(0, 9)),
+            'name' => $nombre,
+            'apellidos' => $apellidos,
+            'contrasenia' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi',
+            'correo' => $correo,
             'remember_token' => Str::random(10),
         ];
     }
@@ -34,5 +39,13 @@ class UserFactory extends Factory
         return $this->state(fn (array $attributes) => [
             'email_verified_at' => null,
         ]);
+    }
+
+    private function quitar_tildes($cadena)
+    {
+        $cadBuscar = array("á", "Á", "é", "É", "í", "Í", "ó", "Ó", "ú", "Ú");
+        $cadPoner = array("a", "A", "e", "E", "i", "I", "o", "O", "u", "U");
+        $cadena = str_replace ($cadBuscar, $cadPoner, $cadena);
+        return $cadena;
     }
 }
