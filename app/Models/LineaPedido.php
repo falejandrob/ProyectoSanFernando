@@ -15,8 +15,8 @@ class LineaPedido extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'id_pedido',
-        'id_producto',
+        'idPedido',
+        'idProducto',
         'cantidad'
     ];
 
