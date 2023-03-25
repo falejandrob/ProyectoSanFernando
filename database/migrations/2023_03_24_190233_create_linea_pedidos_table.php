@@ -13,7 +13,9 @@ return new class extends Migration
     {
         Schema::create('linea_pedidos', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('idPedido');
             $table->foreign('idPedido')->references('id')->on('pedidos')->onUpdate('cascade')->onDelete('cascade');
+            $table->unsignedBigInteger('idProducto');
             $table->foreign('idProducto')->references('id')->on('productos')->onUpdate('cascade')->onDelete('cascade');
             $table->integer('cantidad');
             $table->timestamps();

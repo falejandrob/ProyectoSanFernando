@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('pedidos', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('idUser');
             $table->foreign('idUser')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
             $table->date('fechaPedido');
             $table->date('fechaPrevistaPedido');
