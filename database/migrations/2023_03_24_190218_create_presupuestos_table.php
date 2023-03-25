@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('presupuestos', function (Blueprint $table) {
             $table->id();
+            $table->foreign('idUser')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
+            $table->string('anio');
+            $table->string('presupuestoTotal');
             $table->timestamps();
         });
     }

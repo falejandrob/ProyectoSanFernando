@@ -13,6 +13,11 @@ return new class extends Migration
     {
         Schema::create('pedidos', function (Blueprint $table) {
             $table->id();
+            $table->foreign('idUser')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
+            $table->date('fechaPedido');
+            $table->date('fechaPrevistaPedido');
+            $table->string('observaciones');
+            $table->string('justificacion');
             $table->timestamps();
         });
     }
