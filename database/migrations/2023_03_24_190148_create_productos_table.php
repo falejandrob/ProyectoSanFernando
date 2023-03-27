@@ -17,6 +17,7 @@ return new class extends Migration
             $table->integer('validado');
             $table->unsignedBigInteger('idCategoria');
             $table->foreign("idCategoria")->references('id')->on('categorias')->onUpdate("cascade")->onDelete("cascade");
+            $table->binary('foto');
             $table->timestamps();
         });
     }

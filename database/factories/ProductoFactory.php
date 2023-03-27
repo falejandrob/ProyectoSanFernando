@@ -23,7 +23,8 @@ class ProductoFactory extends Factory
         return [
             'nombre' => $this->faker->randomElement($productos),
             'validado' => $validacion,
-            'idCategoria' => $this->faker->randomElement(DB::table('categorias')->pluck('id'))
+            'idCategoria' => $this->faker->randomElement(DB::table('categorias')->pluck('id')),
+            'foto'=>null
         ];
     }
 }
