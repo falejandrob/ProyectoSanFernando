@@ -16,4 +16,5 @@ class Producto extends Model
         'foto'
 
     ];
+
 }
