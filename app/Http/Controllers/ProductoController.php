@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 class ProductoController extends Controller
 {
 
-    public function crearProducto()
+    public function aniadirProducto()
     {
         return view("producto.crear", ["categorias" => Categoria::all()]);
     }
