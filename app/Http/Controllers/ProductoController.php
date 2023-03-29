@@ -23,7 +23,7 @@ class ProductoController extends Controller
     {
         $product = Producto::create([
             'nombre' => $request->nombre,
-            'validado' => $request->validado,
+            'validado' => 1,
             'idCategoria' => $request->idCategoria,
             'foto' => $request->foto
         ]);
