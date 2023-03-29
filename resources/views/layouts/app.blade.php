@@ -98,6 +98,9 @@
                                     <span class="budget-amount">$500</span>
                                 </div>
                             </li>
+                            <li class="nav-item">
+                                <a class="btn btn-success" href="#"> Añadir producto</a>
+                            </li>
                         @endguest
                     </ul>
                 </div>
