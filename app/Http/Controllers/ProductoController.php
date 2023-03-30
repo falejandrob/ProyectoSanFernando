@@ -44,6 +44,4 @@ class ProductoController extends Controller
         $product->delete();
         return redirect()->action([HomeController::class, 'index']);
     }
-
-
 }
