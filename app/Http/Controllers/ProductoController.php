@@ -21,11 +21,12 @@ class ProductoController extends Controller
 
     public function store(Request $request)
     {
+        $foto = $request->file('foto')->get();
         $product = Producto::create([
             'nombre' => $request->nombre,
             'validado' => 1,
             'idCategoria' => $request->idCategoria,
-            'foto' => $request->foto
+            'foto' => $foto
         ]);
 
         $product->save();

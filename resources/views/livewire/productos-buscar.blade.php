@@ -7,18 +7,28 @@
     @if($productos && $productos->count() > 0)
         <div style="display: flex; flex-wrap: wrap; justify-content: center;">
             @foreach($productos as $producto)
+                <form wire:submit.prevent="addToCart({{$producto->id}})">
                 <div class="card" style="width: 16rem; margin: 5px">
-                    <img src="{{ $producto->foto }}" class="card-img-top">
+                    <img src="{{ $producto->fotoUrl }}" class="card-img-top">
                     <div class="card-body" style="text-align: center; display: flex; flex-wrap: wrap; justify-content: center; align-items: center;">
                         <h5 class="card-title">{{ $producto->nombre }}</h5>
-                        <input style="width: 50%; margin: auto; text-align: center" min="1" value="1" type="number" class="form-control">
-                        <button style="width: 75%; margin: 15px; font-size: 120%" type="button" class="btn btn-primary">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-cart" viewBox="0 0 16 16">
-                                <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
-                            </svg>
-                        </button>
+                        <input wire:model="cantidad.{{$producto->id}}" style="width: 50%; margin: auto; text-align: center" min="1" value="1" type="number" class="form-control">
+                        @if(\Gloudemans\Shoppingcart\Facades\Cart::content()->where('id',$producto->id)->count())
+                            <button style="width: 75%; margin: 15px; font-size: 120%" type="submit" class="btn btn-primary disabled">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-cart" viewBox="0 0 16 16">
+                                    <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+                                </svg>
+                            </button>
+                        @else
+                            <button style="width: 75%; margin: 15px; font-size: 120%" type="submit" class="btn btn-primary">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-cart" viewBox="0 0 16 16">
+                                    <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+                                </svg>
+                            </button>
+                        @endif
                     </div>
                 </div>
+                </form>
             @endforeach
         </div>
     @else
@@ -40,7 +50,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form  action="{{ route("producto.store") }}" method="post" enctype="multipart/form-data" >
+                        <form action="{{ route("producto.store") }}" method="post" enctype="multipart/form-data" >
                             @csrf
                             @method("POST")
                             <div class="form-group">
