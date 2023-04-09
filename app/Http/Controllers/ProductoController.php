@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 class ProductoController extends Controller
 {
 
-    public function crearProducto()
+    public function aniadirProducto()
     {
         return view("producto.crear", ["categorias" => Categoria::all()]);
     }
@@ -21,11 +21,12 @@ class ProductoController extends Controller
 
     public function store(Request $request)
     {
+        $foto = $request->file('foto')->get();
         $product = Producto::create([
             'nombre' => $request->nombre,
-            'validado' => $request->validado,
+            'validado' => 1,
             'idCategoria' => $request->idCategoria,
-            'foto' => $request->foto
+            'foto' => $foto
         ]);
 
         $product->save();
@@ -44,6 +45,4 @@ class ProductoController extends Controller
         $product->delete();
         return redirect()->action([HomeController::class, 'index']);
     }
-
-
 }
