@@ -68,7 +68,12 @@
         @endforeach
     </div>
     <div style="width: 100%; text-align: center; padding: 10px">
-        <button style="font-size: 130%; width: 50%; padding: 10px" type="button" class="btn btn-success">Hacer pedido
-        </button>
+        <form action="{{route('cart.confirm')}}">
+            @csrf
+            <button type="submit"  style="font-size: 130%; width: 50%; padding: 10px" type="button" class="btn btn-success">Hacer pedido
+            </button>
+        </form>
+
+
     </div>
 </div>

@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Producto;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 
 class CartController extends Controller
 {
@@ -23,5 +25,11 @@ class CartController extends Controller
     public function remove (Request $request){
        /* Cart::remove($request->rowId);
         return redirect()->route('home')->with('message','Eliminado correctamente');*/
+    }
+
+    public function confirm(){
+
+        $pdf = Pdf::loadView('pdf.productos');
+        return $pdf->download('invoice.pdf');
     }
 }

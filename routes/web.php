@@ -31,3 +31,4 @@ Route::post('/producto/update/{id}',[\App\Http\Controllers\ProductoController::c
 //Ruta carrito
 Route::post('/cart/store',[\App\Http\Controllers\CartController::class,'store'])->name('cart.store');
 Route::post('/cart/remove',[\App\Http\Controllers\CartController::class,'remove'])->name('cart.remove');
+Route::get('/cart/confirm',[\App\Http\Controllers\CartController::class,'confirm'])->name('cart.confirm');
