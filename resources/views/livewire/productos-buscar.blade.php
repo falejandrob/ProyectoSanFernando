@@ -8,9 +8,11 @@
         <div style="display: flex; flex-wrap: wrap; justify-content: center;">
             @foreach($productos as $producto)
                 <form wire:submit.prevent="addToCart({{$producto->id}})">
-                <div class="card" style="width: 16rem; margin: 5px">
-                    <img src="{{ $producto->fotoUrl }}" class="card-img-top">
-                    <div class="card-body" style="text-align: center; display: flex; flex-wrap: wrap; justify-content: center; align-items: center;">
+                <div class="card" style="width: 16rem; margin: 5px; height:98%;">
+                    <div style="height: 50%">
+                        <img src="{{ $producto->fotoUrl }}" class="card-img-top">
+                    </div>
+                    <div class="card-body" style="text-align: center; display: flex; flex-wrap: wrap; justify-content: center; align-items: center; height: 50%">
                         <h5 class="card-title">{{ $producto->nombre }}</h5>
                         <input wire:model="cantidad.{{$producto->id}}" style="width: 50%; margin: auto; text-align: center" min="1" value="1" type="number" class="form-control">
                         @if(\Gloudemans\Shoppingcart\Facades\Cart::content()->where('id',$producto->id)->count())

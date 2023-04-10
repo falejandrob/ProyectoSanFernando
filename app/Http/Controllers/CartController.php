@@ -28,8 +28,9 @@ class CartController extends Controller
     }
 
     public function confirm(){
-
-        $pdf = Pdf::loadView('pdf.productos');
+        $productos = Cart::content();
+        $pdf = Pdf::loadView('pdf.productos', compact('productos'));
+        Pdf::setOption('isRemoteEnabled', TRUE);
         return $pdf->download('invoice.pdf');
     }
 }

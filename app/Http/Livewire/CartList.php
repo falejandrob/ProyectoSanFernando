@@ -13,6 +13,7 @@ class CartList extends Component
     public function render()
     {
         $this->cart = Cart::content();
+        //@dd($this->cart);
         return view('livewire.cart-list', ['cart'=>$this->cart]);
     }
 

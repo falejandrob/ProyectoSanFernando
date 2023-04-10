@@ -6,6 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hoja de pedido</title>
     <style>
+        table{
+            width: 100%;
+        }
         table, td, th {
             border: 1px solid #595959;
             border-collapse: collapse;
@@ -34,8 +37,8 @@
 <table>
     <tbody>
     <tr>
-        <td rowspan="3">Logo</td>
-        <td rowspan="3">Hoja de pedido</td>
+        <td rowspan="3"><img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('/logo.png')))}}" style="width: 100%"></td>
+        <td rowspan="3" style="text-align: center">Hoja de pedido</td>
         <td>Documento</td>
         <td>Norma</td>
     </tr>
@@ -47,6 +50,25 @@
         <td>Rev.3</td>
         <td>pag 1/1</td>
     </tr>
+    </tbody>
+</table>
+<br>
+<table>
+    <thead>
+        <tr>
+            <th>Artículo</th>
+            <th>Cantidad</th>
+        </tr>
+    </thead>
+    <tbody>
+        @csrf
+        @method("POST")
+        @foreach($productos as $producto)
+            <tr style="text-align: center" class="hover">
+                <td>{{$producto->name}}</td>
+                <td>{{$producto->qty}} ud</td>
+            </tr>
+        @endforeach
     </tbody>
 </table>
 </body>
