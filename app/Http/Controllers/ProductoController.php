@@ -19,6 +19,11 @@ class ProductoController extends Controller
         return view("producto.modificar", ["producto" => Producto::find($id)], ["categorias" => Categoria::all()]);
     }
 
+    public function listarProductos(){
+
+        return view('producto.listar');
+    }
+
     public function store(Request $request)
     {
         $foto = $request->file('foto')->get();
@@ -36,13 +41,13 @@ class ProductoController extends Controller
     public function update(Request $request, $id){
         $product = Producto::find($id);
         $product->update($request->all());
-        return redirect()->action([HomeController::class, 'index']);
+        return redirect()->action([ProductoController::class, 'listarProductos']);
     }
 
     public function destroy($id)
     {
         $product = Producto::find($id);
         $product->delete();
-        return redirect()->action([HomeController::class, 'index']);
+        return redirect()->action([ProductoController::class, 'listarProductos']);
     }
 }

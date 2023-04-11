@@ -40,6 +40,8 @@
             font-size: 14px;
             font-weight: bold;
         }
+
+
     </style>
     @livewireStyles
     <!-- Bootstrap -->
@@ -79,6 +81,32 @@
                                 </li>
                             @endif
                         @else
+                            <ul class="navbar-nav menu-admin">
+                                <li class="nav-item">
+                                    <a class="nav-link active" aria-current="page" href="#">Profesores</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link active" aria-current="page" href="#">Pedidos</a>
+                                </li>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        Productos
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="{{ route('listarProductos') }}">Ver productos</a></li>
+                                        <li><a class="dropdown-item" href="{{ route('aniadirProducto') }}">Añadir producto</a></li>
+                                    </ul>
+                                </li>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        Proveedores
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="#">Ver proveedores</a></li>
+                                        <li><a class="dropdown-item" href="#">Añadir proveedor</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->nombre }}
@@ -99,9 +127,7 @@
                                     <span class="budget-amount">$500</span>
                                 </div>
                             </li>
-                            <li class="nav-item">
-                                <a class="btn btn-success" href="{{ route('aniadirProducto') }}"> Añadir producto</a>
-                            </li>
+
                         @endguest
                     </ul>
                 </div>

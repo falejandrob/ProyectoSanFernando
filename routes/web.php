@@ -26,7 +26,9 @@ Route::get('/producto/aniadirProducto',[\App\Http\Controllers\ProductoController
 Route::get('/producto/modificarProducto/{id}',[\App\Http\Controllers\ProductoController::class, 'modificarProducto'])->name('modificarProducto');
 Route::post('/producto/store',[\App\Http\Controllers\ProductoController::class, 'store'])->name('producto.store');
 Route::get('/producto/destroy/{id}',[\App\Http\Controllers\ProductoController::class, 'destroy'])->name('producto.destroy');
+Route::get('/producto/destroy/{id}',[\App\Http\Livewire\ProductoController::class, 'destroy'])->name('producto.destroy');
 Route::post('/producto/update/{id}',[\App\Http\Controllers\ProductoController::class, 'update'])->name('producto.update');
+Route::get('/producto/listarProductos', [\App\Http\Controllers\ProductoController::class, 'listarProductos'])->name('listarProductos');
 
 //Ruta carrito
 Route::post('/cart/store',[\App\Http\Controllers\CartController::class,'store'])->name('cart.store');

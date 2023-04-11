@@ -6,12 +6,12 @@
             <div class="col-md-12">
                 <h2 class="mt-4">Modificar un producto</h2>
                 <hr>
-                <form  action="{{ route("producto.update") }}" method="post" enctype="multipart/form-data">
+                <form  action="{{ route("producto.update", ["id" => $producto->id]) }}" method="post" enctype="multipart/form-data">
                     @csrf
                     @method("POST")
                     <div class="form-group">
                         <label for="nombre" style="margin:15px 0px;">Nombre</label>
-                        <input type="text" name="nombre" id="nombre" class="form-control" value="">
+                        <input type="text" name="nombre" id="nombre" class="form-control" value="{{$producto->nombre}}">
                     </div>
                     <div>
                         <label for="categoria" style="margin:15px 0px;">Categoría</label>
