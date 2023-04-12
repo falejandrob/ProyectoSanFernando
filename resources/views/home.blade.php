@@ -14,5 +14,4 @@
         @livewire('productos-buscar')
     </div>
 </div>
-@livewireScripts
 @endsection
