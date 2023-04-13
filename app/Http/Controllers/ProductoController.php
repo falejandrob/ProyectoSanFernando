@@ -44,10 +44,4 @@ class ProductoController extends Controller
         return redirect()->action([ProductoController::class, 'listarProductos']);
     }
 
-    public function destroy($id)
-    {
-        $product = Producto::find($id);
-        $product->delete();
-        return redirect()->action([ProductoController::class, 'listarProductos']);
-    }
 }
