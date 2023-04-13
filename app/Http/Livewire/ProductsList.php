@@ -9,18 +9,24 @@ use Livewire\Component;
 class ProductsList extends Component
 {
 
-    private $productos;
-    private $categorias;
-
     public $product_id, $nombre, $validado, $idCategoria, $foto;
 
     protected $listeners = ['producto_update' =>'render'];
 
     public function render()
     {
-        $this->productos = Producto::orderBy('id', 'desc')->paginate(10);
-        $this->categorias = Categoria::all();
-        return view('livewire.productos-listar', ["categorias" => $this->categorias],["productos" => $this->productos]);
+        $productos = Producto::where("id", ">=", 1);
+        if ($this->validado) {
+            $productos->where('validado', $this->validado);
+        }
+
+        if ($this->idCategoria) {
+            $productos->where('idCategoria', $this->idCategoria);
+        }
+
+        $productos =  $productos->paginate(10);
+        $categorias = Categoria::all();
+        return view('livewire.productos-listar', compact('productos', 'categorias'));
     }
 
     public function destroyProduct($id)
