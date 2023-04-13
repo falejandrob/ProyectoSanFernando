@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Categoria;
 use App\Models\Producto;
+use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
 
@@ -46,16 +47,9 @@ class ProductoController extends Controller
     }
 
     public function update(Request $request, $id){
-        $product = Producto::find($id);
+        $profesor = User::find($id);
 
-        if($request->file('foto') != null) {
-            $request->foto = $request->file('foto')->get();
-        } else {
-            $request->foto = null;
-        }
-
-        $product->update($request->all());
-        return redirect()->action([ProductoController::class, 'listarProductos']);
+        $profesor->update($request->all());
+        return redirect()->action([ProfesorController::class, 'listarProfesores']);
     }
-
 }

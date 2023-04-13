@@ -89,7 +89,7 @@
                         @else
                             <ul class="navbar-nav menu-admin">
                                 <li class="nav-item">
-                                    <a class="nav-link active" aria-current="page" href="#">Profesores</a>
+                                    <a class="nav-link active" aria-current="page" href="{{ route('listarProfesores') }}">Profesores</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link active" aria-current="page" href="#">Pedidos</a>
