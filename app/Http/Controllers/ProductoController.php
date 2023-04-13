@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Categoria;
 use App\Models\Producto;
+use Exception;
 use Illuminate\Http\Request;
 
 class ProductoController extends Controller
@@ -26,7 +27,13 @@ class ProductoController extends Controller
 
     public function store(Request $request)
     {
-        $foto = $request->file('foto')->get();
+        if($request->file('foto') != null) {
+            $foto = $request->file('foto')->get();
+        }
+        else {
+            $foto = null;
+        }
+
         $product = Producto::create([
             'nombre' => $request->nombre,
             'validado' => 1,
@@ -40,6 +47,13 @@ class ProductoController extends Controller
 
     public function update(Request $request, $id){
         $product = Producto::find($id);
+
+        if($request->file('foto') != null) {
+            $request->foto = $request->file('foto')->get();
+        } else {
+            $request->foto = null;
+        }
+
         $product->update($request->all());
         return redirect()->action([ProductoController::class, 'listarProductos']);
     }

@@ -1,6 +1,6 @@
 <div>
     <div style="width: 60%; margin: auto; border: 2px solid black; border-radius: 50px; height: 50px; display: flex; justify-content: space-around; align-items: center;">
-        <input wire:model="searchTerm" type="text" style="width: 80%; height: 35px; font-size: 150%; text-align: center; outline: none; border: 2px solid white;" />
+        <input wire:model="searchTerm" type="text" style="width: 80%; height: 35px; font-size: 150%; text-align: center; outline: none; border: 2px solid #FFFBDA; background: #FFFBDA" />
         <img src="https://cdn-icons-png.flaticon.com/512/3917/3917132.png" style="height: 30px;"/>
     </div>
     <br>
@@ -8,21 +8,21 @@
         <div style="display: flex; flex-wrap: wrap; justify-content: center;">
             @foreach($productos as $producto)
                 <form wire:submit.prevent="addToCart({{$producto->id}})">
-                <div class="card" style="width: 16rem; margin: 5px; height:98%;">
-                    <div style="height: 50%">
+                <div class="card" style="width: 16rem; margin: 5px; height:98%; background: #FFFBDA">
+                    <div style="height: 50%; padding: 10px">
                         <img src="{{ $producto->fotoUrl }}" class="card-img-top">
                     </div>
                     <div class="card-body" style="text-align: center; display: flex; flex-wrap: wrap; justify-content: center; align-items: center; height: 50%">
                         <h5 class="card-title">{{ $producto->nombre }}</h5>
                         <input wire:model="cantidad.{{$producto->id}}" style="width: 50%; margin: auto; text-align: center" min="1" value="1" type="number" class="form-control">
                         @if(\Gloudemans\Shoppingcart\Facades\Cart::content()->where('id',$producto->id)->count())
-                            <button style="width: 75%; margin: 15px; font-size: 120%" type="submit" class="btn btn-primary disabled">
+                            <button disabled style="width: 75%; margin: 15px; font-size: 120%; background: #F6C366" type="submit" class="btn">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-cart" viewBox="0 0 16 16">
                                     <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
                                 </svg>
                             </button>
                         @else
-                            <button style="width: 75%; margin: 15px; font-size: 120%" type="submit" class="btn btn-primary">
+                            <button style="width: 75%; margin: 15px; font-size: 120%; background: #F6C366" type="submit" class="btn">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-cart" viewBox="0 0 16 16">
                                     <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
                                 </svg>
@@ -35,11 +35,11 @@
         </div>
     @else
         <div style="width: 60%; margin: auto">
-            <div class="alert alert-danger" role="alert">
-                El producto no existe
+            <div class="alert" style="text-align: center; font-size: 120%; border: solid 2px #C80000; background: #F3D8D8">
+                El producto no existe!!!
             </div>
 
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            <button class="btn" data-bs-toggle="modal" data-bs-target="#exampleModal" style="background: #F5BA53; width: 50%; margin-left: 25%; padding: 10px">
                 INSERTAR PRODUCTO
             </button>
         </div>
