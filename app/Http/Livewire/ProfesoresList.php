@@ -6,7 +6,7 @@ use App\Models\User;
 use Livewire\Component;
 
 class ProfesoresList extends Component
-{
+{//
     protected $listeners = ['profesor_update' =>'render'];
 
     public function render()

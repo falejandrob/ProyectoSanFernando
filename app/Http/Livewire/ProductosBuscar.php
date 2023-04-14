@@ -18,6 +18,7 @@ class ProductosBuscar extends Component
 
     public function render()
     {
+        //
         if(empty($this->searchTerm)) {
             $this->productos = Producto::all();
         } else {

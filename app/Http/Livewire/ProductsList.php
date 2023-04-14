@@ -8,7 +8,7 @@ use Livewire\Component;
 
 class ProductsList extends Component
 {
-
+//
     public $product_id, $nombre, $validado, $idCategoria, $foto;
 
     protected $listeners = ['producto_update' =>'render'];

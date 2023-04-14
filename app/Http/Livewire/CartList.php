@@ -7,6 +7,7 @@ use Livewire\Component;
 
 class CartList extends Component
 {
+    //
     protected $listeners = ['cart_update' =>'render'];
     public $cart;
     public $rowId;

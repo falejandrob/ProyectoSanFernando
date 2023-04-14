@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\App;
 
 class CartController extends Controller
 {
+    //
     public function store (Request $request){
        /* dd($request->cantidad);
         $producto = Producto::findOrFail($request->input('producto_id'));

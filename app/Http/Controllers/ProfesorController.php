@@ -11,6 +11,7 @@ class ProfesorController extends Controller
     public function listarProfesores() {
         return view('profesor.listar');
     }
+    //
 
     public function modificarProfesor($id){
         return view("profesor.modificar", ["profesor" => User::find($id)]);
