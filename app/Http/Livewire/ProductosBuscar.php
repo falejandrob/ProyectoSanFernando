@@ -12,6 +12,7 @@ class ProductosBuscar extends Component
     public $searchTerm = '';
     public $productos;
     public $categorias;
+    public $cart;
     public array $cantidad = [];
     protected $listeners = ['product_listeners'=>'render'];
 
@@ -24,8 +25,9 @@ class ProductosBuscar extends Component
         }
 
         $this->categorias = Categoria::all();
-
-        return view('livewire.productos-buscar', ["categorias" => $this->categorias]);
+        $this->cart = Cart::content();
+        //dd($this->cart);
+        return view('livewire.productos-buscar', ["categorias" => $this->categorias, "carrito"=>$this->cart]);
     }
 
 
@@ -45,5 +47,22 @@ class ProductosBuscar extends Component
         foreach ($this->productos as $producto){
             $this->cantidad[$producto->id] = 1;
         }
+    }
+
+    public function removeFromCart($rowId){
+        //@dd($productoCarrito);
+        Cart::remove($rowId);
+        $this->emit('product_listeners');
+        $this->emit('cart_update');
+    }
+    public function restElementToProduct($rowId){
+        Cart::update($rowId, Cart::get($rowId)->qty-1);
+        $this->emit('product_listeners');
+        $this->emit('cart_update');
+    }
+    public function addElementToProduct($rowId){
+        Cart::update($rowId, Cart::get($rowId)->qty+1);
+        $this->emit('product_listeners');
+        $this->emit('cart_update');
     }
 }

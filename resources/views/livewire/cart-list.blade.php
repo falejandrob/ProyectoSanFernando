@@ -1,5 +1,5 @@
 <div>
-    <h2 style="text-align: center; margin-bottom: 20px">Lista de pedido</h2>
+    <h2 style="text-align: center; margin-bottom: 20px">Lista de pedidos</h2>
     <div>
         @foreach($cart as $productoCarrito)
             <div
