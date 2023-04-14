@@ -24,7 +24,7 @@ class ProductoFactory extends Factory
             'nombre' => $this->faker->randomElement($productos),
             'validado' => $validacion,
             'idCategoria' => $this->faker->randomElement(DB::table('categorias')->pluck('id')),
-            'foto'=>null
+            'foto' => null
         ];
     }
 }
