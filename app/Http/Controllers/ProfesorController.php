@@ -18,7 +18,7 @@ class ProfesorController extends Controller
     }
 
     public function update(Request $request, $id){
-        $product = User::find($id);
+        $profesor = User::find($id);
 
         if($request->file('foto') != null) {
             $request->foto = $request->file('foto')->get();
@@ -26,7 +26,7 @@ class ProfesorController extends Controller
             $request->foto = null;
         }
 
-        $product->update($request->all());
+        $profesor->update($request->all());
         return redirect()->action([ProfesorController::class, 'listarProfesores']);
     }
 

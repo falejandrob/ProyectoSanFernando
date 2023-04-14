@@ -10,8 +10,8 @@
         <div style="display: flex; flex-wrap: wrap; justify-content: center;">
             @foreach($productos as $producto)
 
-                <div class="card card-hover" style="width: 16rem; margin: 5px; height:100%; border: 2px solid white;">
-                    <div style="height: 50%; padding: 10px">
+                <div class="card card-hover" style="width: 16rem; margin: 5px; height:400px; border: 2px solid white;">
+                    <div style="height: 400px; padding: 10px">
                         <img src="{{ $producto->fotoUrl }}" class="card-img-top" style="background: #F5F6F6">
                     </div>
                     <div class="card-body"
@@ -83,7 +83,9 @@
                     </div>
                 </div>
             @endforeach
+
         </div>
+
     @else
         <div style="width: 60%; margin: auto">
             <div class="alert"

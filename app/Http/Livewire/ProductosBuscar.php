@@ -6,6 +6,7 @@ use App\Models\Categoria;
 use App\Models\Producto;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class ProductosBuscar extends Component
 {
@@ -20,7 +21,7 @@ class ProductosBuscar extends Component
     {
         //
         if(empty($this->searchTerm)) {
-            $this->productos = Producto::all();
+            $this->productos = Producto::all()->paginate(10);
         } else {
             $this->productos = Producto::where('nombre', 'like', '%'.$this->searchTerm.'%')->get();
         }

@@ -17,21 +17,22 @@ class ProductoController extends Controller
         return view("producto.crear", ["categorias" => Categoria::all()]);
     }
 
-    public function modificarProducto($id){
+    public function modificarProducto($id)
+    {
         return view("producto.modificar", ["producto" => Producto::find($id)], ["categorias" => Categoria::all()]);
     }
 
-    public function listarProductos(){
+    public function listarProductos()
+    {
 
         return view('producto.listar');
     }
 
     public function store(Request $request)
     {
-        if($request->file('foto') != null) {
+        if ($request->file('foto') != null) {
             $foto = $request->file('foto')->get();
-        }
-        else {
+        } else {
             $foto = null;
         }
 
@@ -46,10 +47,12 @@ class ProductoController extends Controller
         return redirect()->action([HomeController::class, 'index']);
     }
 
-    public function update(Request $request, $id){
-        $profesor = User::find($id);
+    public function update(Request $request, $id)
+    {
+        $producto = Producto::find($id);
+        $producto->update($request->all());
+        return redirect()->action([ProductoController::class, 'listarProductos']);
 
-        $profesor->update($request->all());
-        return redirect()->action([ProfesorController::class, 'listarProfesores']);
+
     }
 }
