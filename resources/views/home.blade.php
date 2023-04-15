@@ -9,6 +9,4 @@
             @livewire('productos-buscar')
         </div>
     </div>
-
-
 @endsection

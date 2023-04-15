@@ -35,12 +35,19 @@ class ProductosBuscar extends Component
 
     public function addToCart($product_id){
         $producto = Producto::findOrFail($product_id);
-        Cart::add(
-            $producto->id,
-            $producto->nombre,
-            $this->cantidad[$product_id],
-            0.00,
-        );
+        //dd($producto);
+        Cart::add([
+            'id'=>$producto->id,
+            'name'=>$producto->nombre,
+            'qty'=>$this->cantidad[$product_id],
+            'price'=>0.00,
+            'weight'=>0.00,
+            'options'=>[
+                'categoria'=>Categoria::findOrFail($producto->idCategoria)->nombre
+            ]
+
+        ]);
+
         $this->emit('cart_update');
     }
 

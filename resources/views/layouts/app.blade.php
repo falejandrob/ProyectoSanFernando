@@ -52,6 +52,57 @@
             transition: all 0.2s ease-in-out;
         }
 
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #fff;
+            color: #333;
+            padding: 15px;
+            margin: 10px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.2s ease-in-out;
+        }
+
+        .cart-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0px 8px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .item-name {
+            font-size: 1.2rem;
+            font-weight: bold;
+            flex: 1;
+        }
+
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+            margin-right: 1rem;
+        }
+
+        .quantity-controls .btn {
+            background: transparent;
+            border: none;
+            font-size: 1.5rem;
+            padding: 0;
+            cursor: pointer;
+        }
+
+        .quantity-controls .item-quantity {
+            font-size: 1.2rem;
+            margin: 0 1rem;
+            vertical-align: middle;
+        }
+
+        .plus-btn {
+            color: #61CB5F;
+        }
+
+        .minus-btn {
+            color: #CB5F
+        }
     </style>
     @livewireStyles
 </head>
@@ -69,14 +120,22 @@
         @endauth
 
         <div class="container">
+
             @auth
+                @if(auth()->user()->hasRole('profesor'))
                 <div class="budget-container">
                     <span class="budget-label" style="font-size: 120%">Presupuesto:</span>
-                    <span class="budget-amount" style="font-size: 120%">500 €</span>
+                    @if($presupuesto == null)
+                        <span class="budget-amount" style="font-size: 120%">Aun no tienes presupuesto</span>
+                    @else
+                        <span class="budget-amount" style="font-size: 120%">{{$presupuesto->presupuestoTotal}} €</span>
+                    @endif
+
                 </div>
+                @endif
             @endauth
 
-            <a class="navbar-brand" href="{{ url('/') }}">
+            <a class="navbar-brand mx-auto" href="{{ url('/') }}">
                 SanCenando
             </a>
 
@@ -96,34 +155,47 @@
                         @endif
                     @else
                         <ul class="navbar-nav menu-admin">
-                            <li class="nav-item">
-                                <a class="nav-link active" aria-current="page" href="{{ route('listarProfesores') }}">Profesores</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link active" aria-current="page" href="#">Pedidos</a>
-                            </li>
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle active" href="#" role="button" data-toggle="dropdown"
-                                   data-bs-toggle="dropdown" aria-expanded="false">
-                                    Productos
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="{{ route('listarProductos') }}">Ver productos</a>
-                                    </li>
-                                    <li><a class="dropdown-item" href="{{ route('aniadirProducto') }}">Añadir
-                                            producto</a></li>
-                                </ul>
-                            </li>
-                            <li class="nav-item dropdown">
+                            @if(auth()->user()->hasRole('admin'))
+                                <li class="nav-item">
+                                    <a class="nav-link active" aria-current="page"
+                                       href="{{ route('listarProfesores') }}">Profesores</a>
+                                </li>
+                                <!--<li class="nav-item">
+                                    <a class="nav-link active" aria-current="page" href="#">Pedidos</a>
+                                </li>-->
+                            @endif
+                            @if(auth()->user()->hasRole('admin'))
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle active" href="#" role="button"
+                                       data-toggle="dropdown"
+                                       data-bs-toggle="dropdown" aria-expanded="false">
+                                        Productos
+                                    </a>
+
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="{{ route('listarProductos') }}">Ver
+                                                productos</a>
+                                        </li>
+
+                                        <li><a class="dropdown-item" href="{{ route('aniadirProducto') }}">Añadir
+                                                producto</a></li>
+
+                                    </ul>
+                                </li>
+                            @endif
+                            <!--<li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle active" href="#" role="button" data-toggle="dropdown"
                                    data-bs-toggle="dropdown" aria-expanded="false">
                                     Proveedores
                                 </a>
                                 <ul class="dropdown-menu">
                                     <li><a class="dropdown-item" href="#">Ver proveedores</a></li>
-                                    <li><a class="dropdown-item" href="#">Añadir proveedor</a></li>
-                                </ul>
-                            </li>
+                                    @if(auth()->user()->hasRole('admin'))
+                                <li><a class="dropdown-item" href="#">Añadir proveedor</a></li>
+
+                            @endif
+                            </ul>
+                        </li> -->
                         </ul>
                         <button
                             data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions"
@@ -158,7 +230,9 @@
             </form>
         @endauth
     </nav>
-    <div class="offcanvas offcanvas-end" data-bs-scroll="true" tabindex="-1" id="offcanvasWithBothOptions"
+
+    <div class="offcanvas offcanvas-end" data-bs-scroll="true" data-bs-backdrop="true" tabindex="-1"
+         id="offcanvasWithBothOptions"
          aria-labelledby="offcanvasWithBothOptionsLabel">
         <div class="offcanvas-header">
             <h5 class="offcanvas-title"
@@ -172,7 +246,6 @@
             </div>
         </div>
     </div>
-
     <main class="py-4">
         @yield('content')
     </main>

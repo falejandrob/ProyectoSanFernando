@@ -6,6 +6,7 @@
         <img src="https://cdn-icons-png.flaticon.com/512/3917/3917132.png" style="height: 30px;"/>
     </div>
     <br>
+
     @if($productos && $productos->count() > 0)
         <div style="display: flex; flex-wrap: wrap; justify-content: center;">
             @foreach($productos as $producto)

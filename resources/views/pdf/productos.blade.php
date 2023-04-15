@@ -6,9 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hoja de pedido</title>
     <style>
-        table{
+        table {
             width: 100%;
         }
+
         table, td, th {
             border: 1px solid #595959;
             border-collapse: collapse;
@@ -38,7 +39,8 @@
 <table>
     <tbody>
     <tr>
-        <td rowspan="3"><img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('/logo.png')))}}" style="width: 100%"></td>
+        <td rowspan="3"><img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('/logo.png')))}}"
+                             style="width: 100%"></td>
         <td rowspan="3" style="text-align: center">Hoja de pedido</td>
         <td>Documento</td>
         <td>Norma</td>
@@ -54,22 +56,40 @@
     </tbody>
 </table>
 <br>
+<p>PROFESOR/A QUE REALIZA EL PEDIDO: <strong>{{auth()->user()->nombre}} {{auth()->user()->apellidos}}</strong></p>
+<p>FECHA DEL PEDIDO: <strong>{{ now()->format('d/m/Y') }}</strong></p>
+<p>FECHA PARA LA QUE SE SOLICITA EL PEDIDO: <strong>{{$dateTimeJustification['expectedDate']}}</strong></p>
+<p>HORA PARA LA QUE SE SOLICITA EL PEDIDO: <strong>{{$dateTimeJustification['expectedTime']}}</strong></p>
+<p>JUSTIFICACION: <strong>{{$dateTimeJustification['justification']}}</strong></p>
 <table>
     <thead>
-        <tr>
-            <th>Artículo</th>
-            <th>Cantidad</th>
-        </tr>
+    <tr>
+        <th>Artículo</th>
+        <th>Cantidad</th>
+    </tr>
     </thead>
     <tbody>
-        @csrf
-        @method("POST")
-        @foreach($productos as $producto)
+    @php
+        $categorias = array();
+    @endphp
+    @foreach($productos as $producto)
+        @php
+            $categoria = $producto->options->categoria;
+        @endphp
+        @if(!in_array($categoria, $categorias))
+            @php
+                $categorias[] = $categoria;
+            @endphp
             <tr style="text-align: center" class="hover">
-                <td>{{$producto->name}}</td>
-                <td>{{$producto->qty}} ud</td>
+                <td><strong>{{ $categoria }}</strong></td>
+                <td></td>
             </tr>
-        @endforeach
+        @endif
+        <tr style="text-align: center" class="hover">
+            <td>{{ $producto->name }}</td>
+            <td>{{ $producto->qty }} ud</td>
+        </tr>
+    @endforeach
     </tbody>
 </table>
 </body>
