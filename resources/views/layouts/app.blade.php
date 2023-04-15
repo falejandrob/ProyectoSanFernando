@@ -3,22 +3,15 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-
-    <!--<title>{{ config('app.name', 'SanCenando') }}</title>-->
     <title>SanCenando</title>
-
-    <!-- Fonts -->
-    <link rel="dns-prefetch" href="//fonts.gstatic.com">
-    <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
-
-    <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
-    <!-- CSS -->
-
     <style>
+        nav {
+            background: #f6f0d2;
+        }
+
         .budget-container {
             background-color: #d4edda;
             border-radius: 10px;
@@ -40,77 +33,224 @@
             font-size: 14px;
             font-weight: bold;
         }
+
+        .dropdown ul, .dropdown li {
+            background: #f6f0d2;
+        }
+
+        html {
+            background: #FFFFFF;
+        }
+
+        main {
+            background: #FFFFFF;
+        }
+
+        .card-hover:hover {
+            box-shadow: 0 0 11px rgba(33, 33, 33, .2);
+            transform: scale(1.02);
+            transition: all 0.2s ease-in-out;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #fff;
+            color: #333;
+            padding: 15px;
+            margin: 10px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.2s ease-in-out;
+        }
+
+        .cart-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0px 8px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .item-name {
+            font-size: 1.2rem;
+            font-weight: bold;
+            flex: 1;
+        }
+
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+            margin-right: 1rem;
+        }
+
+        .quantity-controls .btn {
+            background: transparent;
+            border: none;
+            font-size: 1.5rem;
+            padding: 0;
+            cursor: pointer;
+        }
+
+        .quantity-controls .item-quantity {
+            font-size: 1.2rem;
+            margin: 0 1rem;
+            vertical-align: middle;
+        }
+
+        .plus-btn {
+            color: #61CB5F;
+        }
+
+        .minus-btn {
+            color: #CB5F
+        }
     </style>
     @livewireStyles
-    <!-- Bootstrap -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js" integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N" crossorigin="anonymous"></script>
 </head>
 <body>
-    <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
-            <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    SanCenando
-                </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
+<div id="app">
+    <nav class="navbar navbar-expand-md navbar-light shadow-sm">
+        @auth
+            <p style="margin: 15px">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                     class="bi bi-person-fill" viewBox="0 0 16 16">
+                    <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3Zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/>
+                </svg>
+                {{ Auth::user()->nombre . " " . Auth::user()->apellidos }}
+            </p>
+        @endauth
 
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav me-auto">
+        <div class="container">
 
-                    </ul>
+            @auth
+                @if(auth()->user()->hasRole('profesor'))
+                <div class="budget-container">
+                    <span class="budget-label" style="font-size: 120%">Presupuesto:</span>
+                    @if($presupuesto == null)
+                        <span class="budget-amount" style="font-size: 120%">Aun no tienes presupuesto</span>
+                    @else
+                        <span class="budget-amount" style="font-size: 120%">{{$presupuesto->presupuestoTotal}} €</span>
+                    @endif
 
-                    <!-- Right Side Of Navbar -->
-                    <ul class="navbar-nav ms-auto">
-                        <!-- Authentication Links -->
-                        @guest
-                            @if (Route::has('login'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                                </li>
-                            @endif
-
-                            @if (Route::has('register'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                                </li>
-                            @endif
-                        @else
-                            <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->nombre }}
-                                </a>
-
-                                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">{{ __('Logout') }}</a>
-
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                        @csrf
-                                    </form>
-                                </div>
-                            </li>
-
-                            <li class="nav-item">
-                                <div class="budget-container">
-                                    <span class="budget-label">Presupuesto:</span>
-                                    <span class="budget-amount">$500</span>
-                                </div>
-                            </li>
-                            <li class="nav-item">
-                                <a class="btn btn-success" href="{{ route('aniadirProducto') }}"> Añadir producto</a>
-                            </li>
-                        @endguest
-                    </ul>
                 </div>
-            </div>
-        </nav>
+                @endif
+            @endauth
 
-        <main class="py-4">
-            @yield('content')
-        </main>
+            <a class="navbar-brand mx-auto" href="{{ url('/') }}">
+                SanCenando
+            </a>
+
+            <div id="navbarSupportedContent">
+                <ul class="navbar-nav ms-auto">
+                    @guest
+                        @if (Route::has('login'))
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                            </li>
+                        @endif
+
+                        @if (Route::has('register'))
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                            </li>
+                        @endif
+                    @else
+                        <ul class="navbar-nav menu-admin">
+                            @if(auth()->user()->hasRole('admin'))
+                                <li class="nav-item">
+                                    <a class="nav-link active" aria-current="page"
+                                       href="{{ route('listarProfesores') }}">Profesores</a>
+                                </li>
+                                <!--<li class="nav-item">
+                                    <a class="nav-link active" aria-current="page" href="#">Pedidos</a>
+                                </li>-->
+                            @endif
+                            @if(auth()->user()->hasRole('admin'))
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle active" href="#" role="button"
+                                       data-toggle="dropdown"
+                                       data-bs-toggle="dropdown" aria-expanded="false">
+                                        Productos
+                                    </a>
+
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="{{ route('listarProductos') }}">Ver
+                                                productos</a>
+                                        </li>
+
+                                        <li><a class="dropdown-item" href="{{ route('aniadirProducto') }}">Añadir
+                                                producto</a></li>
+
+                                    </ul>
+                                </li>
+                            @endif
+                            <!--<li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle active" href="#" role="button" data-toggle="dropdown"
+                                   data-bs-toggle="dropdown" aria-expanded="false">
+                                    Proveedores
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="#">Ver proveedores</a></li>
+                                    @if(auth()->user()->hasRole('admin'))
+                                <li><a class="dropdown-item" href="#">Añadir proveedor</a></li>
+
+                            @endif
+                            </ul>
+                        </li> -->
+                        </ul>
+                        <button
+                            data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions"
+                            aria-controls="offcanvasWithBothOptions"
+                            class="btn">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor"
+                                 class="bi bi-cart" viewBox="0 0 16 16">
+                                <path
+                                    d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+                            </svg>
+                        </button>
+                    @endguest
+                </ul>
+            </div>
+        </div>
+
+        @auth
+            <a style="margin-right: 15px; background: #C80000; color: white" type="button" class="btn"
+               href="{{ route('logout') }}"
+               onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                Logout
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                     class="bi bi-box-arrow-right" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd"
+                          d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0v2z"/>
+                    <path fill-rule="evenodd"
+                          d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"/>
+                </svg>
+            </a>
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                @csrf
+            </form>
+        @endauth
+    </nav>
+
+    <div class="offcanvas offcanvas-end" data-bs-scroll="true" data-bs-backdrop="true" tabindex="-1"
+         id="offcanvasWithBothOptions"
+         aria-labelledby="offcanvasWithBothOptionsLabel">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title"
+                id="offcanvasWithBothOptionsLabel">Lista de pedidos</h5>
+            <button style="display:relative" type="button" class="btn-close" data-bs-dismiss="offcanvas"
+                    aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <div class="lista" style="width: 90%; margin: 0 auto; padding: 15px;">
+                @livewire('cart-list')
+            </div>
+        </div>
     </div>
+    <main class="py-4">
+        @yield('content')
+    </main>
+</div>
+<!---->
+@livewireScripts
 </body>
 </html>

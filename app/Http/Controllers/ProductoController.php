@@ -5,23 +5,37 @@ namespace App\Http\Controllers;
 
 use App\Models\Categoria;
 use App\Models\Producto;
+use App\Models\User;
+use Exception;
 use Illuminate\Http\Request;
 
 class ProductoController extends Controller
 {
-
+//
     public function aniadirProducto()
     {
         return view("producto.crear", ["categorias" => Categoria::all()]);
     }
 
-    public function modificarProducto($id){
+    public function modificarProducto($id)
+    {
         return view("producto.modificar", ["producto" => Producto::find($id)], ["categorias" => Categoria::all()]);
+    }
+
+    public function listarProductos()
+    {
+
+        return view('producto.listar');
     }
 
     public function store(Request $request)
     {
-        $foto = $request->file('foto')->get();
+        if ($request->file('foto') != null) {
+            $foto = $request->file('foto')->get();
+        } else {
+            $foto = null;
+        }
+
         $product = Producto::create([
             'nombre' => $request->nombre,
             'validado' => 1,
@@ -33,16 +47,12 @@ class ProductoController extends Controller
         return redirect()->action([HomeController::class, 'index']);
     }
 
-    public function update(Request $request, $id){
-        $product = Producto::find($id);
-        $product->update($request->all());
-        return redirect()->action([HomeController::class, 'index']);
-    }
-
-    public function destroy($id)
+    public function update(Request $request, $id)
     {
-        $product = Producto::find($id);
-        $product->delete();
-        return redirect()->action([HomeController::class, 'index']);
+        $producto = Producto::find($id);
+        $producto->update($request->all());
+        return redirect()->action([ProductoController::class, 'listarProductos']);
+
+
     }
 }

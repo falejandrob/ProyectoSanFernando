@@ -27,7 +27,16 @@ Route::get('/producto/modificarProducto/{id}',[\App\Http\Controllers\ProductoCon
 Route::post('/producto/store',[\App\Http\Controllers\ProductoController::class, 'store'])->name('producto.store');
 Route::get('/producto/destroy/{id}',[\App\Http\Controllers\ProductoController::class, 'destroy'])->name('producto.destroy');
 Route::post('/producto/update/{id}',[\App\Http\Controllers\ProductoController::class, 'update'])->name('producto.update');
+Route::get('/producto/listarProductos', [\App\Http\Controllers\ProductoController::class, 'listarProductos'])->name('listarProductos');
+
+//Ruta profesores
+Route::get('/profesor/listarProfesores', [\App\Http\Controllers\ProfesorController::class, 'listarProfesores'])->name('listarProfesores');
+Route::get('/profesor/modificarProfesor/{id}',[\App\Http\Controllers\ProfesorController::class, 'modificarProfesor'])->name('modificarProfesor');
+Route::post('/profesor/update/{id}',[\App\Http\Controllers\ProfesorController::class, 'update'])->name('profesor.update');
+Route::get('/profesor/cambiarPassword/{id}',[\App\Http\Controllers\ProfesorController::class, 'cambiarPassword'])->name('cambiarPassword');
+Route::post('/profesor/pass/{id}',[\App\Http\Controllers\ProfesorController::class, 'pass'])->name('profesor.pass');
 
 //Ruta carrito
 Route::post('/cart/store',[\App\Http\Controllers\CartController::class,'store'])->name('cart.store');
 Route::post('/cart/remove',[\App\Http\Controllers\CartController::class,'remove'])->name('cart.remove');
+Route::post('/cart/confirm',[\App\Http\Controllers\CartController::class,'confirm'])->name('cart.confirm');
