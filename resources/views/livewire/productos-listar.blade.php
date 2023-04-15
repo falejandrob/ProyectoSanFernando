@@ -53,7 +53,7 @@
                             @endif
                         @endforeach
                         <td>
-                            <button wire:click="destroyProduct({{$producto->id}})" class="btn btn-danger">
+                            <button wire:click.prevent="destroyProduct({{$producto->id}})" class="btn btn-danger">
                                 ELIMINAR
                             </button>
                         </td>

@@ -7,6 +7,7 @@ use Barryvdh\DomPDF\Facade\Pdf;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Event;
 
 class CartController extends Controller
 {
@@ -32,6 +33,8 @@ class CartController extends Controller
         $productos = Cart::content();
         $pdf = Pdf::loadView('pdf.productos', compact('productos'));
         Pdf::setOption('isRemoteEnabled', TRUE);
+        //Cart::destroy();
         return $pdf->download('invoice.pdf');
     }
+
 }

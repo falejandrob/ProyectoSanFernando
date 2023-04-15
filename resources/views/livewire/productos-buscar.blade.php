@@ -16,7 +16,7 @@
                     </div>
                     <div class="card-body"
                          style="text-align: center; display: flex; flex-wrap: wrap; justify-content: center; align-items: center; height: 50%">
-                        <h5 class="card-title">{{ $producto->nombre }}</h5>
+                        <h5 class="card-title" style="width: 100%">{{ $producto->nombre }}</h5>
                         <!--<input
                             wire:model="cantidad.{{$producto->id}}"
                             style="width: 50%; margin: auto; text-align: center;border: 2px solid #F6C366; background: #FFFBDA; padding-left: 20px; padding-right: 20px;"
@@ -30,43 +30,61 @@
                         @if(optional($carrito->where('id', $producto->id)->first())->qty != null)
                             @if($carrito->where('id',$producto->id)->first()->qty == 1)
                                 {{--@dd($carrito->where('id',$producto->id)->first()->qty == 1)--}}
-                            <br>
-                                <button
-                                    wire:click.prevent="removeFromCart('{{ $carrito->where('id', $producto->id)->first()->rowId }}')"
-                                    class="btn" style="background: #CB5F5F">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
-                                         class="bi bi-x-lg" viewBox="0 0 16 16">
-                                        <path
-                                            d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
-                                    </svg>
-                                </button>
-                                <button
-                                    wire:click.prevent="addElementToProduct('{{ $carrito->where('id', $producto->id)->first()->rowId }}')"
-                                    class="btn" style="background: #61CB5F">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
-                                         class="bi bi-plus-lg" viewBox="0 0 16 16">
-                                        <path fill-rule="evenodd"
-                                              d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"/>
-                                    </svg>
-                                </button>
+                                <div>
+                                    <div>
+                                        <p>{{$carrito->where('id',$producto->id)->first()->qty}} unidad</p>
+                                    </div>
+                                    <div>
+                                        <button
+                                            wire:click.prevent="removeFromCart('{{ $carrito->where('id', $producto->id)->first()->rowId }}')"
+                                            class="btn" style="background: #CB5F5F; margin: 5px">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                                 fill="currentColor"
+                                                 class="bi bi-x-lg" viewBox="0 0 16 16">
+                                                <path
+                                                    d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
+                                            </svg>
+                                        </button>
+                                        <button
+                                            wire:click.prevent="addElementToProduct('{{ $carrito->where('id', $producto->id)->first()->rowId }}')"
+                                            class="btn" style="background: #61CB5F; margin: 5px">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                                 fill="currentColor"
+                                                 class="bi bi-plus-lg" viewBox="0 0 16 16">
+                                                <path fill-rule="evenodd"
+                                                      d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"/>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div>
                             @endif
                         @endif
                         @if(optional($carrito->where('id', $producto->id)->first())->qty != null)
                             @if($carrito->where('id',$producto->id)->first()->qty > 1)
-                                <button
-                                    wire:click.prevent="restElementToProduct('{{ $carrito->where('id', $producto->id)->first()->rowId }}')"
-                                    class="btn" style="background: #CB5F5F">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-dash" viewBox="0 0 16 16">
-                                        <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z"/>
-                                    </svg>
-                                </button>
-                                <button
-                                    wire:click.prevent="addElementToProduct('{{ $carrito->where('id', $producto->id)->first()->rowId }}')"
-                                    class="btn" style="background: #61CB5F">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
-                                        <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"/>
-                                    </svg>
-                                </button>
+                                <div>
+                                    <div>
+                                        <p>{{$carrito->where('id',$producto->id)->first()->qty}} unidades</p>
+                                    </div>
+                                    <div>
+                                        <button
+                                            wire:click.prevent="restElementToProduct('{{ $carrito->where('id', $producto->id)->first()->rowId }}')"
+                                            class="btn" style="background: #CB5F5F; margin: 5px">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                                 fill="currentColor" class="bi bi-dash" viewBox="0 0 16 16">
+                                                <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z"/>
+                                            </svg>
+                                        </button>
+                                        <button
+                                            wire:click.prevent="addElementToProduct('{{ $carrito->where('id', $producto->id)->first()->rowId }}')"
+                                            class="btn" style="background: #61CB5F; margin: 5px">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                                 fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
+                                                <path fill-rule="evenodd"
+                                                      d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"/>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div>
                             @endif
                         @endif
                         @if(optional($carrito->where('id', $producto->id)->first())->qty == null)

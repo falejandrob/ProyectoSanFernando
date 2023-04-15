@@ -21,7 +21,7 @@ class ProductosBuscar extends Component
     {
         //
         if(empty($this->searchTerm)) {
-            $this->productos = Producto::all()->paginate(10);
+            $this->productos = Producto::all();
         } else {
             $this->productos = Producto::where('nombre', 'like', '%'.$this->searchTerm.'%')->get();
         }

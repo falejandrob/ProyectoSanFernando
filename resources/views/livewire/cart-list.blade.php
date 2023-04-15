@@ -1,5 +1,13 @@
 <div>
     <div>
+        <button wire:click.prevent="clearCart()" class="btn btn-danger">
+            <svg width="25px" height="25px" viewBox="0 0 24 24" fill="none"
+                 xmlns="http://www.w3.org/2000/svg">
+                <path
+                    d="M4.99997 8H6.5M6.5 8V18C6.5 19.1046 7.39543 20 8.5 20H15.5C16.6046 20 17.5 19.1046 17.5 18V8M6.5 8H17.5M17.5 8H19M9 5H15M9.99997 11.5V16.5M14 11.5V16.5"
+                    stroke="#464455" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </button>
         @foreach($cart as $productoCarrito)
             <div
                 style="display:flex; justify-content: space-between; background: #BD651D; color: white; padding: 15px; margin: 10px; border-radius: 10px ">
@@ -45,12 +53,20 @@
         @endforeach
     </div>
     <div style="width: 100%; text-align: center; padding: 10px">
-        <form action="{{route('cart.confirm')}}">
-            @csrf
-            <button type="submit" style="font-size: 130%; width: 50%; padding: 10px; background: #FF8507" class="btn">
+        @if(Cart::content()->count() == 0)
+            <button type="submit" style="font-size: 130%; width: 50%; padding: 10px; background: #FF8507"
+                    class="btn disabled">
                 Hacer pedido
             </button>
-        </form>
+        @else
+            <form action="{{route('cart.confirm')}}">
+                @csrf
+                <button type="submit" style="font-size: 130%; width: 50%; padding: 10px; background: #FF8507"
+                        class="btn">
+                    Hacer pedido
+                </button>
+            </form>
+        @endif
     </div>
     <!---->
 </div>

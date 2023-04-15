@@ -40,4 +40,8 @@ class CartList extends Component
         $this->cart = Cart::get($this->rowId);
         Cart::update($this->rowId, $this->cart->qty+1);
     }
+    public function clearCart(){
+        Cart::destroy();
+        $this->emit('product_listeners');
+    }
 }
