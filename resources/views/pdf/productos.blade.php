@@ -22,6 +22,9 @@
         #container{
             width: 100%;
         }
+        .page-break {
+            page-break-after: always;
+        }
         table {
             width: 100%;
         }
@@ -68,11 +71,10 @@
         </tr>
         <tr>
             <td>Rev.3</td>
-            <td>pag 1/1</td>
+            <td><div class="page-break"></div></td>
         </tr>
         </tbody>
     </table>
-    <br> <br> <br> <br> <br> <br> <br> <br>
 </div>
 
 <div id="info">
@@ -115,6 +117,15 @@
         @endforeach
         </tbody>
     </table>
+
 </div>
+<script type="text/php">
+        if ( isset($pdf) ) {
+            $pdf->page_script('
+                $font = $fontMetrics->get_font("Arial, Helvetica, sans-serif", "normal");
+                $pdf->text(420, 92, "Pág. $PAGE_NUM/$PAGE_COUNT", $font, 12);
+            ');
+        }
+	</script>
 </body>
 </html>
