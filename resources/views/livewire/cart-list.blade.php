@@ -43,19 +43,19 @@
             </button>
         @else
             <button type="submit" style="font-size: 130%; width: 50%; padding: 10px; background: #FF8507"
-                    class="btn" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    class="btn" data-bs-toggle="modal" data-bs-target="#ConfirmationModal">
                 Hacer pedido
             </button>
         @endif
     </div>
     <!---->
 
-    <div class="modal fade" id="exampleModal" data-bs-backdrop="false" tabindex="-1" aria-labelledby="exampleModalLabel"
+    <div class="modal fade" id="ConfirmationModal" data-bs-backdrop="false" tabindex="-1" aria-labelledby="exampleModalLabel"
          aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Insertar producto</h1>
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Confirmar pedido</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
