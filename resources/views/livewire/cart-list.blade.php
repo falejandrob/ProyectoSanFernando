@@ -1,38 +1,56 @@
 <div>
     <div>
-        <button wire:click.prevent="clearCart()" class="btn btn-danger">
-            <svg width="25px" height="25px" viewBox="0 0 24 24" fill="none"
-                 xmlns="http://www.w3.org/2000/svg">
-                <path
-                    d="M4.99997 8H6.5M6.5 8V18C6.5 19.1046 7.39543 20 8.5 20H15.5C16.6046 20 17.5 19.1046 17.5 18V8M6.5 8H17.5M17.5 8H19M9 5H15M9.99997 11.5V16.5M14 11.5V16.5"
-                    stroke="#464455" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-            Limpiar Carrito
-        </button>
+        <div class="d-flex justify-content-between align-items-center">
+            <button type="button" class="btn btn-primary d-flex justify-content-between align-items-center" data-bs-toggle="modal" data-bs-target="#productosModal">
+                <span style="padding: 5px">Añadir productos</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-bag-plus-fill" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M10.5 3.5a2.5 2.5 0 0 0-5 0V4h5v-.5zm1 0V4H15v10a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V4h3.5v-.5a3.5 3.5 0 1 1 7 0zM8.5 8a.5.5 0 0 0-1 0v1.5H6a.5.5 0 0 0 0 1h1.5V12a.5.5 0 0 0 1 0v-1.5H10a.5.5 0 0 0 0-1H8.5V8z"/>
+                </svg>
+            </button>
+            <button wire:click.prevent="clearCart()" class="btn btn-danger d-flex justify-content-between align-items-center">
+                <span style="padding: 5px">Limpiar Carrito</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-trash3-fill" viewBox="0 0 16 16">
+                    <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5Zm-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5ZM4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5Z"/>
+                </svg>
+            </button>
+        </div>
         <br>
-        @foreach($cart as $productoCarrito)
-            <div class="cart-item">
-                <span class="item-name">{{$productoCarrito->name}}</span>
-                <div class="quantity-controls">
-                    <button wire:click.prevent="restElementToProduct('{{ json_encode($productoCarrito) }}')"
-                            class="btn minus-btn">
-                        -
-                    </button>
-                    <span class="item-quantity">{{$productoCarrito->qty}} ud</span>
-                    <button wire:click.prevent="addElementToProduct('{{ json_encode($productoCarrito) }}')"
-                            class="btn plus-btn">+
-                    </button>
-                </div>
-                <button wire:click.prevent="removeFromCart('{{ json_encode($productoCarrito) }}')"
-                        class="btn delete-btn">
-                    <svg width="25px" height="25px" viewBox="0 0 24 24" fill="none"
-                         xmlns="http://www.w3.org/2000/svg">
-                        <path
-                            d="M4.99997 8H6.5M6.5 8V18C6.5 19.1046 7.39543 20 8.5 20H15.5C16.6046 20 17.5 19.1046 17.5 18V8M6.5 8H17.5M17.5 8H19M9 5H15M9.99997 11.5V16.5M14 11.5V16.5"
-                            stroke="#464455" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                </button>
-            </div>
+        @foreach($categorias as $categoria)
+            @php($cont = 0)
+            @foreach($cart as $productoCarrito)
+                @if($productoCarrito->options->categoria == $categoria->nombre)
+                    @php($cont++)
+                @endif
+            @endforeach
+            @if($cont > 0)
+                <h3>{{ $categoria->nombre }}</h3>
+                @foreach($cart as $productoCarrito)
+                    @if($productoCarrito->options->categoria == $categoria->nombre)
+                        <div class="cart-item">
+                            <span class="item-name">{{$productoCarrito->name}}</span>
+                            <div class="quantity-controls">
+                                <button wire:click.prevent="restElementToProduct('{{ json_encode($productoCarrito) }}')"
+                                        class="btn minus-btn">
+                                    -
+                                </button>
+                                <span class="item-quantity">{{$productoCarrito->qty}} ud</span>
+                                <button wire:click.prevent="addElementToProduct('{{ json_encode($productoCarrito) }}')"
+                                        class="btn plus-btn">+
+                                </button>
+                            </div>
+                            <button wire:click.prevent="removeFromCart('{{ json_encode($productoCarrito) }}')"
+                                    class="btn delete-btn">
+                                <svg width="25px" height="25px" viewBox="0 0 24 24" fill="none"
+                                     xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M4.99997 8H6.5M6.5 8V18C6.5 19.1046 7.39543 20 8.5 20H15.5C16.6046 20 17.5 19.1046 17.5 18V8M6.5 8H17.5M17.5 8H19M9 5H15M9.99997 11.5V16.5M14 11.5V16.5"
+                                        stroke="#464455" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </button>
+                        </div>
+                    @endif
+                @endforeach
+            @endif
         @endforeach
     </div>
     <div style="width: 100%; text-align: center; padding: 10px">
@@ -43,44 +61,9 @@
             </button>
         @else
             <button type="submit" style="font-size: 130%; width: 50%; padding: 10px; background: #FF8507"
-                    class="btn" data-bs-toggle="modal" data-bs-target="#ConfirmationModal">
+                    class="btn" data-bs-toggle="modal" data-bs-target="#confirmarPedido">
                 Hacer pedido
             </button>
         @endif
-    </div>
-    <!---->
-
-    <div class="modal fade" id="ConfirmationModal" data-bs-backdrop="false" tabindex="-1" aria-labelledby="exampleModalLabel"
-         aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Confirmar pedido</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form action="{{route('cart.confirm')}}" method="post">
-                        @csrf
-                        @method("POST")
-                        <div class="form-row">
-                            <div class="mb-3">
-                                <label>Para cuando se quiere el pedido</label>
-                                <input type="date" class="form-control" id="expectedDate" name="expectedDate" required pattern="\d{4}-\d{2}-\d{2}" required>
-                            </div>
-                            <div class="mb-3">
-                                <label>Para que hora</label>
-                                <input type="time" class="form-control" id="expectedTime" name="expectedTime" required>
-                            </div>
-                            <div class="mb-3">
-                                <label>Justificación</label>
-                                <textarea class="form-control" id="justification" placeholder="Justificacion"
-                                          name="justification" required></textarea>
-                            </div>
-                        </div>
-                        <button class="btn btn-primary" type="submit">Hacer pedido</button>
-                    </form>
-                </div>
-            </div>
-        </div>
     </div>
 </div>
