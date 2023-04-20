@@ -78,11 +78,12 @@
 </div>
 
 <div id="info">
-    <p>PROFESOR/A QUE REALIZA EL PEDIDO: <strong>{{auth()->user()->nombre}} {{auth()->user()->apellidos}}</strong></p>
-    <p>FECHA DEL PEDIDO: <strong>{{ now()->format('d/m/Y') }}</strong></p>
-    <p>FECHA PARA LA QUE SE SOLICITA EL PEDIDO: <strong>{{$dateTimeJustification['expectedDate']}}</strong></p>
-    <p>HORA PARA LA QUE SE SOLICITA EL PEDIDO: <strong>{{$dateTimeJustification['expectedTime']}}</strong></p>
-    <p>JUSTIFICACION: <strong>{{$dateTimeJustification['justification']}}</strong></p>
+    <br>
+    <span>PROFESOR/A QUE REALIZA EL PEDIDO: <strong>{{auth()->user()->nombre}} {{auth()->user()->apellidos}}</strong></span><br>
+    <span>FECHA DEL PEDIDO: <strong>{{ now()->format('d/m/Y') }}</strong></span><br>
+    <span>FECHA PARA LA QUE SE SOLICITA EL PEDIDO: <strong>{{$dateTimeJustification['expectedDate']}}</strong></span><br>
+    <span>HORA PARA LA QUE SE SOLICITA EL PEDIDO: <strong>{{$dateTimeJustification['expectedTime']}}</strong></span><br>
+    <span>JUSTIFICACION: <strong>{{$dateTimeJustification['justification']}}</strong></span><br><br>
 </div>
 
 <div id="container">
