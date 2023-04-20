@@ -12,8 +12,30 @@
             background: white;
         }
 
+        .my-custom-scrollbar {
+            position: relative;
+            height: 450px;
+            width: 100%;
+            overflow: auto;
+        }
+        .table-wrapper-scroll-y {
+            display: block;
+        }
+
+        .productos{
+            font-size: 16px;
+        }
+
         nav {
             background: #f6f0d2;
+        }
+
+        table.scroll thead{
+            display: block;
+        }
+
+        .menu-admin, .menu-admin a{
+            font-size: 16px;
         }
 
         .budget-container {

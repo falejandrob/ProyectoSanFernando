@@ -36,15 +36,27 @@ class ProductoController extends Controller
             $foto = null;
         }
 
-        $product = Producto::create([
-            'nombre' => $request->nombre,
-            'validado' => 1,
-            'idCategoria' => $request->idCategoria,
-            'foto' => $foto
-        ]);
+        if(auth()->user()->hasRole('admin')){
+            $product = Producto::create([
+                'nombre' => $request->nombre,
+                'validado' => 0,
+                'idCategoria' => $request->idCategoria,
+
+            ]);
+        }
+        if(auth()->user()->hasRole('profesor')){
+            $product = Producto::create([
+                'nombre' => $request->nombre,
+                'validado' => 1,
+                'idCategoria' => $request->idCategoria,
+
+            ]);
+        }
+
+
 
         $product->save();
-        return redirect()->action([HomeController::class, 'index']);
+        return redirect()->action([ProductoController::class, 'listarProductos']);
     }
 
     public function update(Request $request, $id)
