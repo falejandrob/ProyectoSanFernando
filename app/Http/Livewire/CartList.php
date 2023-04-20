@@ -34,6 +34,7 @@ class CartList extends Component
         $this->rowId = $productoCarrito->rowId;
         $this->cart = Cart::get($this->rowId);
         Cart::update($this->rowId, $this->cart->qty-1);
+        $this->emit('product_listeners');
     }
     public function addElementToProduct($productoCarritoJson){
         $productoCarrito = json_decode($productoCarritoJson);
@@ -41,6 +42,7 @@ class CartList extends Component
         $this->rowId = $productoCarrito->rowId;
         $this->cart = Cart::get($this->rowId);
         Cart::update($this->rowId, $this->cart->qty+1);
+        $this->emit('product_listeners');
     }
     public function clearCart(){
         Cart::destroy();

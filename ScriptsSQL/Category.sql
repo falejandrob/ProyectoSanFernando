@@ -15,5 +15,3 @@ INSERT INTO `categorias` (`nombre`, `created_at`, `updated_at`) VALUES
 ('Pastelería', now(), now()),
 ('Pescados/Mariscos', now(), now()),
 ('Cafés/Infus', now(), now()),
-('Carnes/Aves/Embutidos', now(), now()),
-('Carnes/Aves/Embutidos', now(), now());
