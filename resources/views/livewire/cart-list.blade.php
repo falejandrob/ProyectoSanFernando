@@ -1,20 +1,17 @@
-<div>
+<div style="width: 90%; margin: auto">
     <div>
-        <div class="d-flex justify-content-between align-items-center">
-            <button type="button" class="btn btn-primary d-flex justify-content-between align-items-center" data-bs-toggle="modal" data-bs-target="#productosModal">
-                <span style="padding: 5px">Añadir productos</span>
-                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-bag-plus-fill" viewBox="0 0 16 16">
-                    <path fill-rule="evenodd" d="M10.5 3.5a2.5 2.5 0 0 0-5 0V4h5v-.5zm1 0V4H15v10a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V4h3.5v-.5a3.5 3.5 0 1 1 7 0zM8.5 8a.5.5 0 0 0-1 0v1.5H6a.5.5 0 0 0 0 1h1.5V12a.5.5 0 0 0 1 0v-1.5H10a.5.5 0 0 0 0-1H8.5V8z"/>
-                </svg>
-            </button>
-            <button wire:click.prevent="clearCart()" class="btn btn-danger d-flex justify-content-between align-items-center">
-                <span style="padding: 5px">Limpiar Carrito</span>
-                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-trash3-fill" viewBox="0 0 16 16">
-                    <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5Zm-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5ZM4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5Z"/>
-                </svg>
-            </button>
-        </div>
+        @if(Cart::content()->count() != 0)
+            <div class="d-flex justify-content-end align-items-center">
+                <button wire:click.prevent="clearCart()" class="btn btn-danger d-flex justify-content-between align-items-end">
+                    <span style="padding: 5px">Limpiar Carrito</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-trash3-fill" viewBox="0 0 16 16">
+                        <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5Zm-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5ZM4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5Z"/>
+                    </svg>
+                </button>
+            </div>
+        @endif
         <br>
+        <div>
         @foreach($categorias as $categoria)
             @php($cont = 0)
             @foreach($cart as $productoCarrito)
@@ -23,7 +20,7 @@
                 @endif
             @endforeach
             @if($cont > 0)
-                <h3>{{ $categoria->nombre }}</h3>
+                <h3 style="padding-top: 20px">{{ $categoria->nombre }}</h3>
                 @foreach($cart as $productoCarrito)
                     @if($productoCarrito->options->categoria == $categoria->nombre)
                         <div class="cart-item">
@@ -47,19 +44,16 @@
                                         stroke="#464455" stroke-linecap="round" stroke-linejoin="round"/>
                                 </svg>
                             </button>
+                            <button type="button" class="btn btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#justificacionModal">Justificación</button>
                         </div>
                     @endif
                 @endforeach
             @endif
         @endforeach
+        </div>
     </div>
     <div style="width: 100%; text-align: center; padding: 10px">
-        @if(Cart::content()->count() == 0)
-            <button type="submit" style="font-size: 130%; width: 50%; padding: 10px; background: #FF8507"
-                    class="btn disabled">
-                Hacer pedido
-            </button>
-        @else
+        @if(Cart::content()->count() != 0)
             <button type="submit" style="font-size: 130%; width: 50%; padding: 10px; background: #FF8507"
                     class="btn" data-bs-toggle="modal" data-bs-target="#confirmarPedido">
                 Hacer pedido

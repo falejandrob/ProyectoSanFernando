@@ -5,6 +5,7 @@
                style="width: 80%; height: 35px; font-size: 150%; text-align: center; outline: none; border: 2px solid white; background: white"/>
         <img src="https://cdn-icons-png.flaticon.com/512/3917/3917132.png" style="height: 30px;"/>
     </div>
+
     <br>
 
     @if($productos && $productos->count() > 0)
@@ -21,7 +22,6 @@
                             @endforeach
                             @if(optional($carrito->where('id', $producto->id)->first())->qty != null)
                                 @if($carrito->where('id',$producto->id)->first()->qty == 1)
-                                    {{--@dd($carrito->where('id',$producto->id)->first()->qty == 1)--}}
                                     <div style="width: 30%; box-sizing: border-box">
                                         <div class="d-flex align-items-center justify-content-center">
                                             <button
@@ -61,7 +61,7 @@
                                                     <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z"/>
                                                 </svg>
                                             </button>
-                                            <h3 style="padding: 5px">{{$carrito->where('id',$producto->id)->first()->qty}} ud</h3>
+                                            <h3 style="margin: 5px">{{$carrito->where('id',$producto->id)->first()->qty}} ud</h3>
                                             <button
                                                 wire:click.prevent="addElementToProduct('{{ $carrito->where('id', $producto->id)->first()->rowId }}')"
                                                 class="btn" style="background: #61CB5F; margin: 5px">
@@ -93,19 +93,17 @@
         </div>
     @else
         <div style="width: 60%; margin: auto">
-            <div class="alert"
-                 style="text-align: center; font-size: 120%; border: solid 2px #C80000; background: #F3D8D8">
-                El producto no existe
+            <div class="alert alert-danger" style="text-align: center; font-size: 120%">
+                El producto buscado no existe
             </div>
-
             <button class="btn" data-bs-toggle="modal" data-bs-target="#exampleModal"
                     style="background: #F5BA53; width: 50%; margin-left: 25%; padding: 10px">
                 INSERTAR PRODUCTO
             </button>
         </div>
-        <!---->
-        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
+
+        <div class="modal fade modal-lg" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" style="font-size: 120%">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h1 class="modal-title fs-5" id="exampleModalLabel">Insertar producto</h1>
@@ -118,27 +116,21 @@
                             <div class="form-group">
                                 <label for="nombre" style="margin:15px 0px;">Nombre</label>
                                 <input type="text" name="nombre" id="nombre" class="form-control"
-                                       value="{{ $searchTerm }}">
+                                       value="{{ $searchTerm }}"  style="font-size: 120%">
                             </div>
                             <div>
                                 <label for="categoria" style="margin:15px 0px;">Categoría</label>
                                 <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example"
-                                        name="idCategoria">
+                                        name="idCategoria" style="font-size: 120%">
                                     @foreach($categorias as $categoria)
                                         <option value="{{$categoria->id}}">{{$categoria->nombre}}</option>
                                     @endforeach
                                 </select>
                             </div>
-                            <div>
-                                <p>
-                                    Sube una imagen:<br><br>
-                                    <input type="file" name="foto" accept="image/png, .jpeg, .jpg, image/gif">
-                                </p>
-                            </div>
-                            <hr/>
+                            <br>
                             <div class="form-group" style="text-align: right">
                                 <td>
-                                    <button type="submit" class="btn btn-primary">AÑADIR</button>
+                                    <button type="submit" class="btn btn-primary">ACEPTAR</button>
                                 </td>
                             </div>
                         </form>

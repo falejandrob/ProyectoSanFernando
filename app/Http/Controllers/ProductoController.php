@@ -30,32 +30,25 @@ class ProductoController extends Controller
 
     public function store(Request $request)
     {
-        if ($request->file('foto') != null) {
-            $foto = $request->file('foto')->get();
-        } else {
-            $foto = null;
-        }
-
         if(auth()->user()->hasRole('admin')){
             $product = Producto::create([
                 'nombre' => $request->nombre,
                 'validado' => 0,
                 'idCategoria' => $request->idCategoria,
-
             ]);
+
+            $product->save();
         }
         if(auth()->user()->hasRole('profesor')){
             $product = Producto::create([
                 'nombre' => $request->nombre,
                 'validado' => 1,
                 'idCategoria' => $request->idCategoria,
-
             ]);
+
+            $product->save();
         }
 
-
-
-        $product->save();
         return redirect()->action([ProductoController::class, 'listarProductos']);
     }
 
