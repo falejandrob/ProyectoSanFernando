@@ -127,7 +127,7 @@
         }
 
         .minus-btn {
-            color: #CB5F
+            color: #cc5555
         }
     </style>
     @livewireStyles
@@ -135,24 +135,13 @@
 <body>
 <div id="app">
     <nav class="navbar navbar-expand-md navbar-light shadow-sm">
-        @auth
-            <p style="margin: 15px">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
-                     class="bi bi-person-fill" viewBox="0 0 16 16">
-                    <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3Zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/>
-                </svg>
-                {{ Auth::user()->nombre . " " . Auth::user()->apellidos }}
-            </p>
-        @endauth
-
         <div class="container">
-
             @auth
                 @if(auth()->user()->hasRole('profesor'))
                 <div class="budget-container">
                     <span class="budget-label" style="font-size: 120%">Presupuesto:</span>
                     @if($presupuesto == null)
-                        <span class="budget-amount" style="font-size: 120%">Aun no tienes presupuesto</span>
+                        <span class="budget-amount" style="font-size: 120%">Aún no tienes presupuesto</span>
                     @else
                         <span class="budget-amount" style="font-size: 120%">{{$presupuesto->presupuestoTotal}} €</span>
                     @endif
@@ -229,21 +218,40 @@
         </div>
 
         @auth
-            <a style="margin-right: 15px; background: #C80000; color: white" type="button" class="btn"
-               href="{{ route('logout') }}"
-               onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                Logout
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
-                     class="bi bi-box-arrow-right" viewBox="0 0 16 16">
-                    <path fill-rule="evenodd"
-                          d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0v2z"/>
-                    <path fill-rule="evenodd"
-                          d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"/>
-                </svg>
-            </a>
-            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                @csrf
-            </form>
+            <ul class="navbar-nav menu-admin">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle active d-flex justify-content-center align-items-center" role="button" data-toggle="dropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16">
+                            <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3Zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/>
+                        </svg>
+                        {{ Auth::user()->nombre . " " . Auth::user()->apellidos }}
+                    </a>
+
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a class="dropdown-item">
+                                Mis pedidos
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                Logout
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                                     class="bi bi-box-arrow-right" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd"
+                                          d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0v2z"/>
+                                    <path fill-rule="evenodd"
+                                          d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"/>
+                                </svg>
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                    @csrf
+                                </form>
+                            </a>
+                        </li>
+
+                    </ul>
+                </li>
+            </ul>
         @endauth
     </nav>
 
@@ -262,11 +270,10 @@
             </div>
         </div>
     </div>
-    <main class="py-4">
+    <main>
         @yield('content')
     </main>
 </div>
-<!---->
 @livewireScripts
 </body>
 </html>

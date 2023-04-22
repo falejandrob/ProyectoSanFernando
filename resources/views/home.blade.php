@@ -6,11 +6,11 @@
     @endif
 
     <div class="d-flex justify-content-around">
-        <div style="width: 60%;">
+        <div style="width: 60%; padding: 25px">
             @livewire('productos-buscar')
         </div>
 
-        <div style="width: 40%;">
+        <div style="width: 40%; background: #FAFAFA; border-left: #D6D6D6 1px solid; padding: 25px">
             @livewire('cart-list')
         </div>
     </div>

@@ -57,7 +57,5 @@ class ProductoController extends Controller
         $producto = Producto::find($id);
         $producto->update($request->all());
         return redirect()->action([ProductoController::class, 'listarProductos']);
-
-
     }
 }

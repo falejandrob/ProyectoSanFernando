@@ -13,18 +13,5 @@ class Producto extends Model
         'nombre',
         'validado',
         'idCategoria',
-        'foto'
-
     ];
-
-    public function getFotoUrlAttribute()
-    {
-        if ($this->foto) {
-            $base64 = base64_encode($this->foto);
-            $mime = 'image/jpg'; // Reemplace esto con el tipo MIME correcto de su imagen
-            return 'data:' . $mime . ';base64,' . $base64;
-        }
-        return null;
-    }
-
 }

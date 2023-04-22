@@ -5,7 +5,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div style="width: 50%; margin: auto">
-                    <h2 class="mt-4" style="text-align: center">Modificar producto</h2>
+                    <h2 class="mt-4" style="text-align: center">Modificar profesor</h2>
                     <hr>
                     <form action="{{ route("profesor.update", ["id" => $profesor->id]) }}" method="post"
                           enctype="multipart/form-data">
