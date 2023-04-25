@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\LineaPedido;
+use App\Models\Pedido;
 use App\Models\Presupuesto;
 use App\Models\Producto;
 use Carbon\Carbon;
@@ -36,5 +38,23 @@ class HomeController extends Controller
 
 
         return view('home', ["productos" => $productos,"presupuesto" =>$presupuesto]);
+    }
+
+    public function misPedidos($idUser) {
+        $pedidos = Pedido::all()->where('idUser', "=", $idUser);
+        $anio_actual = Carbon::now()->year;
+        $presupuesto = Presupuesto::where('idUser', Auth::id())->where('anio', $anio_actual)->first();
+
+        return view("profesor.misPedidos", ["pedidos" => $pedidos, "presupuesto" =>$presupuesto]);
+    }
+
+    public function detallesPedido($idPedido) {
+        $pedido = Pedido::all()->find($idPedido);
+        $anio_actual = Carbon::now()->year;
+        $presupuesto = Presupuesto::where('idUser', Auth::id())->where('anio', $anio_actual)->first();
+
+        $lineasPedido = LineaPedido::all()->where('idPedido', "=", $pedido->id);
+
+        return view("profesor.detallesPedido", ["pedido" => $pedido, "presupuesto" =>$presupuesto, "lineasPedido"=>$lineasPedido]);
     }
 }

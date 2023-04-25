@@ -229,7 +229,7 @@
 
                     <ul class="dropdown-menu">
                         <li>
-                            <a class="dropdown-item">
+                            <a class="dropdown-item" href="{{ route('misPedidos', Auth::user()->id) }}">
                                 Mis pedidos
                             </a>
                         </li>

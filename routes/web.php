@@ -20,6 +20,8 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/misPedidos/{id}',[\App\Http\Controllers\HomeController::class, 'misPedidos'])->name('misPedidos');
+Route::get('/detallesPedido/{id}',[\App\Http\Controllers\HomeController::class, 'detallesPedido'])->name('detallesPedido');
 
 //Ruta producto
 Route::get('/producto/aniadirProducto',[\App\Http\Controllers\ProductoController::class, 'aniadirProducto'])->name('aniadirProducto');
@@ -39,4 +41,4 @@ Route::post('/profesor/pass/{id}',[\App\Http\Controllers\ProfesorController::cla
 //Ruta carrito
 Route::post('/cart/store',[\App\Http\Controllers\CartController::class,'store'])->name('cart.store');
 Route::post('/cart/remove',[\App\Http\Controllers\CartController::class,'remove'])->name('cart.remove');
-Route::post('/cart/confirm',[\App\Http\Controllers\CartController::class,'confirm'])->name('cart.confirm');
+Route::get('/cart/confirm',[\App\Http\Controllers\CartController::class,'confirm'])->name('cart.confirm');

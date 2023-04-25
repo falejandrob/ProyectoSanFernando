@@ -32,7 +32,12 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                <button type="submit" class="btn btn-primary" >Aceptar</button>
+                <form action="{{route('cart.confirm')}}">
+                    @csrf
+                        <button type="submit" class="btn btn-primary">
+                            Aceptar
+                        </button>
+                </form>
             </div>
         </div>
     </div>
