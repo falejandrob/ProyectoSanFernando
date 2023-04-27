@@ -38,6 +38,7 @@ class ProductoController extends Controller
             ]);
 
             $product->save();
+            return redirect()->action([ProductoController::class, 'listarProductos']);
         }
         if(auth()->user()->hasRole('profesor')){
             $product = Producto::create([
@@ -47,9 +48,10 @@ class ProductoController extends Controller
             ]);
 
             $product->save();
+            return redirect()->action([HomeController::class, 'index']);
         }
 
-        return redirect()->action([ProductoController::class, 'listarProductos']);
+
     }
 
     public function update(Request $request, $id)
