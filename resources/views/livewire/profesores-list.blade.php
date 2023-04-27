@@ -44,4 +44,10 @@
             </tbody>
         </table>
     </div>
+
+    <br>
+
+    <div class="d-flex justify-content-center">
+        {{ $profesores->links() }}
+    </div>
 </div>

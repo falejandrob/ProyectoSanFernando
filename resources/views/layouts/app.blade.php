@@ -26,7 +26,7 @@
             font-size: 16px;
         }
 
-        nav {
+        #app > nav {
             background: #f6f0d2;
         }
 
@@ -62,14 +62,6 @@
 
         .dropdown ul, .dropdown li {
             background: #f6f0d2;
-        }
-
-        html {
-            background: #FFFFFF;
-        }
-
-        main {
-            background: #FFFFFF;
         }
 
         .card-hover:hover {

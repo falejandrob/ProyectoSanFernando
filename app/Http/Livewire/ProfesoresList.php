@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use App\Models\User;
 use Livewire\Component;
+use Illuminate\Support\Facades\DB;
 
 class ProfesoresList extends Component
 {//
@@ -11,7 +12,7 @@ class ProfesoresList extends Component
 
     public function render()
     {
-        $profesores = User::all();
+        $profesores = DB::table('users')->paginate(10);
 
         return view('livewire.profesores-list', ["profesores" => $profesores]);
     }

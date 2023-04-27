@@ -31,6 +31,49 @@
                             <input style="font-size: 18px" type="email" name="email" id="email" class="form-control"
                                    value="{{$profesor->email}}">
                         </div>
+                        <div class="form-group">
+                            <label for="presupuesto" style="margin:15px 0px; font-size: 18px">Presupuesto</label>
+                            <input style="font-size: 18px" type="number" name="presupuesto" id="presupuesto" class="form-control"
+                                   value="{{ $presupuesto }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="rol" style="margin:15px 0px; font-size: 18px">Rol</label>
+                            @if($profesor->hasRole('profesor'))
+                                <div class="d-flex">
+                                    <div class="form-check" style="margin: 5px">
+                                        <input class="form-check-input" type="radio" name="rol" id="rol" value="admin">
+                                        <label class="form-check-label" for="admin">
+                                            admin
+                                        </label>
+                                    </div>
+                                    <div class="form-check" style="margin: 5px">
+                                        <input class="form-check-input" type="radio" name="rol" id="rol" value="profesor" checked>
+                                        <label class="form-check-label" for="profesor">
+                                            profesor
+                                        </label>
+                                    </div>
+                                </div>
+                            @endif
+                            @if($profesor->hasRole('admin'))
+                                <div class="d-flex">
+                                    <div class="form-check" style="margin: 5px">
+                                        <input class="form-check-input" type="radio" name="rol" id="rol" value="admin" checked>
+                                        <label class="form-check-label" for="admin">
+                                            admin
+                                        </label>
+                                    </div>
+                                    <div class="form-check" style="margin: 5px">
+                                        <input class="form-check-input" type="radio" name="rol" id="rol" value="profesor">
+                                        <label class="form-check-label" for="profesor">
+                                            profesor
+                                        </label>
+                                    </div>
+                                </div>
+                            @endif
+                        </div>
+
+                        <br>
+
                         <button type="submit" class="btn btn-primary" style="align-items: center">MODIFICAR</button>
                     </form>
                 </div>
