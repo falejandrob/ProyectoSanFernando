@@ -14,11 +14,14 @@ class CartList extends Component
     public $rowId;
     public function render()
     {
+        $expectedDate = date("Y-m-d");
+        $expectedTime = date("H:i");
+
         $this->cart = Cart::content();
         $this->rowId = null;
         $categorias = Categoria::all();
 
-        return view('livewire.cart-list', ['cart'=>$this->cart, 'categorias'=>$categorias]);
+        return view('livewire.cart-list', ['cart'=>$this->cart, 'categorias'=>$categorias, "expectedDate" => $expectedDate, "expectedTime" => $expectedTime]);
     }
 
     public function removeFromCart($productoCarritoJson){

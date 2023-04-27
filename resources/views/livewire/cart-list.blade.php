@@ -61,11 +61,11 @@
         <div class="d-flex justify-content-around align-items-center">
             <div class="mb-3" style="width: 40%">
                 <label>Para cuando se quiere el pedido</label>
-                <input type="date" class="form-control" id="expectedDate" name="expectedDate" pattern="\d{4}-\d{2}-\d{2}" required>
+                <input type="date" class="form-control" id="expectedDate" name="expectedDate" pattern="\d{4}-\d{2}-\d{2}" value="{{ $expectedDate }}" required>
             </div>
             <div class="mb-3" style="width: 40%">
                 <label>Para que hora</label>
-                <input type="time" class="form-control" id="expectedTime" name="expectedTime" required>
+                <input type="time" class="form-control" id="expectedTime" name="expectedTime" value="{{ $expectedTime }}" required>
             </div>
         </div>
         <div style="width: 100%; text-align: center; padding: 10px">

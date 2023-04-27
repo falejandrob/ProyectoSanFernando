@@ -32,12 +32,15 @@ class HomeController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function index(){
+        $expectedDate = date("Y-m-d");
+        $expectedTime = date("H:i");
+
         $productos = Producto::all();
         $anio_actual = Carbon::now()->year;
         $presupuesto = Presupuesto::where('idUser', Auth::id())->where('anio', $anio_actual)->first();
 
 
-        return view('home', ["productos" => $productos,"presupuesto" =>$presupuesto]);
+        return view('home', ["productos" => $productos,"presupuesto" =>$presupuesto, "expectedDate" => $expectedDate, "expectedTime" => $expectedTime]);
     }
 
     public function misPedidos($idUser) {

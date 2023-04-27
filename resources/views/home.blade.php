@@ -16,6 +16,7 @@
     </div>
 @endsection
 
+
 <!-- Escribir justificacion modal -->
 <div class="modal fade modal-lg" id="justificacionModal" tabindex="-1" aria-labelledby="justificacionModal" aria-hidden="true">
     <div class="modal-dialog">
@@ -32,7 +33,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                <form action="{{route('cart.confirm')}}">
+                <form>
                     @csrf
                         <button type="submit" class="btn btn-primary">
                             Aceptar
@@ -59,11 +60,11 @@
                     <div class="form-row">
                         <div class="mb-3">
                             <label>Para cuando se quiere el pedido</label>
-                            <input type="date" class="form-control" id="expectedDate" name="expectedDate" pattern="\d{4}-\d{2}-\d{2}" required>
+                            <input type="date" class="form-control" id="expectedDate" name="expectedDate" pattern="\d{4}-\d{2}-\d{2}" value="{{ $expectedDate }}" required>
                         </div>
                         <div class="mb-3">
                             <label>Para que hora</label>
-                            <input type="time" class="form-control" id="expectedTime" name="expectedTime" required>
+                            <input type="time" class="form-control" id="expectedTime" name="expectedTime" value="{{ $expectedTime }}" required>
                         </div>
                         <div class="mb-3">
                             <label>Justificación</label>
