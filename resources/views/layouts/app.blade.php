@@ -157,17 +157,7 @@
             <div id="navbarSupportedContent">
                 <ul class="navbar-nav ms-auto">
                     @guest
-                        @if (Route::has('login'))
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                            </li>
-                        @endif
 
-                        @if (Route::has('register'))
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                            </li>
-                        @endif
                     @else
                         <ul class="navbar-nav menu-admin">
                             @if(auth()->user()->hasRole('admin'))
@@ -198,19 +188,19 @@
                                     </ul>
                                 </li>
                             @endif
-                            <!--<li class="nav-item dropdown">
+                            <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle active" href="#" role="button" data-toggle="dropdown"
                                    data-bs-toggle="dropdown" aria-expanded="false">
                                     Proveedores
                                 </a>
                                 <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="#">Ver proveedores</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('listarProveedores') }}">Ver proveedores</a></li>
                                     @if(auth()->user()->hasRole('admin'))
-                                <li><a class="dropdown-item" href="#">Añadir proveedor</a></li>
+                                <li><a class="dropdown-item" href="{{ route('aniadirProveedor') }}">Añadir proveedor</a></li>
 
                             @endif
                             </ul>
-                        </li> -->
+                        </li>
                         </ul>
                     @endguest
                 </ul>
