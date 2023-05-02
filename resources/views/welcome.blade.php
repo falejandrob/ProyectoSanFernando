@@ -47,7 +47,7 @@
         }
 
 
-        .animated-word:hover {
+        .animated-word:hover, .animated-word-rigth:hover {
             color: #C80000;
             outline-color: rgba(71, 126, 232, 0);
             outline-offset: 80px;

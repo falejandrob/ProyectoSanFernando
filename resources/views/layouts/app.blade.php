@@ -18,11 +18,12 @@
             width: 100%;
             overflow: auto;
         }
+
         .table-wrapper-scroll-y {
             display: block;
         }
 
-        .productos{
+        .productos {
             font-size: 16px;
         }
 
@@ -30,11 +31,15 @@
             background: #f6f0d2;
         }
 
-        table.scroll thead{
+        table.scroll thead {
             display: block;
         }
 
-        .menu-admin, .menu-admin a{
+        .menu-admin {
+            margin-right: 2%;
+        }
+
+        .menu-admin, .menu-admin a {
             font-size: 16px;
         }
 
@@ -126,84 +131,91 @@
 </head>
 <body>
 <div id="app">
-    <nav class="navbar navbar-expand-md navbar-light shadow-sm">
-        <div class="container">
-            @auth
-                @if(auth()->user()->hasRole('profesor'))
-                <div class="budget-container">
-                    <span class="budget-label" style="font-size: 120%">Presupuesto:</span>
-                    @if($presupuesto == null)
-                        <span class="budget-amount" style="font-size: 120%">Aún no tienes presupuesto</span>
-                    @else
-                        <span class="budget-amount" style="font-size: 120%">{{$presupuesto->presupuestoTotal}} €</span>
-                    @endif
-
-                </div>
-                @endif
-            @endauth
-
+    <nav class="navbar navbar-expand-lg navbar-light shadow-sm">
+        <div class="container-fluid">
             <a class="navbar-brand mx-auto" href="{{ url('/') }}">
                 SanCenando
             </a>
+            @auth
+                @if(auth()->user()->hasRole('profesor'))
+                    <div class="budget-container">
+                        <span class="budget-label" style="font-size: 120%">Presupuesto:</span>
+                        @if($presupuesto == null)
+                            <span class="budget-amount" style="font-size: 120%">Aún no tienes presupuesto</span>
+                        @else
+                            <span class="budget-amount"
+                                  style="font-size: 120%">{{$presupuesto->presupuestoTotal}} €</span>
+                        @endif
 
-            <div id="navbarSupportedContent">
-                <ul class="navbar-nav ms-auto">
-                    @guest
+                    </div>
+                @endif
+            @endauth
 
-                    @else
+            @guest
+
+            @else
+                @if(auth()->user()->hasRole('admin'))
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#navbarNavDropdown"
+                            aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarNavDropdown">
                         <ul class="navbar-nav menu-admin">
-                            @if(auth()->user()->hasRole('admin'))
-                                <li class="nav-item">
-                                    <a class="nav-link active" aria-current="page"
-                                       href="{{ route('listarProfesores') }}">Profesores</a>
-                                </li>
-                                <!--<li class="nav-item">
-                                    <a class="nav-link active" aria-current="page" href="#">Pedidos</a>
-                                </li>-->
-                            @endif
-                            @if(auth()->user()->hasRole('admin'))
-                                <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle active" href="#" role="button"
-                                       data-toggle="dropdown"
-                                       data-bs-toggle="dropdown" aria-expanded="false">
-                                        Productos
-                                    </a>
-
-                                    <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item" href="{{ route('listarProductos') }}">Ver
-                                                productos</a>
-                                        </li>
-
-                                        <li><a class="dropdown-item" href="{{ route('aniadirProducto') }}">Añadir
-                                                producto</a></li>
-
-                                    </ul>
-                                </li>
-                            @endif
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="page"
+                                   href="{{ route('listarProfesores') }}">Profesores</a>
+                            </li>
+                            <!--<li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="#">Pedidos</a>
+                            </li>-->
                             <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle active" href="#" role="button" data-toggle="dropdown"
+                                <a class="nav-link dropdown-toggle active" href="#" role="button"
+                                   data-toggle="dropdown"
+                                   data-bs-toggle="dropdown" aria-expanded="false">
+                                    Productos
+                                </a>
+
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="{{ route('listarProductos') }}">Ver
+                                            productos</a>
+                                    </li>
+
+                                    <li><a class="dropdown-item" href="{{ route('aniadirProducto') }}">Añadir
+                                            producto</a></li>
+
+                                </ul>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle active" href="#" role="button"
+                                   data-toggle="dropdown"
                                    data-bs-toggle="dropdown" aria-expanded="false">
                                     Proveedores
                                 </a>
                                 <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="{{ route('listarProveedores') }}">Ver proveedores</a></li>
-                                    @if(auth()->user()->hasRole('admin'))
-                                <li><a class="dropdown-item" href="{{ route('aniadirProveedor') }}">Añadir proveedor</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('listarProveedores') }}">Ver
+                                            proveedores</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('aniadirProveedor') }}">Añadir
+                                            proveedor</a></li>
 
-                            @endif
-                            </ul>
-                        </li>
+                                </ul>
+                            </li>
+
+
                         </ul>
-                    @endguest
-                </ul>
-            </div>
+                    </div>
+                @endif
+            @endguest
+
         </div>
 
         @auth
             <ul class="navbar-nav menu-admin">
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle active d-flex justify-content-center align-items-center" role="button" data-toggle="dropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16">
+                    <a class="nav-link dropdown-toggle active d-flex justify-content-center align-items-center"
+                       role="button" data-toggle="dropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                             class="bi bi-person-fill" viewBox="0 0 16 16">
                             <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3Zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/>
                         </svg>
                         {{ Auth::user()->nombre . " " . Auth::user()->apellidos }}
@@ -216,7 +228,8 @@
                             </a>
                         </li>
                         <li>
-                            <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                            <a class="dropdown-item" href="{{ route('logout') }}"
+                               onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                 Logout
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
                                      class="bi bi-box-arrow-right" viewBox="0 0 16 16">

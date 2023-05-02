@@ -22,7 +22,7 @@
         <div
             style="width: 50%; margin: auto; border: 2px solid #F6C366; border-radius: 50px; height: 40px; display: flex; justify-content: space-around; align-items: center;">
             <input wire:model="searchFilter" type="text"  id="searchFilter"
-                   style="width: 80%; height: 25px; font-size: 150%; text-align: center; outline: none; border: 2px solid white; background: white"/>
+                   style="width: 65%; height: 25px; font-size: 150%; text-align: center; outline: none; border: 2px solid white; background: white"/>
             <img src="https://cdn-icons-png.flaticon.com/512/3917/3917132.png" style="height: 25px;"/>
         </div><br>
         @if($productos && $productos->count() > 0)
