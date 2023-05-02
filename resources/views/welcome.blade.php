@@ -75,6 +75,9 @@
                 display: block;
                 margin: 0 auto;
             }
+            .animated-word:hover, .animated-word-rigth:hover {
+                outline-offset: 30px;
+            }
         }
 
         @media (min-width: 768px) and (max-width: 992px) {
