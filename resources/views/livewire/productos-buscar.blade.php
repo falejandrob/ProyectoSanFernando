@@ -2,22 +2,22 @@
     <div
         style="width: 60%; margin: auto; border: 2px solid #F6C366; border-radius: 50px; height: 50px; display: flex; justify-content: space-around; align-items: center;">
         <input wire:model="searchTerm" type="text"
-               style="width: 80%; height: 35px; font-size: 150%; text-align: center; outline: none; border: 2px solid white; background: white"/>
+               style="width: 70%; height: 35px; font-size: 150%; text-align: center; outline: none; border: 2px solid white; background: white"/>
         <img src="https://cdn-icons-png.flaticon.com/512/3917/3917132.png" style="height: 30px;"/>
     </div>
 
     <br>
 
     @if($productos && $productos->count() > 0)
-        <div style="display: flex; flex-wrap: wrap; justify-content: center;">
-            <ul class="list-group" style="width: 85%; margin: auto">
+        <div class="busqueda-productos" style="display: flex; flex-wrap: wrap; justify-content: center;">
+            <ul class="list-group" style="width: 90%; margin: auto">
                 @foreach($productos as $producto)
                     <li class="list-group-item" style="width: 100%">
                         <div class="d-flex align-items-center justify-content-between">
-                            <h3 style="width: 30%">{{ $producto->nombre}}</h3>
+                            <p style="width: 30%">{{ $producto->nombre}}</p>
                             @foreach($categorias as $categoria)
                                 @if($producto->idCategoria == $categoria->id)
-                                    <h3 style="width: 30%;">{{$categoria->nombre}}</h3>
+                                    <p class="p-categoria" style="width:20%;">{{$categoria->nombre}}</p>
                                 @endif
                             @endforeach
                             @if(optional($carrito->where('id', $producto->id)->first())->qty != null)
@@ -34,7 +34,7 @@
                                                         d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
                                                 </svg>
                                             </button>
-                                            <h3 style="margin: 5px">{{$carrito->where('id',$producto->id)->first()->qty}} ud</h3>
+                                            <p style="margin: 5px">{{$carrito->where('id',$producto->id)->first()->qty}} ud</p>
                                             <button
                                                 wire:click.prevent="addElementToProduct('{{ $carrito->where('id', $producto->id)->first()->rowId }}')"
                                                 class="btn" style="background: #61CB5F; margin: 5px">
@@ -61,7 +61,7 @@
                                                     <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z"/>
                                                 </svg>
                                             </button>
-                                            <h3 style="margin: 5px">{{$carrito->where('id',$producto->id)->first()->qty}} ud</h3>
+                                            <p style="margin: 5px">{{$carrito->where('id',$producto->id)->first()->qty}} ud</p>
                                             <button
                                                 wire:click.prevent="addElementToProduct('{{ $carrito->where('id', $producto->id)->first()->rowId }}')"
                                                 class="btn" style="background: #61CB5F; margin: 5px">

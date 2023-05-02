@@ -133,13 +133,32 @@
 
         @media (max-width: 768px) {
             .adm{
-                margin-left: 0%;
+                margin-left: 0;
             }
+            .busqueda{
+                width: 100%;
+            }
+            .carrito{
+                width: 100%;
+            }
+            .busqueda-productos svg{
+                width: 15px;
+            }
+
         }
 
         @media (min-width: 1200px) {
             .adm{
                 margin-left: 40%;
+            }
+            .busqueda{
+                width: 60%;
+            }
+            .carrito{
+                width: 40%;
+            }
+            .busqueda-productos{
+                font-size: 20px;
             }
         }
     </style>
