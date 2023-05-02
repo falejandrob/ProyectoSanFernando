@@ -43,6 +43,10 @@
             font-size: 16px;
         }
 
+        .nombre{
+            margin-left: 1%;
+        }
+
         .budget-container {
             background-color: #d4edda;
             border-radius: 10px;
@@ -126,6 +130,18 @@
         .minus-btn {
             color: #cc5555
         }
+
+        @media (max-width: 768px) {
+            .adm{
+                margin-left: 0%;
+            }
+        }
+
+        @media (min-width: 1200px) {
+            .adm{
+                margin-left: 40%;
+            }
+        }
     </style>
     @livewireStyles
 </head>
@@ -160,7 +176,7 @@
                             aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
-                    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                    <div class="collapse navbar-collapse adm" id="navbarNavDropdown">
                         <ul class="navbar-nav menu-admin">
                             <li class="nav-item">
                                 <a class="nav-link active" aria-current="page"
@@ -200,8 +216,6 @@
 
                                 </ul>
                             </li>
-
-
                         </ul>
                     </div>
                 @endif
@@ -210,7 +224,7 @@
         </div>
 
         @auth
-            <ul class="navbar-nav menu-admin">
+            <ul class="navbar-nav menu-admin nombre">
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle active d-flex justify-content-center align-items-center"
                        role="button" data-toggle="dropdown" data-bs-toggle="dropdown" aria-expanded="false">
