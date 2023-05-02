@@ -21,7 +21,7 @@
                     @endif
                 @endforeach
                 @if($cont > 0)
-                    <h3 style="padding-top: 20px">{{ $categoria->nombre }}</h3>
+                    <p style="padding-top: 20px">{{ $categoria->nombre }}</p>
                     @foreach($cart as $productoCarrito)
                         @if($productoCarrito->options->categoria == $categoria->nombre)
                             <div class="cart-item">
@@ -45,7 +45,7 @@
                                             stroke="#464455" stroke-linecap="round" stroke-linejoin="round"/>
                                     </svg>
                                 </button>
-                                <button type="button" class="btn btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#justificacionModal">Justificación</button>
+                                <button type="button" class="btn btn-primary btn-lg justificacion" data-bs-toggle="modal" data-bs-target="#justificacionModal">Justificación</button>
                             </div>
                         @endif
                     @endforeach

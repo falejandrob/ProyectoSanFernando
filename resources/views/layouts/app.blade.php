@@ -136,13 +136,22 @@
                 margin-left: 0;
             }
             .busqueda{
-                width: 100%;
+                width: 90%;
             }
             .carrito{
                 width: 100%;
             }
+            .carrito span{
+                font-size: 14px;
+            }
             .busqueda-productos svg{
                 width: 15px;
+            }
+            .cart-item{
+                width: 160%;
+            }
+            .justificacion{
+                font-size: 15px;
             }
 
         }
