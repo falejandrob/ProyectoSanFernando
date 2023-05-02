@@ -11,6 +11,7 @@ use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 
 class HomeController extends Controller
@@ -39,7 +40,6 @@ class HomeController extends Controller
         $anio_actual = Carbon::now()->year;
         $presupuesto = Presupuesto::where('idUser', Auth::id())->where('anio', $anio_actual)->first();
 
-
         return view('home', ["productos" => $productos,"presupuesto" =>$presupuesto, "expectedDate" => $expectedDate, "expectedTime" => $expectedTime]);
     }
 
@@ -59,5 +59,20 @@ class HomeController extends Controller
         $lineasPedido = LineaPedido::all()->where('idPedido', "=", $pedido->id);
 
         return view("profesor.detallesPedido", ["pedido" => $pedido, "presupuesto" =>$presupuesto, "lineasPedido"=>$lineasPedido]);
+    }
+
+    public function addJustificacion(Request $request) {
+        $justificacion = Session::get("justificacion");
+        $justificacion = $justificacion . "\n" . $request->justificacion;
+        Session::put("justificacion", $justificacion);
+
+        $expectedDate = date("Y-m-d");
+        $expectedTime = date("H:i");
+
+        $productos = Producto::all();
+        $anio_actual = Carbon::now()->year;
+        $presupuesto = Presupuesto::where('idUser', Auth::id())->where('anio', $anio_actual)->first();
+
+        return view('home', ["productos" => $productos,"presupuesto" =>$presupuesto, "expectedDate" => $expectedDate, "expectedTime" => $expectedTime]);
     }
 }

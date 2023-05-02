@@ -38,7 +38,6 @@ Route::post('/profesor/update/{id}',[\App\Http\Controllers\ProfesorController::c
 Route::get('/profesor/cambiarPassword/{id}',[\App\Http\Controllers\ProfesorController::class, 'cambiarPassword'])->name('cambiarPassword');
 Route::post('/profesor/pass/{id}',[\App\Http\Controllers\ProfesorController::class, 'pass'])->name('profesor.pass');
 
-
 //Ruta proveedores
 Route::get('/proveedor/aniadirProveedor',[\App\Http\Controllers\ProveedorController::class, 'aniadirProveedor'])->name('aniadirProveedor');
 Route::post('/proveedor/store',[\App\Http\Controllers\ProveedorController::class, 'store'])->name('proveedor.store');
@@ -46,8 +45,9 @@ Route::get('/proveedor/listarProveedores', [\App\Http\Controllers\ProveedorContr
 Route::get('/proveedor/modificarProveedores/{id}',[\App\Http\Controllers\ProveedorController::class, 'modificarProveedor'])->name('modificarProveedor');
 Route::post('/proveedor/update/{id}',[\App\Http\Controllers\ProveedorController::class, 'update'])->name('proveedor.update');
 
-
 //Ruta carrito
 Route::post('/cart/store',[\App\Http\Controllers\CartController::class,'store'])->name('cart.store');
 Route::post('/cart/remove',[\App\Http\Controllers\CartController::class,'remove'])->name('cart.remove');
 Route::get('/cart/confirm',[\App\Http\Controllers\CartController::class,'confirm'])->name('cart.confirm');
+
+Route::get('/addJustificacion',[\App\Http\Controllers\HomeController::class, 'addJustificacion'])->name('addJustificacion');

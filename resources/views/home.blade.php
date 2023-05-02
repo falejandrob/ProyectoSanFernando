@@ -9,7 +9,7 @@
         <div class="busqueda" style="margin-top: 25px">
             @livewire('productos-buscar')
         </div>
-        
+
         <div class="carrito" style="background: #FAFAFA; border-left: #D6D6D6 1px solid; padding: 25px">
             @livewire('cart-list')
         </div>
@@ -25,21 +25,20 @@
                 <h1 class="modal-title fs-5" id="justificacionModal">Justificación pedido</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
-                <div class="input-group">
+            <form action="{{route('addJustificacion')}}" method="post">
+                <div class="modal-body">
+                    <div class="input-group">
                     <textarea class="form-control" id="justificacion" placeholder="Justificacion"
                               name="justificacion" required></textarea>
+                    </div>
                 </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                <form>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                     @csrf
-                        <button type="submit" class="btn btn-primary">
-                            Aceptar
-                        </button>
-                </form>
-            </div>
+                    @method("GET")
+                    <button class="btn btn-primary" type="submit">Aceptar</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
@@ -69,7 +68,7 @@
                         <div class="mb-3">
                             <label>Justificación</label>
                             <textarea class="form-control" id="justification" placeholder="Justificacion"
-                                      name="justification" required></textarea>
+                                      name="justification" required>{{ Session::get("justificacion") }}</textarea>
                         </div>
                     </div>
                     <button class="btn btn-primary" type="submit">Hacer pedido</button>

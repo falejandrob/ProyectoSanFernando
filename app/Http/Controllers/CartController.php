@@ -7,6 +7,7 @@ use Carbon\Carbon;
 use Dompdf\Dompdf;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class CartController extends Controller
 {
@@ -33,6 +34,8 @@ class CartController extends Controller
 
     public function confirm(Request $request)
     {
+        Session::forget("justificacion");
+
         $dateTimeJustification =[
             'expectedDate' => Carbon::parse($request->expectedDate)->format('d/m/Y'),
             'expectedTime'=>$request->expectedTime,
