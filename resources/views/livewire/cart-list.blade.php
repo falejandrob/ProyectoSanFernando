@@ -1,6 +1,9 @@
 <div style="width: 90%; margin: auto">
     <div>
         @if(Cart::content()->count() != 0)
+            <div style="margin-top: 2%">
+                <p style="text-align: center; font-size: 22px;">Su pedido</p>
+            </div>
             <div class="d-flex justify-content-end align-items-center">
                 <button wire:click.prevent="clearCart()" class="btn btn-danger d-flex justify-content-between align-items-center">
                     <span style="padding: 5px">Limpiar Carrito</span>

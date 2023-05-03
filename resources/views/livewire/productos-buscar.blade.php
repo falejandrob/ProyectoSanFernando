@@ -9,7 +9,7 @@
     <br>
 
     @if($productos && $productos->count() > 0)
-        <div class="table-wrapper-scroll-y my-custom-scrollbar">
+        <div class="table-responsive table-wrapper-scroll-y my-custom-scrollbar">
             <table class="table mb-0 tabla-scroll" style="width: 90%; margin:auto; text-align: center;  font-size: 15px">
                 <tbody>
                 @foreach($productos as $producto)
@@ -22,14 +22,14 @@
                         @endforeach
 
                         <td style="text-align: center; vertical-align: middle;">
-                            <div style="width: 100%; display: inline-block">
+                            <div style="width: 50%; display: inline-block">
                                 <div class="d-flex align-items-center justify-content-center">
                                     @if(optional($carrito->where('id', $producto->id)->first())->qty != null)
                                         @if($carrito->where('id',$producto->id)->first()->qty == 1)
 
                                             <button
                                                 wire:click.prevent="removeFromCart('{{ $carrito->where('id', $producto->id)->first()->rowId }}')"
-                                                class="btn" style="background: #CB5F5F; margin: 5px">
+                                                class="btn" style="background: #CB5F5F; ">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
                                                      fill="currentColor"
                                                      class="bi bi-x-lg" viewBox="0 0 16 16">
@@ -41,7 +41,7 @@
                                                 ud</p>
                                             <button
                                                 wire:click.prevent="addElementToProduct('{{ $carrito->where('id', $producto->id)->first()->rowId }}')"
-                                                class="btn" style="background: #61CB5F; margin: 5px">
+                                                class="btn" style="background: #61CB5F; ">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
                                                      fill="currentColor"
                                                      class="bi bi-plus-lg" viewBox="0 0 16 16">
@@ -57,7 +57,7 @@
 
                                             <button
                                                 wire:click.prevent="restElementToProduct('{{ $carrito->where('id', $producto->id)->first()->rowId }}')"
-                                                class="btn" style="background: #CB5F5F; margin: 5px">
+                                                class="btn" style="background: #CB5F5F; ">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
                                                      fill="currentColor" class="bi bi-dash" viewBox="0 0 16 16">
                                                     <path
@@ -68,7 +68,7 @@
                                                 ud</p>
                                             <button
                                                 wire:click.prevent="addElementToProduct('{{ $carrito->where('id', $producto->id)->first()->rowId }}')"
-                                                class="btn" style="background: #61CB5F; margin: 5px">
+                                                class="btn" style="background: #61CB5F; ">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
                                                      fill="currentColor" class="bi bi-plus-lg"
                                                      viewBox="0 0 16 16">
@@ -79,8 +79,8 @@
                                         @endif
                                     @endif
                                     @if(optional($carrito->where('id', $producto->id)->first())->qty == null)
-                                        <button wire:click.prevent="addToCart({{$producto->id}})"
-                                                style="width: 40%; font-size: 120%; background: #F6C366; box-sizing: border-box;"
+                                        <button  wire:click.prevent="addToCart({{$producto->id}})"
+                                                style=" width: 100%; font-size: 120%; background: #F6C366; box-sizing: border-box;"
                                                 type="submit"
                                                 class="btn">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25"

@@ -27,7 +27,7 @@
         </div><br>
         @if($productos && $productos->count() > 0)
         <div class="table-wrapper-scroll-y my-custom-scrollbar">
-            <table class="table mb-0 tabla-scroll" style="width:100%; margin:auto; text-align: center;">
+            <table class="table mb-0 tabla-scroll " style="width:100%; margin:auto; text-align: center;">
                 <thead style="position: static">
                 <tr>
                     <th>Id</th>

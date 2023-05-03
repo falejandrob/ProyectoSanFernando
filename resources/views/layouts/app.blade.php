@@ -27,6 +27,8 @@
             font-size: 16px;
         }
 
+
+
         #app > nav {
             background: #f6f0d2;
         }
@@ -148,12 +150,27 @@
                 width: 15px;
             }
             .cart-item{
-                width: 160%;
+                width: 150%;
             }
             .justificacion{
                 font-size: 15px;
             }
 
+            .cd-admin{
+                width: 60%;
+            }
+
+            .cd-admin a{
+                font-size: 16px;
+            }
+
+
+        }
+
+        @media (min-width: 768px) and (max-width: 992px) {
+            .cart-item{
+                width: 90%;
+            }
         }
 
         @media (min-width: 1200px) {
@@ -169,17 +186,27 @@
             .busqueda-productos{
                 font-size: 20px;
             }
+
+            .cd-admin{
+                width: 30%;
+            }
+
+            .cd-admin a{
+                font-size: 20px;
+            }
+
+
         }
     </style>
     @livewireStyles
 </head>
 <body>
 <div id="app">
-    <nav class="navbar navbar-expand-lg navbar-light shadow-sm">
+    <nav class="navbar navbar-expand-lg navbar-light shadow-sm" >
+        <a class="navbar-brand m-lg-3" href="{{ url('/home') }}">
+            SanCenando
+        </a>
         <div class="container-fluid">
-            <a class="navbar-brand mx-auto" href="{{ url('/') }}">
-                SanCenando
-            </a>
             @auth
                 @if(auth()->user()->hasRole('profesor'))
                     <div class="budget-container">
@@ -210,9 +237,9 @@
                                 <a class="nav-link active" aria-current="page"
                                    href="{{ route('listarProfesores') }}">Profesores</a>
                             </li>
-                            <!--<li class="nav-item">
+                            <li class="nav-item">
                                 <a class="nav-link active" aria-current="page" href="#">Pedidos</a>
-                            </li>-->
+                            </li>
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle active" href="#" role="button"
                                    data-toggle="dropdown"
@@ -227,7 +254,6 @@
 
                                     <li><a class="dropdown-item" href="{{ route('aniadirProducto') }}">Añadir
                                             producto</a></li>
-
                                 </ul>
                             </li>
                             <li class="nav-item dropdown">
@@ -241,7 +267,6 @@
                                             proveedores</a></li>
                                     <li><a class="dropdown-item" href="{{ route('aniadirProveedor') }}">Añadir
                                             proveedor</a></li>
-
                                 </ul>
                             </li>
                         </ul>

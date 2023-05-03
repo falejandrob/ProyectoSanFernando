@@ -40,7 +40,14 @@ class HomeController extends Controller
         $anio_actual = Carbon::now()->year;
         $presupuesto = Presupuesto::where('idUser', Auth::id())->where('anio', $anio_actual)->first();
 
-        return view('home', ["productos" => $productos,"presupuesto" =>$presupuesto, "expectedDate" => $expectedDate, "expectedTime" => $expectedTime]);
+        if(auth()->user()->hasRole('profesor')){
+            return view('home', ["productos" => $productos,"presupuesto" =>$presupuesto, "expectedDate" => $expectedDate, "expectedTime" => $expectedTime]);
+        }
+
+        if(auth()->user()->hasRole('admin')){
+            return view('admin.home');
+        }
+
     }
 
     public function misPedidos($idUser) {
