@@ -30,21 +30,28 @@ class ProductoController extends Controller
 
     public function store(Request $request)
     {
-        if ($request->file('foto') != null) {
-            $foto = $request->file('foto')->get();
-        } else {
-            $foto = null;
+        if(auth()->user()->hasRole('admin')){
+            $product = Producto::create([
+                'nombre' => $request->nombre,
+                'validado' => 0,
+                'idCategoria' => $request->idCategoria,
+            ]);
+
+            $product->save();
+            return redirect()->action([ProductoController::class, 'listarProductos']);
+        }
+        if(auth()->user()->hasRole('profesor')){
+            $product = Producto::create([
+                'nombre' => $request->nombre,
+                'validado' => 1,
+                'idCategoria' => $request->idCategoria,
+            ]);
+
+            $product->save();
+            return redirect()->action([HomeController::class, 'index']);
         }
 
-        $product = Producto::create([
-            'nombre' => $request->nombre,
-            'validado' => 1,
-            'idCategoria' => $request->idCategoria,
-            'foto' => $foto
-        ]);
 
-        $product->save();
-        return redirect()->action([HomeController::class, 'index']);
     }
 
     public function update(Request $request, $id)
@@ -52,7 +59,5 @@ class ProductoController extends Controller
         $producto = Producto::find($id);
         $producto->update($request->all());
         return redirect()->action([ProductoController::class, 'listarProductos']);
-
-
     }
 }

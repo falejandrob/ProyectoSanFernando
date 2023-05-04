@@ -25,13 +25,6 @@
                                 @endforeach
                             </select>
                         </div>
-                        <div>
-                            <p style="font-size: 18px">
-                                Sube una imagen:
-                                <br><br>
-                                <input type="file" name="foto" accept="image/png, .jpeg, .jpg, image/gif">
-                            </p>
-                        </div><br>
                          <button type="submit" class="btn btn-primary" style="align-items: center">MODIFICAR</button>
                     </form>
                 </div>

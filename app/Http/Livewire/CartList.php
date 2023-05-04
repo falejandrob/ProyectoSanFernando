@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\Categoria;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Livewire\Component;
 
@@ -13,10 +14,14 @@ class CartList extends Component
     public $rowId;
     public function render()
     {
+        $expectedDate = date("Y-m-d");
+        $expectedTime = date("H:i");
+
         $this->cart = Cart::content();
         $this->rowId = null;
-        //@dd($this->cart);
-        return view('livewire.cart-list', ['cart'=>$this->cart]);
+        $categorias = Categoria::all();
+
+        return view('livewire.cart-list', ['cart'=>$this->cart, 'categorias'=>$categorias, "expectedDate" => $expectedDate, "expectedTime" => $expectedTime]);
     }
 
     public function removeFromCart($productoCarritoJson){
@@ -32,6 +37,7 @@ class CartList extends Component
         $this->rowId = $productoCarrito->rowId;
         $this->cart = Cart::get($this->rowId);
         Cart::update($this->rowId, $this->cart->qty-1);
+        $this->emit('product_listeners');
     }
     public function addElementToProduct($productoCarritoJson){
         $productoCarrito = json_decode($productoCarritoJson);
@@ -39,6 +45,7 @@ class CartList extends Component
         $this->rowId = $productoCarrito->rowId;
         $this->cart = Cart::get($this->rowId);
         Cart::update($this->rowId, $this->cart->qty+1);
+        $this->emit('product_listeners');
     }
     public function clearCart(){
         Cart::destroy();

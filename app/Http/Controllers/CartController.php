@@ -2,11 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Categoria;
+use App\Models\Producto;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Dompdf\Dompdf;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class CartController extends Controller
 {
@@ -31,8 +35,26 @@ class CartController extends Controller
          return redirect()->route('home')->with('message','Eliminado correctamente');*/
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\Response
+     */
     public function confirm(Request $request)
     {
+        //dd(Cart::content());
+        //dd($request);
+        foreach (Cart::content() as $item){
+            $producto = Producto::findOrFail($item->id);
+            Cart::update($item->rowId, ['options' => [
+                'categoria'=>Categoria::findOrFail($producto->idCategoria)->nombre,
+                'expectedDate' => $request->expectedDate,
+                'expectedTime' => $request->expectedTime,
+                'justification' => $request->justification,
+                'fechaPedido' => Carbon::now()->format('d-m-y')
+            ]]);
+        }
+        //dd(Cart::content());
+        Session::forget("justificacion");
         $dateTimeJustification =[
             'expectedDate' => Carbon::parse($request->expectedDate)->format('d/m/Y'),
             'expectedTime'=>$request->expectedTime,
@@ -60,10 +82,12 @@ class CartController extends Controller
               </table>
           </header>";
         $pdf = Pdf::loadView('pdf.productos', compact('productos', 'dateTimeJustification', 'header'));
+        Cart::store(Auth::id());
         Cart::destroy();
         $pdf->download('invoice.pdf');
         return $pdf->stream();
     }
+
 //    public function confirm(Request $request)
 //    {
 //        //Data

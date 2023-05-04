@@ -2,9 +2,12 @@
 
 namespace App\Http\Livewire;
 
+use App\Http\Controllers\CarritoController;
+use App\Models\Carrito;
 use App\Models\Categoria;
 use App\Models\Producto;
 use Gloudemans\Shoppingcart\Facades\Cart;
+use Illuminate\Support\Facades\Http;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -43,10 +46,12 @@ class ProductosBuscar extends Component
             'price'=>0.00,
             'weight'=>0.00,
             'options'=>[
-                'categoria'=>Categoria::findOrFail($producto->idCategoria)->nombre
+                'categoria'=>Categoria::findOrFail($producto->idCategoria)->nombre,
             ]
 
         ]);
+
+
 
         $this->emit('cart_update');
     }

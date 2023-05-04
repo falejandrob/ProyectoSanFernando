@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Presupuesto;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class ProfesorController extends Controller
@@ -14,7 +17,17 @@ class ProfesorController extends Controller
     //
 
     public function modificarProfesor($id){
-        return view("profesor.modificar", ["profesor" => User::find($id)]);
+        $profesor = User::find($id);
+        $anio_actual = Carbon::now()->year;
+        $presupuesto = 0;
+
+        try {
+            $presupuesto = Presupuesto::where('idUser', $profesor->id)->where('anio', $anio_actual)->first()->presupuestoTotal;
+        } catch (\Exception $e) {
+
+        }
+
+        return view("profesor.modificar", ["profesor" => $profesor, "presupuesto" => $presupuesto]);
     }
 
     public function update(Request $request, $id){
@@ -25,6 +38,24 @@ class ProfesorController extends Controller
         } else {
             $request->foto = null;
         }
+
+        if($request->rol == "admin") {
+            $profesor->roles()->detach();
+            $profesor->assignRole('admin');
+        }
+
+        if($request->rol == "profesor") {
+            $profesor->roles()->detach();
+            $profesor->assignRole('profesor');
+        }
+
+        $anio_actual = Carbon::now()->year;
+
+        $presupuesto = Presupuesto::all()->where("idUser", "=", $id)
+            ->where("anio", "=", $anio_actual)->first();
+
+        $presupuesto->presupuestoTotal = $request->presupuesto;
+        $presupuesto->save();
 
         $profesor->update($request->all());
         return redirect()->action([ProfesorController::class, 'listarProfesores']);

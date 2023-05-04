@@ -8,8 +8,45 @@
     <title>SanCenando</title>
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
     <style>
-        nav {
+        body {
+            background: white;
+        }
+
+        .my-custom-scrollbar {
+            position: relative;
+            height: 450px;
+            width: 100%;
+            overflow: auto;
+        }
+
+        .table-wrapper-scroll-y {
+            display: block;
+        }
+
+        .productos {
+            font-size: 16px;
+        }
+
+
+
+        #app > nav {
             background: #f6f0d2;
+        }
+
+        table.scroll thead {
+            display: block;
+        }
+
+        .menu-admin {
+            margin-right: 2%;
+        }
+
+        .menu-admin, .menu-admin a {
+            font-size: 16px;
+        }
+
+        .nombre{
+            margin-left: 1%;
         }
 
         .budget-container {
@@ -36,14 +73,6 @@
 
         .dropdown ul, .dropdown li {
             background: #f6f0d2;
-        }
-
-        html {
-            background: #FFFFFF;
-        }
-
-        main {
-            background: #FFFFFF;
         }
 
         .card-hover:hover {
@@ -101,133 +130,190 @@
         }
 
         .minus-btn {
-            color: #CB5F
+            color: #cc5555
+        }
+
+        @media (max-width: 768px) {
+            .adm{
+                margin-left: 0;
+            }
+            .busqueda{
+                width: 90%;
+            }
+            .carrito{
+                width: 100%;
+            }
+            .carrito span{
+                font-size: 14px;
+            }
+            .busqueda-productos svg{
+                width: 15px;
+            }
+            .cart-item{
+                width: 150%;
+            }
+            .justificacion{
+                font-size: 15px;
+            }
+
+            .cd-admin{
+                width: 60%;
+            }
+
+            .cd-admin a{
+                font-size: 16px;
+            }
+
+
+        }
+
+        @media (min-width: 768px) and (max-width: 992px) {
+            .cart-item{
+                width: 90%;
+            }
+        }
+
+        @media (min-width: 1200px) {
+            .adm{
+                margin-left: 40%;
+            }
+            .busqueda{
+                width: 60%;
+            }
+            .carrito{
+                width: 40%;
+            }
+            .busqueda-productos{
+                font-size: 20px;
+            }
+
+            .cd-admin{
+                width: 30%;
+            }
+
+            .cd-admin a{
+                font-size: 20px;
+            }
+
+
         }
     </style>
     @livewireStyles
 </head>
 <body>
 <div id="app">
-    <nav class="navbar navbar-expand-md navbar-light shadow-sm">
-        @auth
-            <p style="margin: 15px">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
-                     class="bi bi-person-fill" viewBox="0 0 16 16">
-                    <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3Zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/>
-                </svg>
-                {{ Auth::user()->nombre . " " . Auth::user()->apellidos }}
-            </p>
-        @endauth
-
-        <div class="container">
-
+    <nav class="navbar navbar-expand-lg navbar-light shadow-sm" >
+        <a class="navbar-brand m-lg-3" href="{{ url('/home') }}">
+            SanCenando
+        </a>
+        <div class="container-fluid">
             @auth
                 @if(auth()->user()->hasRole('profesor'))
-                <div class="budget-container">
-                    <span class="budget-label" style="font-size: 120%">Presupuesto:</span>
-                    @if($presupuesto == null)
-                        <span class="budget-amount" style="font-size: 120%">Aun no tienes presupuesto</span>
-                    @else
-                        <span class="budget-amount" style="font-size: 120%">{{$presupuesto->presupuestoTotal}} €</span>
-                    @endif
+                    <div class="budget-container">
+                        <span class="budget-label" style="font-size: 120%">Presupuesto:</span>
+                        @if($presupuesto == null)
+                            <span class="budget-amount" style="font-size: 120%">Aún no tienes presupuesto</span>
+                        @else
+                            <span class="budget-amount"
+                                  style="font-size: 120%">{{$presupuesto->presupuestoTotal}} €</span>
+                        @endif
 
-                </div>
+                    </div>
                 @endif
             @endauth
 
-            <a class="navbar-brand mx-auto" href="{{ url('/') }}">
-                SanCenando
-            </a>
+            @guest
 
-            <div id="navbarSupportedContent">
-                <ul class="navbar-nav ms-auto">
-                    @guest
-                        @if (Route::has('login'))
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                            </li>
-                        @endif
-
-                        @if (Route::has('register'))
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                            </li>
-                        @endif
-                    @else
+            @else
+                @if(auth()->user()->hasRole('admin'))
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#navbarNavDropdown"
+                            aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse adm" id="navbarNavDropdown">
                         <ul class="navbar-nav menu-admin">
-                            @if(auth()->user()->hasRole('admin'))
-                                <li class="nav-item">
-                                    <a class="nav-link active" aria-current="page"
-                                       href="{{ route('listarProfesores') }}">Profesores</a>
-                                </li>
-                                <!--<li class="nav-item">
-                                    <a class="nav-link active" aria-current="page" href="#">Pedidos</a>
-                                </li>-->
-                            @endif
-                            @if(auth()->user()->hasRole('admin'))
-                                <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle active" href="#" role="button"
-                                       data-toggle="dropdown"
-                                       data-bs-toggle="dropdown" aria-expanded="false">
-                                        Productos
-                                    </a>
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="page"
+                                   href="{{ route('listarProfesores') }}">Profesores</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="#">Pedidos</a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle active" href="#" role="button"
+                                   data-toggle="dropdown"
+                                   data-bs-toggle="dropdown" aria-expanded="false">
+                                    Productos
+                                </a>
 
-                                    <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item" href="{{ route('listarProductos') }}">Ver
-                                                productos</a>
-                                        </li>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="{{ route('listarProductos') }}">Ver
+                                            productos</a>
+                                    </li>
 
-                                        <li><a class="dropdown-item" href="{{ route('aniadirProducto') }}">Añadir
-                                                producto</a></li>
-
-                                    </ul>
-                                </li>
-                            @endif
-                            <!--<li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle active" href="#" role="button" data-toggle="dropdown"
+                                    <li><a class="dropdown-item" href="{{ route('aniadirProducto') }}">Añadir
+                                            producto</a></li>
+                                </ul>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle active" href="#" role="button"
+                                   data-toggle="dropdown"
                                    data-bs-toggle="dropdown" aria-expanded="false">
                                     Proveedores
                                 </a>
                                 <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="#">Ver proveedores</a></li>
-                                    @if(auth()->user()->hasRole('admin'))
-                                <li><a class="dropdown-item" href="#">Añadir proveedor</a></li>
-
-                            @endif
-                            </ul>
-                        </li> -->
+                                    <li><a class="dropdown-item" href="{{ route('listarProveedores') }}">Ver
+                                            proveedores</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('aniadirProveedor') }}">Añadir
+                                            proveedor</a></li>
+                                </ul>
+                            </li>
                         </ul>
-                        <button
-                            data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions"
-                            aria-controls="offcanvasWithBothOptions"
-                            class="btn">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor"
-                                 class="bi bi-cart" viewBox="0 0 16 16">
-                                <path
-                                    d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
-                            </svg>
-                        </button>
-                    @endguest
-                </ul>
-            </div>
+                    </div>
+                @endif
+            @endguest
+
         </div>
 
         @auth
-            <a style="margin-right: 15px; background: #C80000; color: white" type="button" class="btn"
-               href="{{ route('logout') }}"
-               onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                Logout
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
-                     class="bi bi-box-arrow-right" viewBox="0 0 16 16">
-                    <path fill-rule="evenodd"
-                          d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0v2z"/>
-                    <path fill-rule="evenodd"
-                          d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"/>
-                </svg>
-            </a>
-            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                @csrf
-            </form>
+            <ul class="navbar-nav menu-admin nombre">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle active d-flex justify-content-center align-items-center"
+                       role="button" data-toggle="dropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                             class="bi bi-person-fill" viewBox="0 0 16 16">
+                            <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3Zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/>
+                        </svg>
+                        {{ Auth::user()->nombre . " " . Auth::user()->apellidos }}
+                    </a>
+
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a class="dropdown-item" href="{{ route('misPedidos', Auth::user()->id) }}">
+                                Mis pedidos
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="{{ route('logout') }}"
+                               onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                Logout
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                                     class="bi bi-box-arrow-right" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd"
+                                          d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0v2z"/>
+                                    <path fill-rule="evenodd"
+                                          d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"/>
+                                </svg>
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                    @csrf
+                                </form>
+                            </a>
+                        </li>
+
+                    </ul>
+                </li>
+            </ul>
         @endauth
     </nav>
 
@@ -246,11 +332,10 @@
             </div>
         </div>
     </div>
-    <main class="py-4">
+    <main>
         @yield('content')
     </main>
 </div>
-<!---->
 @livewireScripts
 </body>
 </html>
