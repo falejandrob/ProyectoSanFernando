@@ -25,7 +25,7 @@
 
         <h2>Productos</h2>
         <hr>
-
+<!---->
         @if(count($pedido) == 0)
             <h3>El pedido no tiene ningun producto</h3>
         @else
