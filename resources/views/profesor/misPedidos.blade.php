@@ -8,7 +8,6 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th scope="col">id</th>
                     <th scope="col">Fecha pedido</th>
                     <th scope="col">Fecha prevista</th>
                     <th scope="col">Observaciones</th>
@@ -17,15 +16,14 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach($pedidos as $pedido)
+                @foreach($pedidos as $id => $pedido)
                     <tr>
-                        <th scope="row">{{ $pedido->id }}</th>
-                        <td>{{ $pedido->fechaPedido }}</td>
-                        <td>{{ $pedido->fechaPrevistaPedido }}</td>
-                        <td>{{ $pedido->observaciones }}</td>
-                        <td>{{ $pedido->justificacion }}</td>
+                        <td>{{ $pedido->first()->options->get('fechaPedido') }}</td>
+                        <td>{{ $pedido->first()->options->get('expectedDate') }}</td>
+                        <td>{{ $pedido->first()->observaciones }}</td>
+                        <td>{{ $pedido->first()->options->get('justification') }}</td>
                         <td>
-                            <a class="btn btn-primary" href="{{ route('detallesPedido', $pedido->id) }}">
+                            <a class="btn btn-primary" href="{{ route('detallesPedido', $id) }}">
                                 Ver más
                             </a>
                         </td>

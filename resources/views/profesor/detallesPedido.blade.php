@@ -8,23 +8,23 @@
             Volver
         </a>
 
-        <h1 style="text-align: center">Pedido {{ $pedido->id }}</h1>
+        <h1 style="text-align: center">Pedido {{ $idPedido }}</h1>
 
         <br>
 
         <h2>Detalles</h2>
         <hr>
-        <h3>Fecha pedido: {{ $pedido->fechaPedido }}</h3>
-        <h3>Fecha prevista: {{ $pedido->fechaPrevistaPedido }}</h3>
-        <h3>Observaciones: {{ $pedido->observaciones }}</h3>
-        <h3>Justificación: {{ $pedido->justificacion }}</h3>
+        <h3>Fecha pedido: {{ $pedido->first()->options->get('fechaPedido') }}</h3>
+        <h3>Fecha prevista: {{ $pedido->first()->options->get('expectedDate') }}</h3>
+        <h3>Observaciones: {{ $pedido->first()->observaciones }}</h3>
+        <h3>Justificación: {{ $pedido->first()->options->get('justification') }}</h3>
 
         <br><br>
 
         <h2>Lineas pedido</h2>
         <hr>
 
-        @if(count($lineasPedido) == 0)
+        @if(count($pedido) == 0)
             <h3>El pedido no tiene ninguna línea</h3>
         @else
             <table class="table" style="text-align: center; font-size: 120%">
@@ -38,13 +38,13 @@
                 </tr>
                 </thead>
                 <tbody>
-                @foreach($lineasPedido as $linea)
+                @foreach($pedido as $linea)
                     <tr>
-                        <th scope="row">{{ $linea->id }}</th>
-                        <td>{{ $linea->idProducto }}</td>
-                        <td>{{ \App\Models\Producto::find($linea->idProducto)->nombre }}</td>
-                        <td>{{ \App\Models\Categoria::find(\App\Models\Producto::find($linea->idProducto)->idCategoria)->nombre }}</td>
-                        <td>{{ $linea->cantidad }}</td>
+                        <th scope="row">{{ $linea->rowId }}</th>
+                        <td>{{ $linea->id }}</td>
+                        <td>{{ $linea->name }}</td>
+                        <td>{{ $linea->options->categoria }}</td>
+                        <td>{{ $linea->qty }}</td>
                     </tr>
                 @endforeach
                 </tbody>
