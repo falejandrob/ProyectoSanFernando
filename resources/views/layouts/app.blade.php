@@ -203,10 +203,10 @@
 <body>
 <div id="app">
     <nav class="navbar navbar-expand-lg navbar-light shadow-sm" >
+        <div class="container">
         <a class="navbar-brand m-lg-3" href="{{ url('/home') }}">
             SanCenando
         </a>
-        <div class="container-fluid">
             @auth
                 @if(auth()->user()->hasRole('profesor'))
                     <div class="budget-container">
@@ -231,7 +231,7 @@
                             aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
-                    <div class="collapse navbar-collapse adm" id="navbarNavDropdown">
+                    <div class="collapse navbar-collapse adm" id="navbarNavDropdown" >
                         <ul class="navbar-nav menu-admin">
                             <li class="nav-item">
                                 <a class="nav-link active" aria-current="page"

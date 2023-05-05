@@ -6,38 +6,38 @@
 
         <br>
         @if(count($pedidos) > 0)
-
-        <table class="table">
-            <thead>
-            <tr style="text-align: center">
-                <th scope="col">Profesor</th>
-                <th scope="col">Fecha pedido</th>
-                <th scope="col">Fecha prevista</th>
-                <th scope="col">Observaciones</th>
-                <th scope="col">Justificacion</th>
-                <th scope="col">Ver más</th>
-            </tr>
-            </thead>
-            <tbody>
-            @foreach($pedidos as $id => $pedido)
+            <div class="table-wrapper-scroll-y my-custom-scrollbar">
+                <table class="table mb-0 tabla-scroll ">
+                <thead>
                 <tr style="text-align: center">
-                    {{--@dd($profesores->where("id", "=", $pedidos->where('id','=',$id)->get()))--}}
-                    {{--@dd($profesores->where("id","=",$pedido[1])->first()->nombre . " ". $profesores->where("id","=",$pedido[1])->first()->apellidos)--}}
-                    <td>{{ $profesores->where("id","=",$pedido[1])->first()->nombre . " ". $profesores->where("id","=",$pedido[1])->first()->apellidos }}</td>
-                    <td>{{ $pedido[0]->first()->options->get('fechaPedido') }}</td>
-                    <td>{{ $pedido[0]->first()->options->get('expectedDate') }}</td>
-                    <td>{{ $pedido[0]->first()->observaciones }}</td>
-                    <td>{{ $pedido[0]->first()->options->get('justification') }}</td>
-                    <td>
-                        <a class="btn btn-primary" href="{{ route('detallesPedido', $id) }}">
-                            Ver más
-                        </a>
-                    </td>
+                    <th scope="col">Profesor</th>
+                    <th scope="col">Fecha pedido</th>
+                    <th scope="col">Fecha prevista</th>
+                    <th scope="col">Observaciones</th>
+                    <th scope="col">Justificacion</th>
+                    <th scope="col">Ver más</th>
                 </tr>
-            @endforeach
-            </tbody>
-        </table>
-
+                </thead>
+                <tbody>
+                @foreach($pedidos as $id => $pedido)
+                    <tr style="text-align: center">
+                        {{--@dd($profesores->where("id", "=", $pedidos->where('id','=',$id)->get()))--}}
+                        {{--@dd($profesores->where("id","=",$pedido[1])->first()->nombre . " ". $profesores->where("id","=",$pedido[1])->first()->apellidos)--}}
+                        <td>{{ $profesores->where("id","=",$pedido[1])->first()->nombre . " ". $profesores->where("id","=",$pedido[1])->first()->apellidos }}</td>
+                        <td>{{ $pedido[0]->first()->options->get('fechaPedido') }}</td>
+                        <td>{{ $pedido[0]->first()->options->get('expectedDate') }}</td>
+                        <td>{{ $pedido[0]->first()->observaciones }}</td>
+                        <td>{{ $pedido[0]->first()->options->get('justification') }}</td>
+                        <td>
+                            <a class="btn btn-primary" href="{{ route('detallesPedido', $id) }}">
+                                Ver más
+                            </a>
+                        </td>
+                    </tr>
+                @endforeach
+                </tbody>
+            </table>
+        <div>
         @else
             <div style="width: 60%; margin: auto">
                 <div class="alert alert-danger" style="text-align: center; font-size: 120%">
