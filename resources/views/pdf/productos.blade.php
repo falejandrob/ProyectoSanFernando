@@ -92,6 +92,8 @@
         <tr>
             <th>Artículo</th>
             <th>Cantidad</th>
+            <th>I</th>
+            <th>R</th>
             <th>Observación</th>
         </tr>
         </thead>
@@ -111,11 +113,15 @@
                     <td><strong>{{ $categoria }}</strong></td>
                     <td></td>
                     <td></td>
+                    <td></td>
+                    <td></td>
                 </tr>
             @endif
             <tr style="text-align: center" class="hover">
                 <td>{{ $producto->name }}</td>
                 <td>{{ $producto->qty }} ud</td>
+                <td></td>
+                <td></td>
                 <td></td>
             </tr>
         @endforeach

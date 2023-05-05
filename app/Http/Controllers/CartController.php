@@ -97,7 +97,8 @@ class CartController extends Controller
 
         //DB::connection()->table('shoppingcart')->where(['identifier' => $identifier, 'instance' => $instance])->delete();
         DB::connection()->table('shoppingcart')->where("id", "=", $id)->delete();
-        return view('admin.pedidos');
+        //return view('admin.pedidos');
+        return redirect()->action([HomeController::class, 'totalPedidos']);
     }
 
 //    public function confirm(Request $request)
