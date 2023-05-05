@@ -98,14 +98,7 @@ class HomeController extends Controller
         $justificacion = $justificacion . "\n" . $request->justificacion;
         Session::put("justificacion", $justificacion);
 
-        $expectedDate = date("Y-m-d");
-        $expectedTime = date("H:i");
 
-        $productos = Producto::all();
-        $anio_actual = Carbon::now()->year;
-        $presupuesto = Presupuesto::where('idUser', Auth::id())->where('anio', $anio_actual)->first();
-
-        //return view('home', ["productos" => $productos, "presupuesto" => $presupuesto, "expectedDate" => $expectedDate, "expectedTime" => $expectedTime]);
         return redirect()->action([HomeController::class, 'index']);
     }
 
