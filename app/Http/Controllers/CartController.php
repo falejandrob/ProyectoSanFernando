@@ -90,6 +90,16 @@ class CartController extends Controller
         return $pdf->stream();
     }
 
+    function eliminarPedido($id)
+    {
+
+        //$instance =  "default";
+
+        //DB::connection()->table('shoppingcart')->where(['identifier' => $identifier, 'instance' => $instance])->delete();
+        DB::connection()->table('shoppingcart')->where("id", "=", $id)->delete();
+        return view('admin.pedidos');
+    }
+
 //    public function confirm(Request $request)
 //    {
 //        //Data
@@ -251,3 +261,5 @@ function store($identifier)
         'updated_at' => Carbon::now(),
     ]);
 }
+
+

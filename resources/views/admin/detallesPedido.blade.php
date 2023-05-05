@@ -10,9 +10,7 @@
         <hr>
         <h3>Fecha pedido: {{ $pedido->first()->options->get('fechaPedido') }}</h3>
         <h3>Fecha prevista: {{ $pedido->first()->options->get('expectedDate') }}</h3>
-        <h3>Observaciones: {{ $pedido->first()->observaciones }}</h3>
         <h3>Justificación: {{ $pedido->first()->options->get('justification') }}</h3>
-
         <br><br>
 
         <h2>Productos</h2>
