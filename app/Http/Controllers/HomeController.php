@@ -105,7 +105,8 @@ class HomeController extends Controller
         $anio_actual = Carbon::now()->year;
         $presupuesto = Presupuesto::where('idUser', Auth::id())->where('anio', $anio_actual)->first();
 
-        return view('home', ["productos" => $productos, "presupuesto" => $presupuesto, "expectedDate" => $expectedDate, "expectedTime" => $expectedTime]);
+        //return view('home', ["productos" => $productos, "presupuesto" => $presupuesto, "expectedDate" => $expectedDate, "expectedTime" => $expectedTime]);
+        return redirect()->action([HomeController::class, 'index']);
     }
 
 }
