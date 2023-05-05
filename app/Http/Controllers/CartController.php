@@ -7,9 +7,11 @@ use App\Models\Producto;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Dompdf\Dompdf;
+use Gloudemans\Shoppingcart\Contracts\InstanceIdentifier;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 
 class CartController extends Controller
@@ -61,7 +63,7 @@ class CartController extends Controller
             'justification'=>$request->justification,
         ];
         $productos = Cart::content();
-        $header = "<header>
+        /*$header = "<header>
               <table>
                   <tbody>
                       <tr>
@@ -80,9 +82,9 @@ class CartController extends Controller
                       </tr>
                   </tbody>
               </table>
-          </header>";
-        $pdf = Pdf::loadView('pdf.productos', compact('productos', 'dateTimeJustification', 'header'));
-        Cart::store(Auth::id());
+          </header>";*/
+        $pdf = Pdf::loadView('pdf.productos', compact('productos', 'dateTimeJustification'));
+        store(Auth::id());
         Cart::destroy();
         $pdf->download('invoice.pdf');
         return $pdf->stream();
@@ -224,4 +226,28 @@ class CartController extends Controller
 //    }
 
 
+}
+function store($identifier)
+{
+    $content = Cart::content();
+
+    if ($identifier instanceof InstanceIdentifier) {
+        $identifier = $identifier->getInstanceIdentifier();
+    }
+
+    $instance = "default";
+
+    if (DB::connection()->getDriverName() === 'pgsql') {
+        $serializedContent = base64_encode(serialize($content));
+    } else {
+        $serializedContent = serialize($content);
+    }
+
+    DB::connection()->table('shoppingcart')->insert([
+        'identifier' => $identifier,
+        'instance'   => $instance,
+        'content'    => $serializedContent,
+        'created_at' => Carbon::now(),
+        'updated_at' => Carbon::now(),
+    ]);
 }

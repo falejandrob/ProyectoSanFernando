@@ -6,7 +6,11 @@ use App\Models\LineaPedido;
 use App\Models\Pedido;
 use App\Models\Presupuesto;
 use App\Models\Producto;
+use App\Models\Proveedore;
+use App\Models\User;
 use Carbon\Carbon;
+use Gloudemans\Shoppingcart\Contracts\InstanceIdentifier;
+use Gloudemans\Shoppingcart\Exceptions\CartAlreadyStoredException;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
@@ -71,7 +75,21 @@ class HomeController extends Controller
         //dd($pedido);
         //$lineasPedido = LineaPedido::all()->where('idPedido', "=", $pedido->id);
 
-        return view("profesor.detallesPedido", ["pedido" => $pedido, "presupuesto" => $presupuesto, "idPedido" => $idPedido]);
+        if (auth()->user()->hasRole('profesor')) {
+            return view("profesor.detallesPedido", ["pedido" => $pedido, "presupuesto" => $presupuesto, "idPedido" => $idPedido]);
+        }
+
+        if (auth()->user()->hasRole('admin')) {
+            return view("admin.detallesPedido", ["pedido" => $pedido, "idPedido" => $idPedido]);
+        }
+
+
+    }
+
+    public function totalPedidos(){
+        $pedidos = getAllCartsTeachers();
+        $profesores = User::all();
+        return view("admin.pedidos", ["pedidos" => $pedidos, "profesores" => $profesores]);
     }
 
     public function addJustificacion(Request $request)
@@ -91,6 +109,30 @@ class HomeController extends Controller
     }
 
 }
+
+/**
+ * @return array|array[]
+ *
+ */
+function getAllCartsTeachers()
+{
+    $allShopingCarts = [];
+    $storedAll = DB::table('shoppingcart')->get();
+    foreach ($storedAll as $carItem) {
+        if (DB::connection()->getDriverName() === 'pgsql') {
+            $cartObject = unserialize(base64_decode(data_get($carItem, 'content')));
+            $allShopingCarts[$carItem->id] = [$cartObject, $carItem->identifier];
+            //$allShopingCarts->put($carItem->id, $cartObject);
+        } else {
+            $cartObject = unserialize(data_get($carItem, 'content'));
+            $allShopingCarts[$carItem->id] = [$cartObject, $carItem->identifier];
+            //$allShopingCarts->put($carItem->id, $cartObject);
+        }
+    }
+    return $allShopingCarts;
+
+}
+
 
 /**
  * Get all elements for the shopingcart database asocciate with a identifier

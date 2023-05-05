@@ -4,7 +4,6 @@
         <table class="table" style="width:80%; margin:auto; text-align: center;">
             <thead>
             <tr>
-                <th>Id</th>
                 <th>Nick</th>
                 <th>Nombre</th>
                 <th>Apellidos</th>
@@ -17,7 +16,6 @@
             <tbody>
                 @foreach($profesores as $profesor)
                         <tr class="table" style="text-align: center; background: #F6F0D2">
-                            <td>{{$profesor->id}}</td>
                             <td>{{$profesor->nick}}</td>
                             <td>{{$profesor->nombre}}</td>
                             <td>{{$profesor->apellidos}}</td>

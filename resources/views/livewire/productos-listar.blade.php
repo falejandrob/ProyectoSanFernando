@@ -30,7 +30,6 @@
             <table class="table mb-0 tabla-scroll " style="width:100%; margin:auto; text-align: center;">
                 <thead style="position: static">
                 <tr>
-                    <th>Id</th>
                     <th>Nombre</th>
                     <th>Categoría</th>
                     <th>Borrar producto</th>
@@ -45,7 +44,6 @@
                     @else
                         <tr class="table-success" style="text-align: center">
                             @endif
-                            <td>{{$producto->id}}</td>
                             <td>{{$producto->nombre}}</td>
                             @foreach($categorias as $categoria)
                                 @if($producto->idCategoria == $categoria->id)

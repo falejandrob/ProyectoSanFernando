@@ -50,4 +50,7 @@ Route::post('/cart/store',[\App\Http\Controllers\CartController::class,'store'])
 Route::post('/cart/remove',[\App\Http\Controllers\CartController::class,'remove'])->name('cart.remove');
 Route::get('/cart/confirm',[\App\Http\Controllers\CartController::class,'confirm'])->name('cart.confirm');
 
+//Ruta pedidos
+Route::get('/totalPedidos', [\App\Http\Controllers\HomeController::class, 'totalPedidos'])->name('totalPedidos');
+
 Route::get('/addJustificacion',[\App\Http\Controllers\HomeController::class, 'addJustificacion'])->name('addJustificacion');

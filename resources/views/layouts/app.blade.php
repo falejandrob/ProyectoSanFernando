@@ -238,7 +238,7 @@
                                    href="{{ route('listarProfesores') }}">Profesores</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link active" aria-current="page" href="#">Pedidos</a>
+                                <a class="nav-link active" aria-current="page" href="{{route('totalPedidos')}}">Pedidos</a>
                             </li>
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle active" href="#" role="button"
