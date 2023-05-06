@@ -24,7 +24,7 @@
                     @endif
                 @endforeach
                 @if($cont > 0)
-                    <p style="padding-top: 20px">{{ $categoria->nombre }}</p>
+                    <p class="carrito-cat" style="padding-top: 20px">{{ $categoria->nombre }}</p>
                     @foreach($cart as $productoCarrito)
                         @if($productoCarrito->options->categoria == $categoria->nombre)
                             <div class="cart-item">

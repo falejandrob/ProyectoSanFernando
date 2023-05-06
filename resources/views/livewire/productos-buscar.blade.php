@@ -23,7 +23,7 @@
 
                         <td style="text-align: center; vertical-align: middle;">
                             <div style="width: 50%; display: inline-block">
-                                <div class="d-flex align-items-center justify-content-center">
+                                <div class="d-flex align-items-center justify-content-center div-btn" >
                                     @if(optional($carrito->where('id', $producto->id)->first())->qty != null)
                                         @if($carrito->where('id',$producto->id)->first()->qty == 1)
 

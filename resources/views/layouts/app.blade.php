@@ -164,6 +164,14 @@
                 font-size: 16px;
             }
 
+            .div-btn{
+                width: 160%
+            }
+            .presupuesto{
+                width: 60%;
+                font-size: 12px;
+            }
+
 
         }
 
@@ -171,11 +179,45 @@
             .cart-item{
                 width: 90%;
             }
+            .div-btn{
+                width: 100%
+            }
+        }
+        @media (min-width: 1024px) {
+            .adm{
+                margin-left: 20%;
+            }
+            .busqueda{
+                width: 50%;
+            }
+            .carrito{
+                width: 50%;
+            }
+
+            .carrito-cat{
+                font-size: 20px;
+            }
+            .busqueda-productos{
+                font-size: 20px;
+            }
+
+            .cd-admin{
+                width: 30%;
+            }
+
+            .cd-admin a{
+                font-size: 20px;
+            }
+
+            .div-btn{
+                width: 60%
+            }
+
         }
 
         @media (min-width: 1200px) {
             .adm{
-                margin-left: 40%;
+                margin-left: 30%;
             }
             .busqueda{
                 width: 60%;
@@ -195,6 +237,9 @@
                 font-size: 20px;
             }
 
+            .div-btn{
+                width: 60%
+            }
 
         }
     </style>
@@ -209,10 +254,10 @@
         </a>
             @auth
                 @if(auth()->user()->hasRole('profesor'))
-                    <div class="budget-container">
+                    <div class="budget-container presupuesto">
                         <span class="budget-label" style="font-size: 120%">Presupuesto:</span>
                         @if($presupuesto == null)
-                            <span class="budget-amount" style="font-size: 120%">Aún no tienes presupuesto</span>
+                            <span class="budget-amount " style="font-size: 120%">Aún no tienes presupuesto</span>
                         @else
                             <span class="budget-amount"
                                   style="font-size: 120%">{{$presupuesto->presupuestoTotal}} €</span>
@@ -282,7 +327,7 @@
                     <a class="nav-link dropdown-toggle active d-flex justify-content-center align-items-center"
                        role="button" data-toggle="dropdown" data-bs-toggle="dropdown" aria-expanded="false">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
-                             class="bi bi-person-fill" viewBox="0 0 16 16">
+                             class="bi bi-person-fill" viewBox="0 0 16 16" style="margin-left: 5px; margin-right: 3px">
                             <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3Zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/>
                         </svg>
                         {{ Auth::user()->nombre . " " . Auth::user()->apellidos }}
