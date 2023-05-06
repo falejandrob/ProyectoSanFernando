@@ -101,6 +101,29 @@ class CartController extends Controller
         return redirect()->action([HomeController::class, 'totalPedidos']);
     }
 
+    function repetirPedido($id)
+    {
+        $content = Cart::content();
+
+        $stored = DB::connection()->table('shoppingcart')
+            ->where(['id'=> $id])->first();
+
+        if (DB::connection()->getDriverName() === 'pgsql') {
+            $storedContent = unserialize(base64_decode(data_get($stored, 'content')));
+        } else {
+            $storedContent = unserialize(data_get($stored, 'content'));
+        }
+
+        foreach ($storedContent as $cartItem) {
+            $content->put($cartItem->rowId, $cartItem);
+        }
+
+        dd($content);
+
+        //return redirect()->action();
+
+    }
+
 //    public function confirm(Request $request)
 //    {
 //        //Data
