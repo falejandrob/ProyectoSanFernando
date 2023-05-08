@@ -14,7 +14,12 @@
 
         <br>
 
-        <h2>Detalles</h2>
+        <div style="display: flex; justify-content: space-between">
+            <h2>Detalles</h2>
+            <a class="btn btn-success" href="{{ route('repetirPedido', $idPedido) }}" style="font-size: 16px">
+                Repetir pedido
+            </a>
+        </div>
         <hr>
         <h3>Fecha pedido: {{ $pedido->first()->options->get('fechaPedido') }}</h3>
         <h3>Fecha prevista: {{ $pedido->first()->options->get('expectedDate') }}</h3>

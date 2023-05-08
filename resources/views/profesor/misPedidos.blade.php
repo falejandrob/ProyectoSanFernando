@@ -11,7 +11,6 @@
                     <th scope="col">Fecha pedido</th>
                     <th scope="col">Fecha prevista</th>
                     <th scope="col">Más detalles</th>
-                    <th scope="col">Repetir pedido</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -22,11 +21,6 @@
                         <td>
                             <a class="btn btn-primary" href="{{ route('detallesPedido', $id) }}">
                                 Ver más
-                            </a>
-                        </td>
-                        <td>
-                            <a class="btn btn-success" href="{{ route('repetirPedido', $id) }}">
-                                Repetir pedido
                             </a>
                         </td>
                     </tr>

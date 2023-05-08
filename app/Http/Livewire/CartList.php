@@ -3,7 +3,10 @@
 namespace App\Http\Livewire;
 
 use App\Models\Categoria;
+use App\Models\Presupuesto;
+use Carbon\Carbon;
 use Gloudemans\Shoppingcart\Facades\Cart;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
 class CartList extends Component
@@ -20,8 +23,10 @@ class CartList extends Component
         $this->cart = Cart::content();
         $this->rowId = null;
         $categorias = Categoria::all();
+        $anio_actual = Carbon::now()->year;
+        $presupuesto = Presupuesto::where('idUser', Auth::id())->where('anio', $anio_actual)->first();
 
-        return view('livewire.cart-list', ['cart'=>$this->cart, 'categorias'=>$categorias, "expectedDate" => $expectedDate, "expectedTime" => $expectedTime]);
+        return view('livewire.cart-list', ['cart'=>$this->cart, 'categorias'=>$categorias, "expectedDate" => $expectedDate, "expectedTime" => $expectedTime, "presupuesto" => $presupuesto]);
     }
 
     public function removeFromCart($productoCarritoJson){
