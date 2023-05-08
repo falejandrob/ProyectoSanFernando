@@ -17,8 +17,8 @@ class FechaMaximaPedidoFactory extends Factory
     public function definition(): array
     {
         return [
-            'fechaMaxima'=>$this->faker->dateTimeBetween('now', '+1 year'),
-            'fechaVencida'=>$this->faker->randomNumber(0,1)
+            //'fechaMaxima'=>$this->faker->dateTimeBetween('now', '+1 year'),
+            //'fechaVencida'=>$this->faker->randomNumber(0,1)
         ];
     }
 }

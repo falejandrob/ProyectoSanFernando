@@ -45,14 +45,16 @@ class CartController extends Controller
     {
         //dd(Cart::content());
         //dd($request);
+        $fecha = strtotime($request->expectedDate);
+        $fechaConFormato = date('d-m-Y',$fecha );
         foreach (Cart::content() as $item){
             $producto = Producto::findOrFail($item->id);
             Cart::update($item->rowId, ['options' => [
                 'categoria'=>Categoria::findOrFail($producto->idCategoria)->nombre,
-                'expectedDate' => $request->expectedDate,
+                'expectedDate' => $fechaConFormato,
                 'expectedTime' => $request->expectedTime,
                 'justification' => $request->justification,
-                'fechaPedido' => Carbon::now()->format('d-m-y')
+                'fechaPedido' => Carbon::now()->format('d-m-Y')
             ]]);
         }
         //dd(Cart::content());

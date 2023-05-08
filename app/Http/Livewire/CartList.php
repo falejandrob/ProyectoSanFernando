@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Models\Categoria;
+use App\Models\FechaMaximaPedido;
 use App\Models\Presupuesto;
 use Carbon\Carbon;
 use Gloudemans\Shoppingcart\Facades\Cart;
@@ -17,7 +18,17 @@ class CartList extends Component
     public $rowId;
     public function render()
     {
-        $expectedDate = date("Y-m-d");
+        $fechaActual = Carbon::now();
+        $fechaMasProxima = FechaMaximaPedido::selectRaw('fechaMaxima')
+            ->where('fechaMaxima', '>', $fechaActual)
+            ->orderByRaw('fechaMaxima ASC')
+            ->limit(1)
+            ->value('fechaMaxima');
+
+        $fecha = strtotime($fechaMasProxima);
+        $fechaConFormato = date('d-m-Y',$fecha );
+
+        $expectedDate = date('d-m-Y');
         $expectedTime = date("H:i");
 
         $this->cart = Cart::content();
@@ -26,7 +37,7 @@ class CartList extends Component
         $anio_actual = Carbon::now()->year;
         $presupuesto = Presupuesto::where('idUser', Auth::id())->where('anio', $anio_actual)->first();
 
-        return view('livewire.cart-list', ['cart'=>$this->cart, 'categorias'=>$categorias, "expectedDate" => $expectedDate, "expectedTime" => $expectedTime, "presupuesto" => $presupuesto]);
+        return view('livewire.cart-list', ['cart'=>$this->cart, 'categorias'=>$categorias, "expectedDate" => $expectedDate, "expectedTime" => $expectedTime, "presupuesto" => $presupuesto, 'fechaConFormato' => $fechaConFormato]);
     }
 
     public function removeFromCart($productoCarritoJson){

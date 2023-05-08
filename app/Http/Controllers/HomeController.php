@@ -80,7 +80,23 @@ class HomeController extends Controller
         }
 
         if (auth()->user()->hasRole('admin')) {
-            return view("admin.detallesPedido", ["pedido" => $pedido, "idPedido" => $idPedido]);
+            return view("admin.detallesPedido", ["pedido" => $pedido, "idPedido" => $idPedido,  "profesor" => $profesor]);
+        }
+
+
+    }
+
+    public function detallesPedidoAdmin($idPedido, $profesor)
+    {
+        $pedido = getCart($idPedido);
+        $anio_actual = Carbon::now()->year;
+        $presupuesto = Presupuesto::where('idUser', Auth::id())->where('anio', $anio_actual)->first();
+        //dd($pedido);
+        //$lineasPedido = LineaPedido::all()->where('idPedido', "=", $pedido->id);
+
+
+        if (auth()->user()->hasRole('admin')) {
+            return view("admin.detallesPedido", ["pedido" => $pedido, "idPedido" => $idPedido,  "profesor" => $profesor]);
         }
 
 

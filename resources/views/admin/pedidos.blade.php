@@ -14,7 +14,6 @@
                     <th scope="col">Profesor</th>
                     <th scope="col">Fecha pedido</th>
                     <th scope="col">Fecha prevista</th>
-                    <th scope="col">Justificacion</th>
                     <th scope="col">Ver más</th>
                     <th scope="col">Eliminación</th>
                 </tr>
@@ -27,14 +26,13 @@
                         <td>{{ $profesores->where("id","=",$pedido[1])->first()->nombre . " ". $profesores->where("id","=",$pedido[1])->first()->apellidos }}</td>
                         <td>{{ $pedido[0]->first()->options->get('fechaPedido') }}</td>
                         <td>{{ $pedido[0]->first()->options->get('expectedDate') }}</td>
-                        <td>{{ $pedido[0]->first()->options->get('justification') }}</td>
                         <td>
-                            <a class="btn btn-primary" href="{{ route('detallesPedido', $id) }}">
+                            <a class="btn btn-primary" href="{{ route('detallesPedidoAdmin', [$id, $profesores->where("id","=",$pedido[1])->first()->nombre . " ". $profesores->where("id","=",$pedido[1])->first()->apellidos]) }}">
                                 Ver más
                             </a>
                         </td>
                         <td>
-                            <a class="btn btn-danger" href="{{ route('eliminarPedido', $id) }}">
+                            <a class="btn btn-danger" href="{{ route('eliminarPedido', $id)}}">
                                 Eliminar
                             </a>
                         </td>

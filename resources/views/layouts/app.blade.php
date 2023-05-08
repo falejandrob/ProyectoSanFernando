@@ -171,7 +171,9 @@
                 width: 60%;
                 font-size: 12px;
             }
-
+            .form-fecha{
+                width: 100%;
+            }
 
         }
 
@@ -241,6 +243,10 @@
                 width: 60%
             }
 
+            .form-fecha{
+                width: 40%;
+            }
+
         }
     </style>
     @livewireStyles
@@ -282,8 +288,16 @@
                                 <a class="nav-link active" aria-current="page"
                                    href="{{ route('listarProfesores') }}">Profesores</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link active" aria-current="page" href="{{route('totalPedidos')}}">Pedidos</a>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle active" href="#" role="button"
+                                   data-toggle="dropdown"
+                                   data-bs-toggle="dropdown" aria-expanded="false">
+                                    Pedidos
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="{{route('totalPedidos')}}">Ver pedidos</a></li>
+                                    <li><a class="dropdown-item" href="{{route('fechaPedidos')}}">Fecha límite pedido</a></li>
+                                </ul>
                             </li>
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle active" href="#" role="button"

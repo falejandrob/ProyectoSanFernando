@@ -8,6 +8,7 @@
 
         <h2>Detalles</h2>
         <hr>
+        <h3>Profesor que realiza el pedido: {{$profesor}}</h3>
         <h3>Fecha pedido: {{ $pedido->first()->options->get('fechaPedido') }}</h3>
         <h3>Fecha prevista: {{ $pedido->first()->options->get('expectedDate') }}</h3>
         <h3>Justificación: {{ $pedido->first()->options->get('justification') }}</h3>
@@ -26,6 +27,7 @@
                         <th scope="col">Nombre producto</th>
                         <th scope="col">Categoria producto</th>
                         <th scope="col">Cantidad</th>
+                        <th scope="col">Observación</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -34,6 +36,7 @@
                             <td>{{ $linea->name }}</td>
                             <td>{{ $linea->options->categoria }}</td>
                             <td>{{ $linea->qty }}</td>
+                            <td></td>
                         </tr>
                     @endforeach
                     </tbody>
