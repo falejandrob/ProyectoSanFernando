@@ -104,7 +104,7 @@ class CartController extends Controller
     function repetirPedido($id)
     {
         $content = Cart::content();
-
+        //dd($content);
         $stored = DB::connection()->table('shoppingcart')
             ->where(['id'=> $id])->first();
 
@@ -114,13 +114,19 @@ class CartController extends Controller
             $storedContent = unserialize(data_get($stored, 'content'));
         }
 
-        foreach ($storedContent as $cartItem) {
-            $content->put($cartItem->rowId, $cartItem);
+        if(Cart::content()){
+            Cart::destroy();
         }
 
-        dd($content);
+        foreach ($storedContent as $cartItem) {
+            $content->put($cartItem->rowId, $cartItem);
+            Cart::add(['rowId'=>$cartItem->rowId,'id'=>$cartItem->id,'qty'=>$cartItem->qty, 'name'=>$cartItem->name, 'price'=>0.0,'weight'=>0.0,'options'=>['categoria'=>$cartItem->options->categoria, 'expectedDate'=>$cartItem->options->expectedDate,'expectedTime'=>$cartItem->options->expectedTime,'justification'=>$cartItem->options->justification,'fechaPedido'=>$cartItem->options->fechaPedido]]);
+        }
+        //dd(Cart::content());
+        //dd($content);
 
-        //return redirect()->action();
+        // return redirect()->action();
+        return redirect()->action([HomeController::class, 'index']);
 
     }
 
