@@ -3,6 +3,8 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Presupuesto>
@@ -18,7 +20,7 @@ class PresupuestoFactory extends Factory
     {
         return [
             'idUser' => $this->faker->randomElement(DB::table('users')->pluck('id')),
-            'anio' => $this->faker->year,
+            'anio' => Carbon::now()->year + rand(-2, 2),
             'presupuestoTotal' => $this->faker->numberBetween(3500, 4000),
         ];
     }

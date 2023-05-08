@@ -15,9 +15,8 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('idUser');
             $table->foreign('idUser')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
-            $table->date('fechaPedido');
-            $table->date('fechaPrevistaPedido');
-            $table->string('observaciones');
+            $table->dateTime('fechaPedido');
+            $table->dateTime('fechaPrevistaPedido');
             $table->string('justificacion');
             $table->timestamps();
         });

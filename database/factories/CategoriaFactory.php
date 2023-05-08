@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Facades\DB;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Categoria>
@@ -16,11 +17,34 @@ class CategoriaFactory extends Factory
      */
     public function definition(): array
     {
-        $categorias = array("congelados", "conservas", "carnes", "pescados", "charcuteria",
-            "frutas", "verduras", "legumbres", "lacteos y huevos", "frutos secos");
-
         return [
-            'nombre' => $this->faker->randomElement($categorias)
+            'nombre' => $this->getCategoriaFromSql()
         ];
+    }
+
+    private function getCategoriaFromSql(): string
+    {
+        $categorias = [
+            'Carnes, Aves, Embutidos',
+            'Aceite, Grasa',
+            'Bases cocina',
+            'Bebidas',
+            'Condim, Espec, Hierbas',
+            'Conservas',
+            'Consumibles',
+            'Frutas, Frutos Secos',
+            'Hortalizas',
+            'Huevos',
+            'Lacteos y derivados',
+            'Pastas Alimenticias',
+            'Legumb, Cereal, Pan, Boller',
+            'Pastelería',
+            'Pescados, Mariscos',
+            'Cafés, Infus',
+        ];
+
+        $categoria = DB::table('categorias')->whereIn('nombre', $categorias)->first();
+
+        return $categoria ? $categoria->nombre : '';
     }
 }
