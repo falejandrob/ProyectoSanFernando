@@ -41,6 +41,7 @@
                         <th scope="col">Nombre producto</th>
                         <th scope="col">Categoria producto</th>
                         <th scope="col">Cantidad</th>
+                        <th scope="col">Observación</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -49,6 +50,7 @@
                             <td>{{ $linea->name }}</td>
                             <td>{{ $linea->options->categoria }}</td>
                             <td>{{ $linea->qty }}</td>
+                            <td></td>
                         </tr>
                     @endforeach
                     </tbody>

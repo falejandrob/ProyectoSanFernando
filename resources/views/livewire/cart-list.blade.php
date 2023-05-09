@@ -12,8 +12,11 @@
                     </svg>
                 </button>
             </div>
+        <br>
+            <div>
+                <p style="font-size: 22px;">Fecha máxima: {{$fechaConFormato}}</p>
+            </div>
         @endif
-        <br/>
         @if(Cart::content()->count() != 0)
             <div style="overflow-y: scroll; height: 500px;">
             @foreach($categorias as $categoria)

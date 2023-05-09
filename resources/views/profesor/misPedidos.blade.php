@@ -10,7 +10,10 @@
                 <tr>
                     <th scope="col">Fecha pedido</th>
                     <th scope="col">Fecha prevista</th>
+                    <th scope="col">Justificación</th>
                     <th scope="col">Más detalles</th>
+                    <th scope="col">Enviar por correo</th>
+                    <th scope="col">Imprimir</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -18,9 +21,20 @@
                     <tr>
                         <td>{{ $pedido->first()->options->get('fechaPedido') }}</td>
                         <td>{{ $pedido->first()->options->get('expectedDate') }}</td>
+                        <td></td>
                         <td>
-                            <a class="btn btn-primary" href="{{ route('detallesPedido', $id) }}">
+                            <a class="btn btn-primary" href="{{ route('detallesPedido', [$id, ""]) }}">
                                 Ver más
+                            </a>
+                        </td>
+                        <td>
+                            <a class="btn btn-danger" href="#">
+                                Enviar
+                            </a>
+                        </td>
+                        <td>
+                            <a class="btn btn-success" href="#">
+                                Imprimir
                             </a>
                         </td>
                     </tr>
