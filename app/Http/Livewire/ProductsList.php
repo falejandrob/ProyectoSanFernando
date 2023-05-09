@@ -34,7 +34,7 @@ class ProductsList extends Component
     public function render()
     {
         $productosPorPagina = 50; // Número de productos a mostrar por página
-        $maxPaginasMostradas = 10;
+        $maxPaginasMostradas = 3;
         $query = Producto::query()
             ->when($this->categoryFilter, function ($query) {
                 $query->where('idCategoria', $this->categoryFilter);

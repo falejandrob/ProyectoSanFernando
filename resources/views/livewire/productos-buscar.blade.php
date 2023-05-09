@@ -81,7 +81,7 @@
                                     @endif
                                     @if(optional($carrito->where('id', $producto->id)->first())->qty == null)
                                         <button wire:click.prevent="addToCart({{$producto->id}})"
-                                                style=" width: 100%; font-size: 120%; background: #F6C366; box-sizing: border-box;"
+                                                style=" width: 180%; font-size: 120%; background: #F6C366; box-sizing: border-box;"
                                                 type="submit"
                                                 class="btn">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25"

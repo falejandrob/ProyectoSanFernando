@@ -54,7 +54,7 @@ Route::post('/proveedor/update/{id}',[\App\Http\Controllers\ProveedorController:
 //Ruta carrito
 Route::post('/cart/store',[\App\Http\Controllers\CartController::class,'store'])->name('cart.store');
 Route::post('/cart/remove',[\App\Http\Controllers\CartController::class,'remove'])->name('cart.remove');
-Route::get('/cart/confirm',[\App\Http\Controllers\CartController::class,'confirm'])->name('cart.confirm');
+Route::post('/cart/confirm',[\App\Http\Controllers\CartController::class,'confirm'])->name('cart.confirm');
 
 //Ruta pedidos
 Route::get('/totalPedidos', [\App\Http\Controllers\HomeController::class, 'totalPedidos'])->name('totalPedidos');
