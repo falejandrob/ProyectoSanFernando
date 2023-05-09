@@ -27,7 +27,39 @@
             font-size: 16px;
         }
 
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+        }
 
+        .pagination-buttons {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .pagination-button {
+            display: inline-block;
+            padding: 8px 12px;
+            margin: 0 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            text-decoration: none;
+            color: #333;
+            background-color: #fff;
+            transition: background-color 0.3s ease;
+        }
+
+        .pagination-button:hover {
+            background-color: #f5f5f5;
+        }
+
+        .pagination-button.active {
+            background-color: #007bff;
+            color: #fff;
+        }
 
         #app > nav {
             background: #f6f0d2;

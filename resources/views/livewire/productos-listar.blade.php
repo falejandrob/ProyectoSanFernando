@@ -76,8 +76,45 @@
                 </tbody>
             </table>
         </div>
-
         <br>
+            <div class="pagination">
+                {{-- Botones de paginación --}}
+                <div class="pagination-buttons">
+                    {{-- Botón de ir a la primera página --}}
+                    @if ($productos->currentPage() > 1)
+                        <button wire:click="gotoPage(1)" class="pagination-button">&laquo;&laquo;</button>
+                    @endif
+
+                    {{-- Botón de ir a la página anterior --}}
+                    @if ($productos->currentPage() > 1)
+                        <button wire:click="previousPage" class="pagination-button">&laquo;</button>
+                    @endif
+
+                    {{-- Botones de las páginas --}}
+                    @php
+                        $startPage = max($productos->currentPage() - floor($maxPaginasMostradas / 2), 1); // Página inicial a mostrar
+                        $endPage = min($startPage + $maxPaginasMostradas - 1, $productos->lastPage()); // Página final a mostrar
+                    @endphp
+
+                    @for ($i = $startPage; $i <= $endPage; $i++)
+                        <button wire:click="gotoPage({{ $i }})" class="pagination-button{{ $i == $productos->currentPage() ? ' active' : '' }}">{{ $i }}</button>
+                    @endfor
+
+                    {{-- Botón de ir a la página siguiente --}}
+                    @if ($productos->hasMorePages())
+                        <button wire:click="nextPage" class="pagination-button">&raquo;</button>
+                    @endif
+
+                    {{-- Botón de ir a la última página --}}
+                    @if ($productos->hasMorePages())
+                        <button wire:click="gotoPage({{ $productos->lastPage() }})" class="pagination-button">&raquo;&raquo;</button>
+                    @endif
+                </div>
+
+            </div>
+
+
+            <br>
         @else
             <div class="alert"
                  style="text-align: center; font-size: 120%; border: solid 2px #C80000; background: #F3D8D8">

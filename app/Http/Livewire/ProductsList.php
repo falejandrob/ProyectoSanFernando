@@ -14,6 +14,7 @@ class ProductsList extends Component
     protected $paginationTheme = 'bootstrap';
 //
     public $nombre, $validado, $idCategoria;
+    public $productosPorPagina;
     public $categoryFilter;
     public $validateFilter;
     public $searchFilter;
@@ -32,19 +33,22 @@ class ProductsList extends Component
 
     public function render()
     {
-        $productos = Producto::query()
-            ->when($this->categoryFilter, function ($query){
+        $productosPorPagina = 50; // Número de productos a mostrar por página
+        $maxPaginasMostradas = 10;
+        $query = Producto::query()
+            ->when($this->categoryFilter, function ($query) {
                 $query->where('idCategoria', $this->categoryFilter);
             })
-            ->when($this->validateFilter, function($query){
+            ->when($this->validateFilter, function ($query) {
                 $query->where('validado', $this->validateFilter);
             })
-            ->when($this->searchFilter, function($query){
+            ->when($this->searchFilter, function ($query) {
                 $query->where('nombre', 'like', '%' . $this->searchFilter . '%');
-            })->get();
+            });
 
+        $productos = $query->paginate($productosPorPagina);
 
-        return view('livewire.productos-listar', compact('productos'));
+        return view('livewire.productos-listar', compact('productos','maxPaginasMostradas'));
     }
 
 
