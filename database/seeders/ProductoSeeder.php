@@ -25,7 +25,7 @@ class ProductoSeeder extends Seeder
             //dd($producto);
             Producto::factory()->create([
                 'nombre' => $producto['Articulo'],
-                'validado' => 1,
+                'validado' => 0,
                 'idCategoria' => DB::table('categorias')->where('nombre', $producto['Familia'])->value('id'),
                 ]);
         }
