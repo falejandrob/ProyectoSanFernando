@@ -1,4 +1,7 @@
 <div style="width: 90%; margin: auto">
+    <form action="{{route('cart.confirm')}}" method="post">
+        @csrf
+        @method("POST")
     <div>
         @if(Cart::content()->count() != 0)
             <div style="margin-top: 2%">
@@ -14,7 +17,12 @@
             </div>
         <br>
             <div>
-                <p style="font-size: 22px;">Fecha máxima: {{$fechaConFormato}}</p>
+                <p class="carrito-size">Fecha máxima pedido: {{$fechaConFormato}}</p>
+            </div>
+            <div class="mb-3">
+                <label class="carrito-size" >Justificación pedido</label>
+                <textarea class="form-control" id="justification" placeholder="Justificacion"
+                          name="justification" required>{{ Session::get("justificacion") }}</textarea>
             </div>
         @endif
         @if(Cart::content()->count() != 0)
@@ -27,7 +35,7 @@
                     @endif
                 @endforeach
                 @if($cont > 0)
-                    <p class="carrito-cat" style="padding-top: 20px">{{ $categoria->nombre }}</p>
+                    <p class="carrito-size" style="padding-top: 20px">{{ $categoria->nombre }}</p>
                     @foreach($cart as $productoCarrito)
                         @if($productoCarrito->options->categoria == $categoria->nombre)
                             <div class="cart-item">
@@ -65,24 +73,25 @@
 
     @if(Cart::content()->count() != 0)
         <div class="d-flex justify-content-around align-items-center">
-           <!-- <div class="mb-3" style="width: 40%">
+           <div class="mb-3" style="width: 40%">
                 <label>Para cuando se quiere el pedido</label>
                 <input type="date" class="form-control" id="expectedDate" name="expectedDate" pattern="\d{4}-\d{2}-\d{2}" value="{{ $expectedDate }}" required>
             </div>
             <div class="mb-3" style="width: 40%">
                 <label>Para que hora</label>
                 <input type="time" class="form-control" id="expectedTime" name="expectedTime" value="{{ $expectedTime }}" required>
-            </div>-->
+            </div>
         </div>
         <div style="width: 100%; text-align: center; padding: 10px">
             @if(Cart::content()->count() != 0)
-                <button type="submit" style="font-size: 130%; width: 50%; padding: 10px; background: #F6C366"
-                        class="btn" data-bs-toggle="modal" @if($presupuesto == null) data-bs-target="#presupuesto" @else data-bs-target="#confirmarPedido" @endif >
+                <button  style="font-size: 130%; width: 50%; padding: 10px; background: #F6C366"
+                        class="btn" data-bs-toggle="modal" @if($presupuesto == null) data-bs-target="#presupuesto" type="reset" @else type="submit" @endif >
                     Hacer pedido
                 </button>
             @endif
         </div>
     @endif
+    </form>
 </div>
 
 

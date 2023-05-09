@@ -52,10 +52,10 @@
                 <h1 class="modal-title fs-5" id="exampleModalLabel">Confirmar pedido</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
+            <!--<div class="modal-body">
                 <form action="{{route('cart.confirm')}}" method="post">
                     @csrf
-                    @method("GET")
+                    @method("POST")
                     <div class="form-row">
                         <div class="mb-3">
                             <label>Para cuando se quiere el pedido</label>
@@ -73,7 +73,7 @@
                     </div>
                     <button class="btn btn-primary" type="submit">Hacer pedido</button>
                 </form>
-            </div>
+            </div>-->
         </div>
     </div>
 </div>

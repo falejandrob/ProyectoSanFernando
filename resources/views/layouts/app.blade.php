@@ -27,7 +27,7 @@
             font-size: 16px;
         }
 
-        .pagination {
+        .pagination-mio {
             display: flex;
             justify-content: center;
             align-items: center;
@@ -199,6 +199,9 @@
             .div-btn{
                 width: 160%
             }
+            .carrito-size{
+                font-size: 18px;
+            }
             .presupuesto{
                 width: 60%;
                 font-size: 12px;
@@ -244,7 +247,7 @@
             }
 
             .div-btn{
-                width: 60%
+                width: 160%
             }
 
         }
@@ -258,6 +261,9 @@
             }
             .carrito{
                 width: 40%;
+            }
+            .carrito-size{
+                font-size: 22px;
             }
             .busqueda-productos{
                 font-size: 20px;
