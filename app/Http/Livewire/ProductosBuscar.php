@@ -24,15 +24,19 @@ class ProductosBuscar extends Component
     {
         //
         if(empty($this->searchTerm)) {
-            $this->productos = Producto::all();
+            //$this->productos = Producto::where('validado', '=','3')->skip(50)->take(50)->get();
+            //$this->productos = Producto::all()->skip(50)->take(50);
+            $this->productos = Producto::where('validado', '=','3')->get();
+            $alerta = false;
         } else {
             $this->productos = Producto::where('nombre', 'like', '%'.$this->searchTerm.'%')->get();
+            $alerta = true;
         }
 
         $this->categorias = Categoria::all();
         $this->cart = Cart::content();
         //dd($this->cart);
-        return view('livewire.productos-buscar', ["categorias" => $this->categorias, "carrito"=>$this->cart]);
+        return view('livewire.productos-buscar', ["categorias" => $this->categorias, "carrito"=>$this->cart, 'alerta'=>$alerta]);
     }
 
 

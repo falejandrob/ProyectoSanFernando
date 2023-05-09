@@ -10,7 +10,8 @@
 
     @if($productos && $productos->count() > 0)
         <div class="table-responsive table-wrapper-scroll-y my-custom-scrollbar">
-            <table class="table mb-0 tabla-scroll" style="width: 90%; margin:auto; text-align: center;  font-size: 15px">
+            <table class="table mb-0 tabla-scroll"
+                   style="width: 90%; margin:auto; text-align: center;  font-size: 15px">
                 <tbody>
                 @foreach($productos as $producto)
                     <tr class="" style="text-align: center; height: 100px">
@@ -23,7 +24,7 @@
 
                         <td style="text-align: center; vertical-align: middle;">
                             <div style="width: 50%; display: inline-block">
-                                <div class="d-flex align-items-center justify-content-center div-btn" >
+                                <div class="d-flex align-items-center justify-content-center div-btn">
                                     @if(optional($carrito->where('id', $producto->id)->first())->qty != null)
                                         @if($carrito->where('id',$producto->id)->first()->qty == 1)
 
@@ -79,7 +80,7 @@
                                         @endif
                                     @endif
                                     @if(optional($carrito->where('id', $producto->id)->first())->qty == null)
-                                        <button  wire:click.prevent="addToCart({{$producto->id}})"
+                                        <button wire:click.prevent="addToCart({{$producto->id}})"
                                                 style=" width: 100%; font-size: 120%; background: #F6C366; box-sizing: border-box;"
                                                 type="submit"
                                                 class="btn">
@@ -102,23 +103,24 @@
         </div>
 
 
-       <!-- <div class="busqueda-productos" style="display: flex; flex-wrap: wrap; justify-content: center;">
+        <!-- <div class="busqueda-productos" style="display: flex; flex-wrap: wrap; justify-content: center;">
             <ul class="list-group" style="width: 90%; margin: auto">
                 @foreach($productos as $producto)
-                    <li class="list-group-item" style="width: 100%">
-                        <div class="d-flex align-items-center justify-content-between">
-                            <p style="width: 30%">{{ $producto->nombre}}</p>
+            <li class="list-group-item" style="width: 100%">
+                <div class="d-flex align-items-center justify-content-between">
+                    <p style="width: 30%">{{ $producto->nombre}}</p>
                            @foreach($categorias as $categoria)
-                                @if($producto->idCategoria == $categoria->id)
-                                    <p class="p-categoria" style="width:20%;">{{$categoria->nombre}}</p>
-                                @endif
-                            @endforeach
-                            @if(optional($carrito->where('id', $producto->id)->first())->qty != null)
-                                @if($carrito->where('id',$producto->id)->first()->qty == 1)
-                                    <div style="width: 30%; box-sizing: border-box">
-                                        <div class="d-flex align-items-center justify-content-center">
-                                            <button
-                                                wire:click.prevent="removeFromCart('{{ $carrito->where('id', $producto->id)->first()->rowId }}')"
+                @if($producto->idCategoria == $categoria->id)
+                    <p class="p-categoria" style="width:20%;">{{$categoria->nombre}}</p>
+
+                @endif
+            @endforeach
+            @if(optional($carrito->where('id', $producto->id)->first())->qty != null)
+                @if($carrito->where('id',$producto->id)->first()->qty == 1)
+                    <div style="width: 30%; box-sizing: border-box">
+                        <div class="d-flex align-items-center justify-content-center">
+                            <button
+                                wire:click.prevent="removeFromCart('{{ $carrito->where('id', $producto->id)->first()->rowId }}')"
                                                 class="btn" style="background: #CB5F5F; margin: 5px">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
                                                      fill="currentColor"
@@ -128,9 +130,9 @@
                                                 </svg>
                                             </button>
                                             <p style="margin: 5px">{{$carrito->where('id',$producto->id)->first()->qty}}
-                                                ud</p>
-                                            <button
-                                                wire:click.prevent="addElementToProduct('{{ $carrito->where('id', $producto->id)->first()->rowId }}')"
+                    ud</p>
+                <button
+                    wire:click.prevent="addElementToProduct('{{ $carrito->where('id', $producto->id)->first()->rowId }}')"
                                                 class="btn" style="background: #61CB5F; margin: 5px">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
                                                      fill="currentColor"
@@ -141,14 +143,15 @@
                                             </button>
                                         </div>
                                     </div>
-                                @endif
-                            @endif
-                            @if(optional($carrito->where('id', $producto->id)->first())->qty != null)
-                                @if($carrito->where('id',$producto->id)->first()->qty > 1)
-                                    <div style="width: 30%; box-sizing: border-box">
-                                        <div class="d-flex align-items-center justify-content-center">
-                                            <button
-                                                wire:click.prevent="restElementToProduct('{{ $carrito->where('id', $producto->id)->first()->rowId }}')"
+
+                @endif
+            @endif
+            @if(optional($carrito->where('id', $producto->id)->first())->qty != null)
+                @if($carrito->where('id',$producto->id)->first()->qty > 1)
+                    <div style="width: 30%; box-sizing: border-box">
+                        <div class="d-flex align-items-center justify-content-center">
+                            <button
+                                wire:click.prevent="restElementToProduct('{{ $carrito->where('id', $producto->id)->first()->rowId }}')"
                                                 class="btn" style="background: #CB5F5F; margin: 5px">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
                                                      fill="currentColor" class="bi bi-dash" viewBox="0 0 16 16">
@@ -157,9 +160,9 @@
                                                 </svg>
                                             </button>
                                             <p style="margin: 5px">{{$carrito->where('id',$producto->id)->first()->qty}}
-                                                ud</p>
-                                            <button
-                                                wire:click.prevent="addElementToProduct('{{ $carrito->where('id', $producto->id)->first()->rowId }}')"
+                    ud</p>
+                <button
+                    wire:click.prevent="addElementToProduct('{{ $carrito->where('id', $producto->id)->first()->rowId }}')"
                                                 class="btn" style="background: #61CB5F; margin: 5px">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
                                                      fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
@@ -169,10 +172,11 @@
                                             </button>
                                         </div>
                                     </div>
-                                @endif
-                            @endif
-                            @if(optional($carrito->where('id', $producto->id)->first())->qty == null)
-                                <button wire:click.prevent="addToCart({{$producto->id}})"
+
+                @endif
+            @endif
+            @if(optional($carrito->where('id', $producto->id)->first())->qty == null)
+                <button wire:click.prevent="addToCart({{$producto->id}})"
                                         style="width: 30%; font-size: 120%; background: #F6C366; box-sizing: border-box;"
                                         type="submit"
                                         class="btn">
@@ -182,21 +186,31 @@
                                             d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
                                     </svg>
                                 </button>
-                            @endif
-                        </div>
-                    </li>
-                @endforeach
-            </ul>
-        </div>-->
+
+            @endif
+            </div>
+        </li>
+
+        @endforeach
+        </ul>
+    </div>-->
     @else
         <div style="width: 60%; margin: auto">
-            <div class="alert alert-danger" style="text-align: center; font-size: 120%">
-                El producto buscado no existe
-            </div>
+            @if(!$alerta)
+
+                <div class="alert alert-success" style="text-align: center; font-size: 120%">
+                    ¡Dinos que producto quieres!
+                </div>
+            @else
+                <div class="alert alert-danger" style="text-align: center; font-size: 120%">
+                    El producto buscado no existe
+                </div>
+
             <button class="btn" data-bs-toggle="modal" data-bs-target="#exampleModal"
                     style="background: #F5BA53; width: 50%; margin-left: 25%; padding: 10px">
                 INSERTAR PRODUCTO
             </button>
+            @endif
         </div>
 
         <div class="modal fade modal-lg" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
