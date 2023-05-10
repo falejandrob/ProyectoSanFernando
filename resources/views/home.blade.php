@@ -89,3 +89,14 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade modal-lg" id="fechapedido" tabindex="-1" aria-labelledby="fechapedido" aria-hidden="true" >
+    <div class="modal-dialog" >
+        <div class="modal-content">
+            <div class="modal-header" style="background: #FAC3C3">
+                <p style="font-size: 18px">La fecha y hora introducida están fuera de plazo</p>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+        </div>
+    </div>
+</div>

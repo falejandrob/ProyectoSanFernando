@@ -90,6 +90,7 @@ class CartController extends Controller
         Cart::destroy();
         $pdf->download('invoice.pdf');
        //return $pdf->stream();
+        session()->flash('success', 'El pedido se ha realizado correctamente.');
         return redirect()->route('misPedidos', [Auth::id()]);
     }
 

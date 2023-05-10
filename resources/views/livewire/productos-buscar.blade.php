@@ -197,9 +197,13 @@
     </div>-->
     @else
         <div style="width: 60%; margin: auto">
-            @if(($fechaActual > $fechaPasada) and ($fechaMasProxima == null))
+            @if($fechaPasada == null)
                 <div class="alert alert-danger" style="text-align: center; font-size: 120%">
-                    No se puede realizar el pedido ya que la fecha máxima es {{$fechaPasada}}
+                    No se pueden realizar pedidos porque no hay plazo abierto.
+                </div>
+            @elseif(($fechaActual > $fechaPasada) and ($fechaMasProxima == null))
+                <div class="alert alert-danger" style="text-align: center; font-size: 120%">
+                    No se pueden realizar pedidos, el plazo se cerró el día {{$fechaConFormato}} a las {{$horaConFormato}}h.
                 </div>
             @elseif(!$alerta)
                 <div class="alert alert-success" style="text-align: center; font-size: 120%">

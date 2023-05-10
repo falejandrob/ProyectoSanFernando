@@ -1,6 +1,11 @@
 @extends('layouts.app')
 @section('content')
     <div class="container" style="padding: 25px; ">
+        @if (session('success'))
+            <div class="alert alert-success">
+                {{ session('success') }}
+            </div>
+        @endif
         <h1 style="text-align: center">Mis pedidos</h1>
         <br>
 

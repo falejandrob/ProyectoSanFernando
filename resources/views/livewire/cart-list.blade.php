@@ -1,4 +1,3 @@
-@if($fechaMasProxima != null)
 <div style="width: 100%; margin: auto">
     <form action="{{route('cart.confirm')}}" method="post">
         @csrf
@@ -18,9 +17,11 @@
             </div>
         <br>
             <div>
-                <p class="carrito-size">Fecha máxima pedido: {{$fechaConFormato}}</p>
-                <p class="carrito-size">Hora máxima pedido: {{$horaConFormato}}</p>
-            </div>
+                <p class="carrito-size">Apertura de plazo:</p>
+                <p class="carrito-size">{{$fechaConFormatoMin}} - {{$horaConFormatoMin}}h</p>
+                <p class="carrito-size">Cierre de plazo:</p>
+                <p class="carrito-size">{{$fechaConFormatoMax}} - {{$horaConFormatoMax}}h</p>
+            </div><br>
             <div class="mb-3">
                 <label class="carrito-size" >Justificación pedido</label>
                 <textarea class="form-control" id="justification" placeholder="Justificacion"
@@ -76,9 +77,7 @@
             </div>
         @endif
     </div>
-
     <br><br>
-
     @if(Cart::content()->count() != 0)
         <div class="d-flex justify-content-around align-items-center">
            <div class="mb-3" style="width: 40%">
@@ -93,7 +92,7 @@
         <div style="width: 100%; text-align: center; padding: 10px">
             @if(Cart::content()->count() != 0)
                 <button  style="font-size: 130%; width: 50%; padding: 10px; background: #F6C366"
-                        class="btn" data-bs-toggle="modal" @if($presupuesto == null) data-bs-target="#presupuesto" type="reset" @else type="submit" @endif >
+                        class="btn" data-bs-toggle="modal" @if($presupuesto == null) data-bs-target="#presupuesto" type="button" @else type="submit" @endif >
                     Hacer pedido
                 </button>
             @endif
@@ -101,5 +100,4 @@
     @endif
     </form>
 </div>
-@endif
 

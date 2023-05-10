@@ -61,7 +61,8 @@ class ProductosBuscar extends Component
         $this->categorias = Categoria::all();
         $this->cart = Cart::content();
         //dd($this->cart);
-        return view('livewire.productos-buscar', ["categorias" => $this->categorias, "carrito"=>$this->cart, 'alerta'=>$alerta, 'fechaActual' => $fechaActual, 'fechaPasada'=>$fechaPasada, 'fechaMasProxima'=>$fechaMasProxima, 'fecha'=>$fecha]);
+        return view('livewire.productos-buscar', ["categorias" => $this->categorias, "carrito"=>$this->cart, 'alerta'=>$alerta, 'fechaActual' => $fechaActual, 'fechaPasada'=>$fechaPasada,
+            'fechaMasProxima'=>$fechaMasProxima, 'fechaConFormato'=>$fechaConFormato, 'horaConFormato'=>$horaConFormato]);
     }
 
 

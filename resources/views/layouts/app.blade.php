@@ -7,6 +7,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>SanCenando</title>
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+
     <style>
         body {
             background: white;
@@ -373,7 +374,7 @@
                                 </a>
                                 <ul class="dropdown-menu">
                                     <li><a class="dropdown-item" href="{{route('totalPedidos')}}">Ver pedidos</a></li>
-                                    <li><a class="dropdown-item" href="{{route('fechaPedidos')}}">Fecha límite pedido</a></li>
+                                    <li><a class="dropdown-item" href="{{route('fechaPedidos')}}">Añadir plazo pedido</a></li>
                                 </ul>
                             </li>
                             <li class="nav-item dropdown">
@@ -476,3 +477,6 @@
 @livewireScripts
 </body>
 </html>
+
+
+

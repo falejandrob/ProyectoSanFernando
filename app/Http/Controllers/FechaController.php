@@ -20,15 +20,19 @@ class FechaController
     public function store(Request $request)
     {
 
-        $date = Carbon::parse($request->fechaMaxima)->format("Y-m-d");
+        $fechaMaxima = Carbon::parse($request->fechaMaxima)->format("Y-m-d");
+        $fechaMinima = Carbon::parse($request->fechaMinima)->format("Y-m-d");
         //dd($date);
-        $time = Carbon::parse($request->horaMaxima)->format('H:i:s');
+        $horaMaxima = Carbon::parse($request->horaMaxima)->format('H:i:s');
+        $horaMinima = Carbon::parse($request->horaMinima)->format('H:i:s');
         //dd($time);
         //$combinedDateTime = $date->copy()->setTime($time->hour, $time->minute, $time->second);
-        $finalDate= Carbon::parse($date.$time)->format("Y-m-d H:i:s");
+        $finalFechaMin= Carbon::parse($fechaMinima.$horaMinima)->format("Y-m-d H:i:s");
+        $finalFechaMax= Carbon::parse($fechaMaxima.$horaMaxima)->format("Y-m-d H:i:s");
         //dd($finalDate);
         $fecha = FechaMaximaPedido::create([
-            'fechaMaxima' => $finalDate,
+            'fechaMinima' => $finalFechaMin,
+            'fechaMaxima' => $finalFechaMax,
             'fechaVencida' => 0
         ]);
 
