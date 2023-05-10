@@ -19,6 +19,9 @@ class CartList extends Component
     public function render()
     {
         $fechaActual = Carbon::now();
+        $hora = strtotime($fechaActual);
+        $horaActual =  date("H:i", $hora);
+
         $fechaMasProxima = FechaMaximaPedido::selectRaw('fechaMaxima')
             ->where('fechaMaxima', '>', $fechaActual)
             ->orderByRaw('fechaMaxima ASC')
@@ -26,9 +29,9 @@ class CartList extends Component
             ->value('fechaMaxima');
 
         $fecha = strtotime($fechaMasProxima);
-        $fechaConFormato = date('d-m-Y',$fecha );
-
-        $expectedDate = date('d-m-Y');
+        $fechaConFormato = date('d-m-Y',$fecha);
+        $horaConFormato = date("H:i", $fecha);
+        $expectedDate = date('Y-m-d');
         $expectedTime = date("H:i");
 
         $this->cart = Cart::content();
@@ -37,7 +40,7 @@ class CartList extends Component
         $anio_actual = Carbon::now()->year;
         $presupuesto = Presupuesto::where('idUser', Auth::id())->where('anio', $anio_actual)->first();
 
-        return view('livewire.cart-list', ['cart'=>$this->cart, 'categorias'=>$categorias, "expectedDate" => $expectedDate, "expectedTime" => $expectedTime, "presupuesto" => $presupuesto, 'fechaConFormato' => $fechaConFormato]);
+        return view('livewire.cart-list', ['cart'=>$this->cart, 'categorias'=>$categorias, "expectedDate" => $expectedDate, "expectedTime" => $expectedTime, "presupuesto" => $presupuesto, 'fechaConFormato' => $fechaConFormato, 'horaConFormato' => $horaConFormato, 'fechaMasProxima'=>$fechaMasProxima]);
     }
 
     public function removeFromCart($productoCarritoJson){

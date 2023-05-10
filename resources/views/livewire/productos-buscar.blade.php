@@ -1,11 +1,12 @@
 <div>
+    @if($fechaMasProxima != null)
     <div
         style="width: 60%; margin: auto; border: 2px solid #F6C366; border-radius: 50px; height: 50px; display: flex; justify-content: space-around; align-items: center;">
         <input wire:model="searchTerm" type="text"
                style="width: 70%; height: 35px; font-size: 150%; text-align: center; outline: none; border: 2px solid white; background: white"/>
         <img src="https://cdn-icons-png.flaticon.com/512/3917/3917132.png" style="height: 30px;"/>
     </div>
-
+    @endif
     <br>
 
     @if($productos && $productos->count() > 0)
@@ -196,8 +197,11 @@
     </div>-->
     @else
         <div style="width: 60%; margin: auto">
-            @if(!$alerta)
-
+            @if(($fechaActual > $fechaPasada) and ($fechaMasProxima == null))
+                <div class="alert alert-danger" style="text-align: center; font-size: 120%">
+                    No se puede realizar el pedido ya que la fecha máxima es {{$fechaPasada}}
+                </div>
+            @elseif(!$alerta)
                 <div class="alert alert-success" style="text-align: center; font-size: 120%">
                     ¡Dinos que producto quieres!
                 </div>

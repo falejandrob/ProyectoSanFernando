@@ -5,7 +5,9 @@ namespace App\Http\Livewire;
 use App\Http\Controllers\CarritoController;
 use App\Models\Carrito;
 use App\Models\Categoria;
+use App\Models\FechaMaximaPedido;
 use App\Models\Producto;
+use Carbon\Carbon;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Support\Facades\Http;
 use Livewire\Component;
@@ -24,6 +26,27 @@ class ProductosBuscar extends Component
     public function render()
     {
         //
+        $fechaActual = Carbon::now();
+        $hora = strtotime($fechaActual);
+        $horaActual =  date("H:i", $hora);
+
+        $fechaMasProxima = FechaMaximaPedido::selectRaw('fechaMaxima')
+            ->where('fechaMaxima', '>', $fechaActual)
+            ->orderByRaw('fechaMaxima ASC')
+            ->limit(1)
+            ->value('fechaMaxima');
+
+        $fechaPasada = FechaMaximaPedido::selectRaw('fechaMaxima')
+            ->where('fechaMaxima', '<', $fechaActual)
+            ->orderByRaw('fechaMaxima ASC')
+            ->limit(1)
+            ->value('fechaMaxima');
+
+        $fecha = strtotime($fechaPasada);
+        $fechaConFormato = date('d-m-Y',$fecha);
+        $horaConFormato = date("H:i", $fecha);
+
+
         $this->searchTerm = preg_replace('/[^a-zA-Z0-9]/', '', $this->searchTerm);
         if(empty($this->searchTerm)) {
             //$this->productos = Producto::where('validado', '=','3')->skip(50)->take(50)->get();
@@ -38,7 +61,7 @@ class ProductosBuscar extends Component
         $this->categorias = Categoria::all();
         $this->cart = Cart::content();
         //dd($this->cart);
-        return view('livewire.productos-buscar', ["categorias" => $this->categorias, "carrito"=>$this->cart, 'alerta'=>$alerta]);
+        return view('livewire.productos-buscar', ["categorias" => $this->categorias, "carrito"=>$this->cart, 'alerta'=>$alerta, 'fechaActual' => $fechaActual, 'fechaPasada'=>$fechaPasada, 'fechaMasProxima'=>$fechaMasProxima, 'fecha'=>$fecha]);
     }
 
 

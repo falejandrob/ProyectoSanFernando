@@ -39,7 +39,7 @@ class CartController extends Controller
 
     /**
      * @param Request $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function confirm(Request $request)
     {
@@ -89,7 +89,8 @@ class CartController extends Controller
         store(Auth::id());
         Cart::destroy();
         $pdf->download('invoice.pdf');
-        return $pdf->stream();
+       //return $pdf->stream();
+        return redirect()->route('misPedidos', [Auth::id()]);
     }
 
     function eliminarPedido($id)

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\FechaMaximaPedido;
 use App\Models\LineaPedido;
 use App\Models\Pedido;
 use App\Models\Presupuesto;
@@ -39,6 +40,13 @@ class HomeController extends Controller
      */
     public function index()
     {
+        $fechaActual = Carbon::now();
+
+        $fechaMasProxima = FechaMaximaPedido::selectRaw('fechaMaxima')
+            ->where('fechaMaxima', '>', $fechaActual)
+            ->orderByRaw('fechaMaxima ASC')
+            ->limit(1)
+            ->value('fechaMaxima');
         $expectedDate = date("Y-m-d");
         $expectedTime = date("H:i");
 
@@ -47,7 +55,7 @@ class HomeController extends Controller
         $presupuesto = Presupuesto::where('idUser', Auth::id())->where('anio', $anio_actual)->first();
 
         if (auth()->user()->hasRole('profesor')) {
-            return view('home', ["productos" => $productos, "presupuesto" => $presupuesto, "expectedDate" => $expectedDate, "expectedTime" => $expectedTime]);
+            return view('home', ["productos" => $productos, "presupuesto" => $presupuesto, "expectedDate" => $expectedDate, "expectedTime" => $expectedTime, 'fechaMasProxima'=>$fechaMasProxima]);
         }
 
         if (auth()->user()->hasRole('admin')) {

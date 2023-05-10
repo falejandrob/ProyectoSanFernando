@@ -9,10 +9,11 @@
         <div class="busqueda" style="margin-top: 25px">
             @livewire('productos-buscar')
         </div>
-
-        <div class="carrito" style="background: #FAFAFA; border-left: #D6D6D6 1px solid; padding: 25px">
-            @livewire('cart-list')
-        </div>
+        @if($fechaMasProxima != null)
+            <div class="carrito" style="background: #FAFAFA; border-left: #D6D6D6 1px solid; padding: 25px">
+                @livewire('cart-list')
+            </div>
+        @endif
     </div>
 @endsection
 

@@ -21,7 +21,7 @@
                     <tr>
                         <td>{{ $pedido->first()->options->get('fechaPedido') }}</td>
                         <td>{{ $pedido->first()->options->get('expectedDate') }}</td>
-                        <td></td>
+                        <td>{{ $pedido->first()->options->get('justification') }}</td>
                         <td>
                             <a class="btn btn-primary" href="{{ route('detallesPedido', [$id, ""]) }}">
                                 Ver más

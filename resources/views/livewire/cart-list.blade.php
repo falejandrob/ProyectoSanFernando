@@ -1,4 +1,5 @@
-<div style="width: 90%; margin: auto">
+@if($fechaMasProxima != null)
+<div style="width: 100%; margin: auto">
     <form action="{{route('cart.confirm')}}" method="post">
         @csrf
         @method("POST")
@@ -18,6 +19,7 @@
         <br>
             <div>
                 <p class="carrito-size">Fecha máxima pedido: {{$fechaConFormato}}</p>
+                <p class="carrito-size">Hora máxima pedido: {{$horaConFormato}}</p>
             </div>
             <div class="mb-3">
                 <label class="carrito-size" >Justificación pedido</label>
@@ -38,28 +40,34 @@
                     <p class="carrito-size" style="padding-top: 20px">{{ $categoria->nombre }}</p>
                     @foreach($cart as $productoCarrito)
                         @if($productoCarrito->options->categoria == $categoria->nombre)
-                            <div class="cart-item">
-                                <span class="item-name">{{$productoCarrito->name}}</span>
-                                <div class="quantity-controls">
-                                    <button wire:click.prevent="restElementToProduct('{{ json_encode($productoCarrito) }}')"
-                                            class="btn minus-btn">
-                                        -
-                                    </button>
-                                    <span class="item-quantity">{{$productoCarrito->qty}} ud</span>
-                                    <button wire:click.prevent="addElementToProduct('{{ json_encode($productoCarrito) }}')"
-                                            class="btn plus-btn">+
+                            <div class="cart-item" style="display: flex; flex-wrap: wrap; width: 95%">
+                                <div class="info-producto" style=" display: flex;">
+                                    <span class="item-name">{{$productoCarrito->name}}</span>
+                                    <div class="quantity-controls">
+                                        <button  wire:click.prevent="restElementToProduct('{{ json_encode($productoCarrito) }}')"
+                                                class="btn minus-btn btn-carrito">
+                                            -
+                                        </button>
+                                        <span class="item-quantity">{{$productoCarrito->qty}} ud</span>
+                                        <button wire:click.prevent="addElementToProduct('{{ json_encode($productoCarrito) }}')"
+                                                class="btn plus-btn btn-carrito">+
+                                        </button>
+                                    </div>
+                                    <button wire:click.prevent="removeFromCart('{{ json_encode($productoCarrito) }}')"
+                                            class="btn delete-btn">
+                                        <svg width="25px" height="25px" viewBox="0 0 24 24" fill="none"
+                                             xmlns="http://www.w3.org/2000/svg">
+                                            <path
+                                                d="M4.99997 8H6.5M6.5 8V18C6.5 19.1046 7.39543 20 8.5 20H15.5C16.6046 20 17.5 19.1046 17.5 18V8M6.5 8H17.5M17.5 8H19M9 5H15M9.99997 11.5V16.5M14 11.5V16.5"
+                                                stroke="#464455" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
                                     </button>
                                 </div>
-                                <button wire:click.prevent="removeFromCart('{{ json_encode($productoCarrito) }}')"
-                                        class="btn delete-btn">
-                                    <svg width="25px" height="25px" viewBox="0 0 24 24" fill="none"
-                                         xmlns="http://www.w3.org/2000/svg">
-                                        <path
-                                            d="M4.99997 8H6.5M6.5 8V18C6.5 19.1046 7.39543 20 8.5 20H15.5C16.6046 20 17.5 19.1046 17.5 18V8M6.5 8H17.5M17.5 8H19M9 5H15M9.99997 11.5V16.5M14 11.5V16.5"
-                                            stroke="#464455" stroke-linecap="round" stroke-linejoin="round"/>
-                                    </svg>
-                                </button>
-                                <button type="button" class="btn btn-primary btn-lg justificacion" data-bs-toggle="modal" data-bs-target="#justificacionModal">Justificación</button>
+                                <br><br>
+                                <div class="observacion" style="width: 100%; display: flex;">
+                                    <textarea class="form-control" style="width: 100%; height: 10%" id="observacion" placeholder="Observación"name="observacion" >{{ Session::get("observacion") }}</textarea>
+                                </div>
+                                <!--<button type="button" class="btn btn-primary btn-lg justificacion" data-bs-toggle="modal" data-bs-target="#justificacionModal">Justificación</button>-->
                             </div>
                         @endif
                     @endforeach
@@ -74,11 +82,11 @@
     @if(Cart::content()->count() != 0)
         <div class="d-flex justify-content-around align-items-center">
            <div class="mb-3" style="width: 40%">
-                <label>Para cuando se quiere el pedido</label>
+                <label>Fecha pedido</label>
                 <input type="date" class="form-control" id="expectedDate" name="expectedDate" pattern="\d{4}-\d{2}-\d{2}" value="{{ $expectedDate }}" required>
             </div>
             <div class="mb-3" style="width: 40%">
-                <label>Para que hora</label>
+                <label>Hora pedido</label>
                 <input type="time" class="form-control" id="expectedTime" name="expectedTime" value="{{ $expectedTime }}" required>
             </div>
         </div>
@@ -93,5 +101,5 @@
     @endif
     </form>
 </div>
-
+@endif
 

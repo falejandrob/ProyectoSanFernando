@@ -10,6 +10,7 @@ class FechaMaximaPedido extends Model
     use HasFactory;
 
     protected $fillable = [
+        'fechaMinima',
         'fechaMaxima',
         'fechaVencida',
     ];

@@ -175,6 +175,11 @@
             .carrito{
                 width: 100%;
             }
+            .btn-carrito{
+                font-size: 12px;
+                background: red;
+            }
+
             .carrito span{
                 font-size: 14px;
             }
@@ -182,7 +187,16 @@
                 width: 15px;
             }
             .cart-item{
-                width: 150%;
+                width: 170%;
+            }
+            .info-producto{
+                width: 100%;
+                align-items: center;
+            }
+            .quantity-controls .item-quantity {
+                font-size: 0.9rem;
+                margin: 10px;
+                vertical-align: middle;
             }
             .justificacion{
                 font-size: 15px;
@@ -210,6 +224,10 @@
                 width: 100%;
             }
 
+            .observacion{
+                width: 40%;
+            }
+
         }
 
         @media (min-width: 768px) and (max-width: 992px) {
@@ -218,6 +236,14 @@
             }
             .div-btn{
                 width: 100%
+            }
+            .carrito span{
+                font-size: 16px;
+            }
+            .quantity-controls .item-quantity {
+                font-size: 1.1rem;
+                margin: 10px;
+                vertical-align: middle;
             }
         }
         @media (min-width: 1024px) {
@@ -230,9 +256,15 @@
             .carrito{
                 width: 50%;
             }
-
+            .carrito span{
+                font-size: 16px;
+            }
             .carrito-cat{
                 font-size: 20px;
+            }
+            .info-producto{
+                width: 100%;
+                align-items: center;
             }
             .busqueda-productos{
                 font-size: 20px;
@@ -264,6 +296,13 @@
             }
             .carrito-size{
                 font-size: 22px;
+            }
+            .info-producto{
+                width: 100%;
+                align-items: center;
+            }
+            .info-producto span{
+                margin-right: 20%;
             }
             .busqueda-productos{
                 font-size: 20px;
@@ -384,13 +423,14 @@
                         </svg>
                         {{ Auth::user()->nombre . " " . Auth::user()->apellidos }}
                     </a>
-
                     <ul class="dropdown-menu">
+                        @if(auth()->user()->hasRole('profesor'))
                         <li>
                             <a class="dropdown-item" href="{{ route('misPedidos', Auth::user()->id) }}">
                                 Mis pedidos
                             </a>
                         </li>
+                        @endif
                         <li>
                             <a class="dropdown-item" href="{{ route('logout') }}"
                                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
