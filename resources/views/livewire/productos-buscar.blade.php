@@ -197,7 +197,7 @@
     </div>-->
     @else
         <div style="width: 60%; margin: auto">
-            @if($fechaPasada == null)
+            @if($fechaPasada == null and $fechaMasProxima == null)
                 <div class="alert alert-danger" style="text-align: center; font-size: 120%">
                     No se pueden realizar pedidos porque no hay plazo abierto.
                 </div>
