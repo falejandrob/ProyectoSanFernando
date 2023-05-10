@@ -18,7 +18,6 @@ class Pedido extends Model
         'idUser',
         'fechaPedido',
         'fechaPrevistaPedido',
-        'observaciones',
         'justificacion',
     ];
 

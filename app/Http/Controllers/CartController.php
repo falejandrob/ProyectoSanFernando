@@ -271,29 +271,25 @@ class CartController extends Controller
 
 
 }
-function store($identifier)
+function store()
 {
-    $content = Cart::content();
+    $pedido = new Pedido();
 
-    if ($identifier instanceof InstanceIdentifier) {
-        $identifier = $identifier->getInstanceIdentifier();
+    $pedido->idUser = Auth::id();
+    $pedido->fechaPedido = Carbon::now();
+    $pedido->fechaPrevistaPedido = Carbon::parse(Cart::content()->first()->options->expectedDate . Cart::content()->first()->options->expectedTime);
+    $pedido->justificacion = Cart::content()->first()->options->justification;
+    $pedido->save();
+
+    foreach (Cart::content() as $cartItem) {
+        $pedidoItem = new LineaPedido();
+        //dd(Cart::content());
+        $pedidoItem->idPedido = $pedido->id;
+        $pedidoItem->idProducto = $cartItem->id;
+        $pedidoItem->cantidad = $cartItem->qty;
+        $pedidoItem->observaciones = $cartItem->options->observaciones;
+        $pedidoItem->save();
+
     }
-
-    $instance = "default";
-
-    if (DB::connection()->getDriverName() === 'pgsql') {
-        $serializedContent = base64_encode(serialize($content));
-    } else {
-        $serializedContent = serialize($content);
-    }
-
-    DB::connection()->table('shoppingcart')->insert([
-        'identifier' => $identifier,
-        'instance'   => $instance,
-        'content'    => $serializedContent,
-        'created_at' => Carbon::now(),
-        'updated_at' => Carbon::now(),
-    ]);
 }
-
 

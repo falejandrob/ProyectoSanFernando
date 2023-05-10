@@ -18,7 +18,7 @@ class LineaPedido extends Model
         'idPedido',
         'idProducto',
         'cantidad',
-        'observaciones'
+        'observaciones',
     ];
 
     /**

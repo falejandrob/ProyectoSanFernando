@@ -160,6 +160,32 @@ function getAllCartsTeachers()
  */
 function getAllCarts($identifier)
 {
+    /**
+     * En produccion
+     *
+     */
+    /*
+    $pedidos = collect();
+    $itemsPedido = collect();
+
+    $pedidos = Pedido::where('idUser', $identifier)->get();
+    foreach ($pedidos as $pedido){
+        $idPedido = $pedido->id;
+        $fechaPedido = $pedido->fechaPedido;
+        $fechaPrevistaPedido = $pedido->fechaPrevistaPedido;
+        $justificacion = $pedido->justificacion;
+        $created_at = $pedido->created_at;
+        $updated_at = $pedido->updated_at;
+        $itemsPedido = LineaPedido::where('idPedido', $idPedido)->get();
+
+    }
+    dd($itemsPedido);
+*/
+
+
+
+    //$Carrito = new CartItem(['id'=>1,'qty'=>1,'name'=>'ejemplo','price'=>0.0,'weight'=>0.0,['optional1'=>1]]);
+    //dd($Carrito);
     $allShopingCarts = collect();
     $storedAll = DB::table('shoppingcart')->where('identifier', '=', $identifier)->get();
     foreach ($storedAll as $carItem) {
