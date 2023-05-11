@@ -9,6 +9,7 @@ use App\Models\Producto;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Dompdf\Dompdf;
+use Gloudemans\Shoppingcart\CartItem;
 use Gloudemans\Shoppingcart\Contracts\InstanceIdentifier;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
@@ -102,36 +103,54 @@ class CartController extends Controller
         //$instance =  "default";
 
         //DB::connection()->table('shoppingcart')->where(['identifier' => $identifier, 'instance' => $instance])->delete();
-        DB::connection()->table('shoppingcart')->where("id", "=", $id)->delete();
+        Pedido::destroy($id);
+        //DB::connection()->table('pedidos')->where("id", "=", $id)->delete();
         //return view('admin.pedidos');
         return redirect()->action([HomeController::class, 'totalPedidos']);
     }
 
     function repetirPedido($id)
     {
-        $content = Cart::content();
-        //dd($content);
-        $stored = DB::connection()->table('shoppingcart')
-            ->where(['id'=> $id])->first();
 
-        if (DB::connection()->getDriverName() === 'pgsql') {
-            $storedContent = unserialize(base64_decode(data_get($stored, 'content')));
-        } else {
-            $storedContent = unserialize(data_get($stored, 'content'));
-        }
+
 
         if(Cart::content()){
             Cart::destroy();
         }
 
-        foreach ($storedContent as $cartItem) {
-            $content->put($cartItem->rowId, $cartItem);
-            Cart::add(['rowId'=>$cartItem->rowId,'id'=>$cartItem->id,'qty'=>$cartItem->qty, 'name'=>$cartItem->name, 'price'=>0.0,'weight'=>0.0,'options'=>['categoria'=>$cartItem->options->categoria, 'expectedDate'=>$cartItem->options->expectedDate,'expectedTime'=>$cartItem->options->expectedTime,'justification'=>$cartItem->options->justification,'fechaPedido'=>$cartItem->options->fechaPedido]]);
-        }
-        //dd(Cart::content());
-        //dd($content);
+        $pedido = Pedido::where('id', $id)->first();
 
-        // return redirect()->action();
+
+        $idPedido = $pedido->id;
+        $datePedido = $pedido->fechaPedido;
+        $expectedDateTime = $pedido->fechaPrevistaPedido;
+        $expectedDate = Carbon::parse($expectedDateTime)->format('d-m-Y');
+        $expectedTime = Carbon::parse($expectedDateTime)->format('H:i:s');
+        $justification = $pedido->justificacion;
+
+        $itemsPedido = LineaPedido::where('idPedido', $idPedido)->get();
+
+        foreach ($itemsPedido as $ItemPedido){
+            $product = Producto::findOrFail($ItemPedido->idProducto);
+            $productId = $product->id;
+            $productName = $product->nombre;
+            $quantity = $ItemPedido->cantidad;
+            Cart::add(['id'=>$productId,
+                'qty'=>$quantity,
+                'name'=>$productName,
+                'price'=>0.0,
+                'weight'=>0.0,
+                'options'=>[
+                    'categoria'=>Categoria::findOrFail($product->idCategoria)->nombre,
+                    'expectedDate'=>$expectedDate,
+                    'expectedTime'=>$expectedTime,
+                    'justification'=>$justification,
+                    'fechaPedido'=>$datePedido
+                ]]);
+
+
+        }
+
         return redirect()->action([HomeController::class, 'index']);
 
     }
@@ -273,7 +292,7 @@ class CartController extends Controller
 
 
 }
-function store()
+function store($identifier)
 {
     $pedido = new Pedido();
 
@@ -293,5 +312,27 @@ function store()
         $pedidoItem->save();
 
     }
+    /*
+    $content = Cart::content();
+
+    if ($identifier instanceof InstanceIdentifier) {
+        $identifier = $identifier->getInstanceIdentifier();
+    }
+
+    $instance = "default";
+
+    if (DB::connection()->getDriverName() === 'pgsql') {
+        $serializedContent = base64_encode(serialize($content));
+    } else {
+        $serializedContent = serialize($content);
+    }
+
+    DB::connection()->table('shoppingcart')->insert([
+        'identifier' => $identifier,
+        'instance'   => $instance,
+        'content'    => $serializedContent,
+        'created_at' => Carbon::now(),
+        'updated_at' => Carbon::now(),
+    ]);*/
 }
 

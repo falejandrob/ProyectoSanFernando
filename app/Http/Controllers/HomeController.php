@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Categoria;
 use App\Models\FechaMaximaPedido;
 use App\Models\LineaPedido;
 use App\Models\Pedido;
@@ -10,6 +11,7 @@ use App\Models\Producto;
 use App\Models\Proveedore;
 use App\Models\User;
 use Carbon\Carbon;
+use Gloudemans\Shoppingcart\CartItem;
 use Gloudemans\Shoppingcart\Contracts\InstanceIdentifier;
 use Gloudemans\Shoppingcart\Exceptions\CartAlreadyStoredException;
 use Gloudemans\Shoppingcart\Facades\Cart;
@@ -50,7 +52,7 @@ class HomeController extends Controller
         $presupuesto = Presupuesto::where('idUser', Auth::id())->where('anio', $anio_actual)->first();
 
         if (auth()->user()->hasRole('profesor')) {
-            return view('home', ["productos" => $productos, "presupuesto" => $presupuesto, "expectedDate" => $expectedDate, "expectedTime" => $expectedTime, 'closestDate'=>$closestDate, 'fechaActual' =>$fechaActual]);
+            return view('home', ["productos" => $productos, "presupuesto" => $presupuesto, "expectedDate" => $expectedDate, "expectedTime" => $expectedTime, 'closestDate' => $closestDate, 'fechaActual' => $fechaActual]);
         }
 
         if (auth()->user()->hasRole('admin')) {
@@ -83,7 +85,7 @@ class HomeController extends Controller
         }
 
         if (auth()->user()->hasRole('admin')) {
-            return view("admin.detallesPedido", ["pedido" => $pedido, "idPedido" => $idPedido,  "profesor" => $profesor]);
+            return view("admin.detallesPedido", ["pedido" => $pedido, "idPedido" => $idPedido, "profesor" => $profesor]);
         }
 
 
@@ -99,13 +101,14 @@ class HomeController extends Controller
 
 
         if (auth()->user()->hasRole('admin')) {
-            return view("admin.detallesPedido", ["pedido" => $pedido, "idPedido" => $idPedido,  "profesor" => $profesor]);
+            return view("admin.detallesPedido", ["pedido" => $pedido, "idPedido" => $idPedido, "profesor" => $profesor]);
         }
 
 
     }
 
-    public function totalPedidos(){
+    public function totalPedidos()
+    {
         $pedidos = getAllCartsTeachers();
         $profesores = User::all();
         return view("admin.pedidos", ["pedidos" => $pedidos, "profesores" => $profesores]);
@@ -129,7 +132,8 @@ class HomeController extends Controller
  */
 function getAllCartsTeachers()
 {
-    $allShopingCarts = [];
+
+    /*
     $storedAll = DB::table('shoppingcart')->get();
     foreach ($storedAll as $carItem) {
         if (DB::connection()->getDriverName() === 'pgsql') {
@@ -141,75 +145,160 @@ function getAllCartsTeachers()
             $allShopingCarts[$carItem->id] = [$cartObject, $carItem->identifier];
             //$allShopingCarts->put($carItem->id, $cartObject);
         }
+    }*/
+
+    $allShopingCarts = [];
+    $pedidos = Pedido::all();
+
+    foreach ($pedidos as $pedido) {
+        $cartCollection = collect();
+        $idUserPedido = $pedido->idUser;
+        $idPedido = $pedido->id;
+        $datePedido = $pedido->fechaPedido;
+        $expectedDateTime = $pedido->fechaPrevistaPedido;
+        $expectedDate = Carbon::parse($expectedDateTime)->format('d-m-Y');
+        $expectedTime = Carbon::parse($expectedDateTime)->format('H:i:s');
+        $justification = $pedido->justificacion;
+
+        $itemsPedido = LineaPedido::where('idPedido', $idPedido)->get();
+
+        foreach ($itemsPedido as $itemPedido) {
+            $product = Producto::findOrFail($itemPedido->idProducto);
+            $productId = $product->id;
+            $productName = $product->nombre;
+            $quantity = $itemPedido->cantidad;
+
+            $cartItem = CartItem::fromAttributes($productId, $productName, 0.0, 0.0, [
+                'categoria' => Categoria::findOrFail($product->idCategoria)->nombre,
+                'expectedDate' => $expectedDate,
+                'expectedTime' => $expectedTime,
+                'justification' => $justification,
+                'fechaPedido' => $datePedido
+            ]);
+
+            $cartItem->setQuantity($quantity);
+            $cartCollection->put($cartItem->rowId, $cartItem);
+        }
+        $allShopingCarts[$idPedido] = [$cartCollection, $idUserPedido];
+
     }
     return $allShopingCarts;
-
 }
 
 
 /**
- * Get all elements for the shopingcart database asocciate with a identifier
+ * Get all elements for the Pedidos table  asocciate with a User id
  *
  * @param $identifier
  * @return array
  */
 function getAllCarts($identifier)
 {
-    /**
-     * En produccion
-     *
-     */
-    /*
-    $pedidos = collect();
-    $itemsPedido = collect();
 
+
+    $allShopingCarts = collect();
     $pedidos = Pedido::where('idUser', $identifier)->get();
-    foreach ($pedidos as $pedido){
+
+    foreach ($pedidos as $pedido) {
+        $cartCollection = collect();
+
         $idPedido = $pedido->id;
-        $fechaPedido = $pedido->fechaPedido;
-        $fechaPrevistaPedido = $pedido->fechaPrevistaPedido;
-        $justificacion = $pedido->justificacion;
-        $created_at = $pedido->created_at;
-        $updated_at = $pedido->updated_at;
+        $datePedido = $pedido->fechaPedido;
+        $expectedDateTime = $pedido->fechaPrevistaPedido;
+        $expectedDate = Carbon::parse($expectedDateTime)->format('d-m-Y');
+        $expectedTime = Carbon::parse($expectedDateTime)->format('H:i:s');
+        $justification = $pedido->justificacion;
+
         $itemsPedido = LineaPedido::where('idPedido', $idPedido)->get();
 
-    }
-    dd($itemsPedido);
-*/
+        foreach ($itemsPedido as $ItemPedido) {
+            $product = Producto::findOrFail($ItemPedido->idProducto);
+            $productId = $product->id;
+            $productName = $product->nombre;
+            $quantity = $ItemPedido->cantidad;
 
+            $carItem = CartItem::fromAttributes($productId, $productName, 0.0, 0.0, [
+                'categoria' => Categoria::findOrFail($product->idCategoria)->nombre,
+                'expectedDate' => $expectedDate,
+                'expectedTime' => $expectedTime,
+                'justification' => $justification,
+                'fechaPedido' => $datePedido
+            ]);
 
-
-    //$Carrito = new CartItem(['id'=>1,'qty'=>1,'name'=>'ejemplo','price'=>0.0,'weight'=>0.0,['optional1'=>1]]);
-    //dd($Carrito);
-    $allShopingCarts = collect();
-    $storedAll = DB::table('shoppingcart')->where('identifier', '=', $identifier)->get();
-    foreach ($storedAll as $carItem) {
-        if (DB::connection()->getDriverName() === 'pgsql') {
-            $cartObject = unserialize(base64_decode(data_get($carItem, 'content')));
-            $allShopingCarts->put($carItem->id, $cartObject);
-        } else {
-            $cartObject = unserialize(data_get($carItem, 'content'));
-            $allShopingCarts->put($carItem->id, $cartObject);
+            $carItem->setQuantity($quantity);
+            $cartCollection->put($carItem->rowId, $carItem);
         }
+        $allShopingCarts->put($pedido->id, $cartCollection);
     }
-    //dd($allShopingCarts);
+
+
+    /*
+        $allShopingCarts = collect();
+        $storedAll = DB::table('shoppingcart')->where('identifier', '=', $identifier)->get();
+        foreach ($storedAll as $carItem) {
+            if (DB::connection()->getDriverName() === 'pgsql') {
+                $cartObject = unserialize(base64_decode(data_get($carItem, 'content')));
+                dd($carItem);
+                $allShopingCarts->put($carItem->id, $cartObject);
+            } else {
+
+                $cartObject = unserialize(data_get($carItem, 'content'));
+                $allShopingCarts->put($carItem->id, $cartObject);
+            }
+        }
+        //dd($allShopingCarts);*/
+
     return $allShopingCarts;
 
 }
 
 /**
- * Get a specific element of the shopingcart database
+ * Get a specific element of the Pedidos table and his associates rows
  *
  * @param $identifier
  * @return mixed
  */
-function getCart($identifier){
-    $cartItem = DB::table('shoppingcart')->where('id', '=', $identifier)->first();
+function getCart($identifier)
+{
+    $allShopingCarts = collect();
+
+    $pedido = Pedido::where('id', $identifier)->first();
+    //dd($pedido);
+
+    $idPedido = $pedido->id;
+    $datePedido = $pedido->fechaPedido;
+    $expectedDateTime = $pedido->fechaPrevistaPedido;
+    $expectedDate = Carbon::parse($expectedDateTime)->format('d-m-Y');
+    $expectedTime = Carbon::parse($expectedDateTime)->format('H:i:s');
+    $justification = $pedido->justificacion;
+
+    $itemsPedido = LineaPedido::where('idPedido', $idPedido)->get();
+
+    foreach ($itemsPedido as $ItemPedido) {
+        $product = Producto::findOrFail($ItemPedido->idProducto);
+        $productId = $product->id;
+        $productName = $product->nombre;
+        $quantity = $ItemPedido->cantidad;
+
+        $carItem = CartItem::fromAttributes($productId, $productName, 0.0, 0.0, [
+            'categoria' => Categoria::findOrFail($product->idCategoria)->nombre,
+            'expectedDate' => $expectedDate,
+            'expectedTime' => $expectedTime,
+            'justification' => $justification,
+            'fechaPedido' => $datePedido
+        ]);
+
+        $carItem->setQuantity($quantity);
+        $allShopingCarts->put($carItem->rowId, $carItem);
+    }
+    /*$cartItem = DB::table('shoppingcart')->where('id', '=', $identifier)->first();
         if (DB::connection()->getDriverName() === 'pgsql') {
             $allShopingCarts = unserialize(base64_decode(data_get($cartItem, 'content')));
         } else {
             $allShopingCarts = unserialize(data_get($cartItem, 'content'));
         }
-    //dd($allShopingCarts);
+    //dd($allShopingCarts);*/
     return $allShopingCarts;
 }
+
+
