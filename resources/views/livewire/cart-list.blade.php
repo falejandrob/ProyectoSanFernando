@@ -17,6 +17,12 @@
             </div>
         <br>
             <div>
+                @php
+                    $fechaConFormatoMin = \Carbon\Carbon::parse($closestDate->fechaMinima)->format('d-m-Y');
+                    $horaConFormatoMin = \Carbon\Carbon::parse($closestDate->fechaMinima)->format('H:i');
+                    $fechaConFormatoMax = \Carbon\Carbon::parse($closestDate->fechaMaxima)->format('d-m-Y');
+                    $horaConFormatoMax = \Carbon\Carbon::parse($closestDate->fechaMaxima)->format('H:i');
+                @endphp
                 <p class="carrito-size">Apertura de plazo:</p>
                 <p class="carrito-size">{{$fechaConFormatoMin}} - {{$horaConFormatoMin}}h</p>
                 <p class="carrito-size">Cierre de plazo:</p>

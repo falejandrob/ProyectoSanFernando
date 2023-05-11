@@ -18,7 +18,7 @@ class CartList extends Component
     public $rowId;
     public function render()
     {
-        $fechaActual = Carbon::now();
+        /*$fechaActual = Carbon::now();
         $hora = strtotime($fechaActual);
         $horaActual =  date("H:i", $hora);
 
@@ -42,7 +42,9 @@ class CartList extends Component
         $fechaMax = strtotime($fechaMasProxima);
         $fechaMaxFormato = date('Y-m-d',$fechaMax);
         $fechaConFormatoMax = date('d-m-Y',$fechaMax);
-        $horaConFormatoMax = date("H:i", $fechaMax);
+        $horaConFormatoMax = date("H:i", $fechaMax);*/
+
+        $closestDate = FechaMaximaPedido::closestToDate()->first();
 
         $expectedDate = date('Y-m-d');
         $expectedTime = date("H:i");
@@ -56,9 +58,7 @@ class CartList extends Component
         $fechaPedido = null;
 
         return view('livewire.cart-list', ['cart'=>$this->cart, 'categorias'=>$categorias, "expectedDate" => $expectedDate, "expectedTime" => $expectedTime,
-            "presupuesto" => $presupuesto, 'fechaConFormatoMax' => $fechaConFormatoMax, 'horaConFormatoMax' => $horaConFormatoMax,
-            'fechaConFormatoMin' => $fechaConFormatoMin, 'horaConFormatoMin' => $horaConFormatoMin, 'fechaMinFormato'=>$fechaMinFormato,
-            'fechaMaxFormato'=>$fechaMaxFormato, 'fechaInicioPlazo'=>$fechaInicioPlazo, 'fechaMasProxima' => $fechaMasProxima]);
+            "presupuesto" => $presupuesto, 'closestDate'=>$closestDate]);
     }
 
     public function removeFromCart($productoCarritoJson){
