@@ -83,8 +83,8 @@
                                         <br><br>
                                         <div class="observacion" style="width: 100%; display: flex;">
                                             <textarea class="form-control" style="width: 100%; height: 10%"
-                                                      id="observacion" placeholder="Observación"
-                                                      name="observacion">{{ Session::get("observacion") }}</textarea>
+                                                      id="observacion{{"-".$productoCarrito->rowId}}" placeholder="Observación"
+                                                      name="observacion{{"-".$productoCarrito->rowId}}">{{ Session::get("observacion") }}</textarea>
                                         </div>
                                         <!--<button type="button" class="btn btn-primary btn-lg justificacion" data-bs-toggle="modal" data-bs-target="#justificacionModal">Justificación</button>-->
                                     </div>

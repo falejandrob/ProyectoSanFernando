@@ -23,7 +23,6 @@
         <hr>
         <h3>Fecha pedido: {{ $pedido->first()->options->get('fechaPedido') }}</h3>
         <h3>Fecha prevista: {{ $pedido->first()->options->get('expectedDate') }}</h3>
-        <h3>Observaciones: {{ $pedido->first()->observaciones }}</h3>
         <h3>Justificación: {{ $pedido->first()->options->get('justification') }}</h3>
 
         <br><br>
@@ -50,7 +49,7 @@
                             <td>{{ $linea->name }}</td>
                             <td>{{ $linea->options->categoria }}</td>
                             <td>{{ $linea->qty }}</td>
-                            <td></td>
+                            <td>{{ $linea->options->observacion }}</td>
                         </tr>
                     @endforeach
                     </tbody>

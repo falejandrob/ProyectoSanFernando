@@ -36,7 +36,7 @@
                             <td>{{ $linea->name }}</td>
                             <td>{{ $linea->options->categoria }}</td>
                             <td>{{ $linea->qty }}</td>
-                            <td></td>
+                            <td>{{ $linea->options->observacion}}</td>
                         </tr>
                     @endforeach
                     </tbody>
