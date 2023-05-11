@@ -5,7 +5,13 @@
         <div class="row" >
             <div class="col-md-12" style="justify-content: center">
                 <div style="width: 60%; margin: auto;">
-                    <h2 class="mt-4" style="text-align: center">Añadir fecha límite</h2>
+                    <br>
+                    @if (session('success'))
+                        <div class="alert alert-success">
+                            {{ session('success') }}
+                        </div>
+                    @endif
+                    <h2 class="mt-4" style="text-align: center">Añadir plazo de pedido</h2>
                     <hr>
                     <form action="{{ route("fecha.store") }}" method="post">
                         @csrf

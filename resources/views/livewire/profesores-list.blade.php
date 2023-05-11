@@ -1,5 +1,11 @@
 <div>
     <div class="mt-2 table-responsive-md">
+        <br>
+        @if (session('success'))
+            <div class="alert alert-success">
+                {{ session('success') }}
+            </div>
+        @endif
         <h1 style="text-align: center; padding: 15px">PROFESORES</h1>
         <table class="table" style="width:80%; margin:auto; text-align: center;">
             <thead>

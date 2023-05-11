@@ -1,5 +1,11 @@
 <div>
     <div class="mt-2 table-responsive-md">
+        <br>
+        @if (session('success'))
+            <div class="alert alert-success">
+                {{ session('success') }}
+            </div>
+        @endif
         <h1 style="text-align: center; padding: 15px">PROVEEDORES</h1>
         @if($proveedores->count() > 0)
             <table class="table" style="width:80%; margin:auto; text-align: center;">

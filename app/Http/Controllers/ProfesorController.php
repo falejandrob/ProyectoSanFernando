@@ -58,6 +58,7 @@ class ProfesorController extends Controller
         $presupuesto->save();
 
         $profesor->update($request->all());
+        session()->flash('success', 'El profesor se ha modificado correctamente.');
         return redirect()->action([ProfesorController::class, 'listarProfesores']);
     }
 

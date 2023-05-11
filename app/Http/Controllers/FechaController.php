@@ -37,6 +37,7 @@ class FechaController
         ]);
 
         $fecha->save();
+        session()->flash('success', 'El plazo se ha guardado correctamente.');
         return redirect()->action([FechaController::class, 'index']);
     }
 }

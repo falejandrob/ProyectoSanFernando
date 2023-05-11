@@ -17,7 +17,8 @@ class ProveedorController extends Controller
         ]);
 
         $proveedor->save();
-        return redirect()->action([ProveedorController::class, 'listarProveedores']);
+        session()->flash('success', 'El proveedor se ha guardado correctamente.');
+        return redirect()->action([ProveedorController::class, 'aniadirProveedor']);
     }
 
     public function aniadirProveedor()
@@ -43,6 +44,7 @@ class ProveedorController extends Controller
         $proveedor = Proveedore::find($id);
 
         $proveedor->update($request->all());
+        session()->flash('success', 'El proveedor se ha modificado correctamente.');
         return redirect()->action([ProveedorController::class, 'listarProveedores']);
     }
 }

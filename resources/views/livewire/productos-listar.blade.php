@@ -1,10 +1,16 @@
 <div class="productos" style="padding: 25px">
     <div class="mt-2 table-responsive-md">
         <div>
+            @if (session('success'))
+                <div class="alert alert-success">
+                    {{ session('success') }}
+                </div>
+                <br>
+            @endif
             <div class="col-md-1" style="display: flex">
                 <label for="idCatgeroia" class="form-label" style="margin-right:5px">Categorías</label>
                 <div class="col-xs-10">
-                    <select class="block w-full" wire:model="categoryFilter">
+                    <select class="block w-full" wire:model="categoryFilter" style="width: 180px">
                         <option value="">Todas</option>
                         @foreach ($categorias as $categoria)
                             <option value="{{ $categoria->id }}">{{ $categoria->nombre }}</option>

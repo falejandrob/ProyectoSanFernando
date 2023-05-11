@@ -3,10 +3,15 @@
 
 @section('content')
     <div class="container" style="padding: 25px">
+        @if (session('success'))
+            <div class="alert alert-success">
+                {{ session('success') }}
+            </div>
+            <br>
+        @endif
         <h1 style="text-align: center">Total pedidos</h1>
 
         <br>
-
         @if(!empty($pedidos) && count($pedidos) > 0 )
             <div class="table-wrapper-scroll-y my-custom-scrollbar">
                 <table class="table mb-0 tabla-scroll ">

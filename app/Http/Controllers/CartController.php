@@ -63,7 +63,7 @@ class CartController extends Controller
     function eliminarPedido($id)
     {
         Pedido::destroy($id);
-
+        session()->flash('success', 'El pedido se ha eliminado correctamente.');
         return redirect()->action([HomeController::class, 'totalPedidos']);
     }
 

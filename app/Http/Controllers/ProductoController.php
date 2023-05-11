@@ -38,7 +38,8 @@ class ProductoController extends Controller
             ]);
 
             $product->save();
-            return redirect()->action([ProductoController::class, 'listarProductos']);
+            session()->flash('success', 'El producto se ha guardado correctamente.');
+            return redirect()->action([ProductoController::class, 'aniadirProducto']);
         }
         if(auth()->user()->hasRole('profesor')){
             $product = Producto::create([
@@ -58,6 +59,7 @@ class ProductoController extends Controller
     {
         $producto = Producto::find($id);
         $producto->update($request->all());
+        session()->flash('success', 'El producto se ha modificado correctamente.');
         return redirect()->action([ProductoController::class, 'listarProductos']);
     }
 }
