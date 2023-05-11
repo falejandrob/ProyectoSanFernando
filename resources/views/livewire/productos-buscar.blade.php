@@ -1,11 +1,13 @@
 <div>
-    @if($fechaMasProxima != null)
-    <div
-        style="width: 60%; margin: auto; border: 2px solid #F6C366; border-radius: 50px; height: 50px; display: flex; justify-content: space-around; align-items: center;">
-        <input wire:model="searchTerm" type="text"
-               style="width: 70%; height: 35px; font-size: 150%; text-align: center; outline: none; border: 2px solid white; background: white"/>
-        <img src="https://cdn-icons-png.flaticon.com/512/3917/3917132.png" style="height: 30px;"/>
-    </div>
+    @if($closestDate !== null)
+        @if($fechaActual->between($closestDate->fechaMinima,$closestDate->fechaMaxima))
+            <div
+                style="width: 60%; margin: auto; border: 2px solid #F6C366; border-radius: 50px; height: 50px; display: flex; justify-content: space-around; align-items: center;">
+                <input wire:model="searchTerm" type="text"
+                       style="width: 70%; height: 35px; font-size: 150%; text-align: center; outline: none; border: 2px solid white; background: white"/>
+                <img src="https://cdn-icons-png.flaticon.com/512/3917/3917132.png" style="height: 30px;"/>
+            </div>
+        @endif
     @endif
     <br>
 
@@ -114,6 +116,7 @@
                 @if($producto->idCategoria == $categoria->id)
                     <p class="p-categoria" style="width:20%;">{{$categoria->nombre}}</p>
 
+
                 @endif
             @endforeach
             @if(optional($carrito->where('id', $producto->id)->first())->qty != null)
@@ -145,6 +148,7 @@
                                         </div>
                                     </div>
 
+
                 @endif
             @endif
             @if(optional($carrito->where('id', $producto->id)->first())->qty != null)
@@ -174,6 +178,7 @@
                                         </div>
                                     </div>
 
+
                 @endif
             @endif
             @if(optional($carrito->where('id', $producto->id)->first())->qty == null)
@@ -188,22 +193,35 @@
                                     </svg>
                                 </button>
 
+
             @endif
             </div>
         </li>
+
 
         @endforeach
         </ul>
     </div>-->
     @else
         <div style="width: 60%; margin: auto">
-            @if($fechaPasada == null and $fechaMasProxima == null)
+            @if($closestDate === null)
                 <div class="alert alert-danger" style="text-align: center; font-size: 120%">
                     No se pueden realizar pedidos porque no hay plazo abierto.
                 </div>
-            @elseif(($fechaActual > $fechaPasada) and ($fechaMasProxima == null))
+            @elseif(!$fechaActual->between($closestDate->fechaMinima,$closestDate->fechaMaxima))
                 <div class="alert alert-danger" style="text-align: center; font-size: 120%">
-                    No se pueden realizar pedidos, el plazo se cerró el día {{$fechaConFormato}} a las {{$horaConFormato}}h.
+                    @php
+                        $fechaConFormato = \Carbon\Carbon::parse($closestDate->fechaMaxima)->format('d-m-Y');
+                        $horaConFormato = \Carbon\Carbon::parse($closestDate->fechaMaxima)->format('H:i:s');
+                    @endphp
+                    @if($fechaActual->lt($closestDate->fechaMaxima))
+                        No se pueden realizar pedidos, el proximo plazo es el día {{$fechaConFormato}} a
+                        las {{$horaConFormato}}h.
+
+                    @else
+                        No se pueden realizar pedidos, el plazo se cerró el día {{$fechaConFormato}} a
+                        las {{$horaConFormato}}h.
+                    @endif
                 </div>
             @elseif(!$alerta)
                 <div class="alert alert-success" style="text-align: center; font-size: 120%">
@@ -214,10 +232,10 @@
                     El producto buscado no existe
                 </div>
 
-            <button class="btn" data-bs-toggle="modal" data-bs-target="#exampleModal"
-                    style="background: #F5BA53; width: 50%; margin-left: 25%; padding: 10px">
-                INSERTAR PRODUCTO
-            </button>
+                <button class="btn" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                        style="background: #F5BA53; width: 50%; margin-left: 25%; padding: 10px">
+                    INSERTAR PRODUCTO
+                </button>
             @endif
         </div>
 

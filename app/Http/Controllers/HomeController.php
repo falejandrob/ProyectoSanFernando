@@ -41,12 +41,7 @@ class HomeController extends Controller
     public function index()
     {
         $fechaActual = Carbon::now();
-
-        $fechaMasProxima = FechaMaximaPedido::selectRaw('fechaMaxima')
-            ->where('fechaMaxima', '>', $fechaActual)
-            ->orderByRaw('fechaMaxima ASC')
-            ->limit(1)
-            ->value('fechaMaxima');
+        $closestDate = FechaMaximaPedido::closestToDate()->first();
         $expectedDate = date("Y-m-d");
         $expectedTime = date("H:i");
 
@@ -55,7 +50,7 @@ class HomeController extends Controller
         $presupuesto = Presupuesto::where('idUser', Auth::id())->where('anio', $anio_actual)->first();
 
         if (auth()->user()->hasRole('profesor')) {
-            return view('home', ["productos" => $productos, "presupuesto" => $presupuesto, "expectedDate" => $expectedDate, "expectedTime" => $expectedTime, 'fechaMasProxima'=>$fechaMasProxima]);
+            return view('home', ["productos" => $productos, "presupuesto" => $presupuesto, "expectedDate" => $expectedDate, "expectedTime" => $expectedTime, 'closestDate'=>$closestDate, 'fechaActual' =>$fechaActual]);
         }
 
         if (auth()->user()->hasRole('admin')) {

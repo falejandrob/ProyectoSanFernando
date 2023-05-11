@@ -27,7 +27,9 @@ class ProductosBuscar extends Component
     {
         //
         $fechaActual = Carbon::now();
-        $hora = strtotime($fechaActual);
+        $closestDate = FechaMaximaPedido::closestToDate()->first();
+
+        /*$hora = strtotime($fechaActual);
         $horaActual =  date("H:i", $hora);
 
         $fechaMasProxima = FechaMaximaPedido::selectRaw('fechaMaxima')
@@ -42,9 +44,15 @@ class ProductosBuscar extends Component
             ->limit(1)
             ->value('fechaMaxima');
 
-        $fecha = strtotime($fechaPasada);
+
+
+        dd($closestDate);
+        dd($fechaPasada);
+       $fecha = strtotime($fechaPasada->fechaMaxima);
         $fechaConFormato = date('d-m-Y',$fecha);
-        $horaConFormato = date("H:i", $fecha);
+        $horaConFormato = date("H:i", $fecha);*/
+
+
 
 
         $this->searchTerm = preg_replace('/[^a-zA-Z0-9]/', '', $this->searchTerm);
@@ -61,8 +69,7 @@ class ProductosBuscar extends Component
         $this->categorias = Categoria::all();
         $this->cart = Cart::content();
         //dd($this->cart);
-        return view('livewire.productos-buscar', ["categorias" => $this->categorias, "carrito"=>$this->cart, 'alerta'=>$alerta, 'fechaActual' => $fechaActual, 'fechaPasada'=>$fechaPasada,
-            'fechaMasProxima'=>$fechaMasProxima, 'fechaConFormato'=>$fechaConFormato, 'horaConFormato'=>$horaConFormato]);
+        return view('livewire.productos-buscar', ["categorias" => $this->categorias, "carrito"=>$this->cart, 'alerta'=>$alerta, 'fechaActual' => $fechaActual, 'closestDate'=>$closestDate]);
     }
 
 
