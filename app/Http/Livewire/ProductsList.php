@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use App\Models\Categoria;
 use App\Models\Producto;
+use App\Models\User;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -54,9 +55,8 @@ class ProductsList extends Component
 
     public function destroyProduct($id)
     {
-        Producto::destroy($id);
-        $this->emit('producto_update');
-        $this->emit('refresh');
+        Producto::find($id)->delete();
+        session()->flash('success', 'El producto se ha eliminado correctamente.');
     }
 
     public function validateProduct($id){

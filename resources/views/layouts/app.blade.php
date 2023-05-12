@@ -229,6 +229,10 @@
                 width: 40%;
             }
 
+            .plazos{
+                width:135%;
+            }
+
         }
 
         @media (min-width: 768px) and (max-width: 992px) {
@@ -245,6 +249,9 @@
                 font-size: 1.1rem;
                 margin: 10px;
                 vertical-align: middle;
+            }
+            .plazos{
+                width:100%;
             }
         }
         @media (min-width: 1024px) {
@@ -281,6 +288,9 @@
 
             .div-btn{
                 width: 160%
+            }
+            .plazos{
+                width:100%;
             }
 
         }
@@ -323,6 +333,10 @@
 
             .form-fecha{
                 width: 40%;
+            }
+
+            .plazos{
+                width:100%;
             }
 
         }
@@ -374,7 +388,8 @@
                                 </a>
                                 <ul class="dropdown-menu">
                                     <li><a class="dropdown-item" href="{{route('totalPedidos')}}">Ver pedidos</a></li>
-                                    <li><a class="dropdown-item" href="{{route('fechaPedidos')}}">Añadir plazo pedido</a></li>
+                                    <li><a class="dropdown-item" href="{{route('listDates')}}">Ver plazos de pedidos</a></li>
+                                    <li><a class="dropdown-item" href="{{route('fechaPedidos')}}">Añadir plazo de pedido</a></li>
                                 </ul>
                             </li>
                             <li class="nav-item dropdown">

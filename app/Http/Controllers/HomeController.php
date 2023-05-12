@@ -73,11 +73,6 @@ class HomeController extends Controller
             return view("profesor.detallesPedido", ["pedido" => $pedido, "presupuesto" => $presupuesto, "idPedido" => $idPedido]);
         }
 
-        if (auth()->user()->hasRole('admin')) {
-            return view("admin.detallesPedido", ["pedido" => $pedido, "idPedido" => $idPedido, "profesor" => $profesor]);
-        }
-
-
     }
 
     public function detallesPedidoAdmin($idPedido, $profesor)
@@ -88,7 +83,7 @@ class HomeController extends Controller
 
 
         if (auth()->user()->hasRole('admin')) {
-            return view("admin.detallesPedido", ["pedido" => $pedido, "idPedido" => $idPedido, "profesor" => $profesor]);
+            return view("admin.detalles-pedido", ["pedido" => $pedido, "idPedido" => $idPedido, "profesor" => $profesor]);
         }
 
 

@@ -25,8 +25,12 @@ Route::get('/detallesPedido/{id}',[\App\Http\Controllers\HomeController::class, 
 Route::get('/detallesPedido/{id}/{profesor}',[\App\Http\Controllers\HomeController::class, 'detallesPedidoAdmin'])->name('detallesPedidoAdmin');
 Route::get('/eliminarPedido/{id}',[\App\Http\Controllers\CartController::class, 'eliminarPedido'])->name('eliminarPedido');
 Route::get('/repetirPedido/{id}',[\App\Http\Controllers\CartController::class, 'repetirPedido'])->name('repetirPedido');
+
 Route::get('/fechaPedidos/',[\App\Http\Controllers\FechaController::class, 'index'])->name('fechaPedidos');
 Route::post('/fecha/store',[\App\Http\Controllers\FechaController::class, 'store'])->name('fecha.store');
+Route::get('/fecha/modificarFecha/{id}',[\App\Http\Controllers\FechaController::class, 'updateDate'])->name('updateDate');
+Route::post('/fecha/update/{id}',[\App\Http\Controllers\FechaController::class, 'update'])->name('fecha.update');
+Route::get('/fecha/listarPlazos', [\App\Http\Controllers\FechaController::class, 'listDates'])->name('listDates');
 
 
 //Ruta producto
