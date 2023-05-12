@@ -121,7 +121,7 @@
 
         @media (min-width: 1200px) {
             img{
-                width: 40%;
+                width: 30%;
             }
             .div-padre{
                 display: flex;
