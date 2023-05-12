@@ -46,6 +46,66 @@
                     </tbody>
                 </table>
             </div>
+            <br>
+            {{-- Botones de paginación --}}
+            <nav>
+                <ul class="pagination justify-content-center">
+                    {{-- Botón de ir a la primera página --}}
+                    @if ($dates->currentPage() > 1)
+                        <li class="page-item">
+                            <a wire:click="gotoPage(1)" class="page-link">&laquo;&laquo;</a>
+                        </li>
+                    @else
+                        <li class="page-item">
+                            <a wire:click="gotoPage(1)" class="page-link disabled">&laquo;&laquo;</a>
+                        </li>
+                    @endif
+                    {{-- Botón de ir a la página anterior --}}
+                    @if ($dates->currentPage() > 1)
+                        <li class="page-item">
+                            <a wire:click="previousPage" class="page-link">&laquo;</a>
+                        </li>
+                    @else
+                        <li class="page-item">
+                            <a wire:click="previousPage" class="page-link disabled">&laquo;</a>
+                        </li>
+                    @endif
+                    {{-- Botones de las páginas --}}
+                    @php
+                        $startPage = max($dates->currentPage() - floor($maxPaginasMostradas / 2), 1); // Página inicial a mostrar
+                        $endPage = min($startPage + $maxPaginasMostradas - 1, $dates->lastPage()); // Página final a mostrar
+                    @endphp
+                    @for ($i = $startPage; $i <= $endPage; $i++)
+                        <li class="page-item"><a wire:click="gotoPage({{ $i }})"
+                                                 class="page-link{{ $i == $dates->currentPage() ? ' active' : '' }}">{{ $i }}</a>
+                        </li>
+                    @endfor
+                    {{-- Botón de ir a la página siguiente --}}
+                    @if ($dates->hasMorePages())
+                        <li class="page-item">
+                            <a wire:click="nextPage" class="page-link">&raquo;</a>
+                        </li>
+                    @else
+                        <li class="page-item">
+                            <a wire:click="nextPage" class="page-link disabled">&raquo;</a>
+                        </li>
+                    @endif
+                    {{-- Botón de ir a la última página --}}
+                    @if ($dates->hasMorePages())
+                        <li class="page-item">
+                            <a wire:click="gotoPage({{ $dates->lastPage() }})" class="page-link">&raquo;&raquo;</a>
+                        </li>
+                    @else
+                        <li class="page-item">
+                            <a wire:click="gotoPage({{ $dates->lastPage() }})" class="page-link disabled">&raquo;&raquo;</a>
+                        </li>
+                    @endif
+                </ul>
+            </nav>
+
+
+
+            <br>
         @else
             <div style="width: 60%; margin: auto">
                 <div class="alert alert-danger" style="text-align: center; font-size: 120%">
