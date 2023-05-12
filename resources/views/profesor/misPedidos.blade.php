@@ -38,7 +38,7 @@
                             </a>
                         </td>
                         <td>
-                            <a class="btn btn-success" href="#">
+                            <a class="btn btn-success" href="{{route('downloadPdf',[$id])}}">
                                 Imprimir
                             </a>
                         </td>

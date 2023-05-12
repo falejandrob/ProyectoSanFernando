@@ -55,7 +55,7 @@ class CartController extends Controller
         $pdf = Pdf::loadView('pdf.productos', compact('productos', 'dateTimeJustification'));
         store(Auth::id());
         Cart::destroy();
-        $pdf->download('invoice.pdf');
+        //$pdf->download('invoice.pdf');
         session()->flash('success', 'El pedido se ha realizado correctamente.');
         return redirect()->route('misPedidos', [Auth::id()]);
     }

@@ -110,11 +110,11 @@
                     $categorias[] = $categoria;
                 @endphp
                 <tr style="text-align: center" class="hover">
-                    <td><strong>{{ $categoria }}</strong></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td style="background: #E7E7E7"><strong>{{ $categoria }}</strong></td>
+                    <td style="background: #E7E7E7"></td>
+                    <td style="background: #E7E7E7"></td>
+                    <td style="background: #E7E7E7"></td>
+                    <td style="background: #E7E7E7"></td>
                 </tr>
             @endif
             <tr style="text-align: center" class="hover">
@@ -122,7 +122,7 @@
                 <td>{{ $producto->qty }} ud</td>
                 <td></td>
                 <td></td>
-                <td></td>
+                <td>{{ $producto->options->observacion }}</td>
             </tr>
         @endforeach
         </tbody>

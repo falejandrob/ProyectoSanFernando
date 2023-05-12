@@ -9,6 +9,7 @@ use App\Models\Pedido;
 use App\Models\Presupuesto;
 use App\Models\Producto;
 use App\Models\User;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Gloudemans\Shoppingcart\CartItem;
 use Illuminate\Http\Request;
@@ -104,6 +105,22 @@ class HomeController extends Controller
 
 
         return redirect()->action([HomeController::class, 'index']);
+    }
+    function downloadPdf($id){
+        $productos = getCart($id);
+        $pdfName = 'Pedido_'.$productos->first()->options->expectedDate.'-'.$productos->first()->options->expectedTime.'_'.auth()->user()->nombre.'-'.auth()->user()->apellidos.'.pdf';
+
+        $dateTimeJustification = [
+            'expectedDate' => $productos->first()->options->expectedDate,
+            'expectedTime' => $productos->first()->options->expectedTime,
+            'justification' => $productos->first()->options->justification,
+        ];
+
+        $pdf = Pdf::loadView('pdf.productos', compact('productos', 'dateTimeJustification'));
+
+        //dd($productos);
+
+        return $pdf->stream($pdfName);
     }
 
 }
