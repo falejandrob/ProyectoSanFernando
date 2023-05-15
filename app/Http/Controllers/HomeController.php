@@ -11,9 +11,11 @@ use App\Models\Producto;
 use App\Models\User;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
+use Dompdf\Dompdf;
 use Gloudemans\Shoppingcart\CartItem;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 
 class HomeController extends Controller
@@ -106,9 +108,42 @@ class HomeController extends Controller
 
         return redirect()->action([HomeController::class, 'index']);
     }
+
+    /**
+     * @param $id
+     * @return mixed
+     */
     function downloadPdf($id){
+
+        list($pdfName, $pdf) = $this->getPDF($id);
+
+        return $pdf->stream($pdfName);
+    }
+
+    public function sendMail($id)
+    {
+        list($pdfName, $pdf) = $this->getPDF($id);
+
+        Mail::send('correo.enviar', [], function($message) use ($pdf, $pdfName){
+
+            $message->to(Auth::user()->email, Auth::user()->nombre.' '.Auth::user()->apellidos)
+                ->subject('Send mail from laravel')
+                ->attachData($pdf->output(), $pdfName);
+
+        });
+
+        session()->flash('success', 'El correo se ha enviado correctamente.');
+        return redirect()->route('misPedidos', [Auth::id()]);
+    }
+
+    /**
+     * @param $id
+     * @return array
+     */
+    public function getPDF($id): array
+    {
         $productos = getCart($id);
-        $pdfName = 'Pedido_'.$productos->first()->options->expectedDate.'-'.$productos->first()->options->expectedTime.'_'.auth()->user()->nombre.'-'.auth()->user()->apellidos.'.pdf';
+        $pdfName = 'Pedido_' . $productos->first()->options->expectedDate . '-' . $productos->first()->options->expectedTime . '_' . auth()->user()->nombre . '-' . auth()->user()->apellidos . '.pdf';
 
         $dateTimeJustification = [
             'expectedDate' => $productos->first()->options->expectedDate,
@@ -117,10 +152,7 @@ class HomeController extends Controller
         ];
 
         $pdf = Pdf::loadView('pdf.productos', compact('productos', 'dateTimeJustification'));
-
-        //dd($productos);
-
-        return $pdf->stream($pdfName);
+        return array($pdfName, $pdf);
     }
 
 }
