@@ -33,12 +33,12 @@
                             </a>
                         </td>
                         <td>
-                            <a class="btn btn-danger" href="#">
+                            <a class="btn btn-danger" href="{{route('sendMail',[$id])}}">
                                 Enviar
                             </a>
                         </td>
                         <td>
-                            <a class="btn btn-success" href="{{route('downloadPdf',[$id])}}">
+                            <a class="btn btn-success" href="{{route('downloadPdf',[$id])}}" target="_blank">
                                 Imprimir
                             </a>
                         </td>

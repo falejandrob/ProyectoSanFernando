@@ -55,7 +55,7 @@ class ProductosBuscar extends Component
 
 
 
-        $this->searchTerm = preg_replace('/[^a-zA-Z0-9]/', '', $this->searchTerm);
+        $this->searchTerm = preg_replace('/[^a-zA-Z0-9 ]/', '', $this->searchTerm);
         if(empty($this->searchTerm)) {
             //$this->productos = Producto::where('validado', '=','3')->skip(50)->take(50)->get();
             //$this->productos = Producto::all()->skip(50)->take(50);
