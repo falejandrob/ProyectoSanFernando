@@ -61,26 +61,30 @@ class HomeController extends Controller
 
     public function misPedidos($idUser)
     {
-        $pedidos = getAllCarts(Auth::id());
-        $collection = new Collection($pedidos);
-        $perPage = 2;
+
+        $pedidos = getAllCarts($idUser);
+
+        $pedidos = $pedidos->sortByDesc(function ($pedido) {
+            return strtotime($pedido->first()->options->fechaPedido);
+        });
+
+        $perPage = 6;
         $currentPage = request()->get('page', 1);
 
         $paginatedData = new LengthAwarePaginator(
-            $collection->forPage($currentPage, $perPage),
-            $collection->count(),
+            $pedidos->forPage($currentPage, $perPage),
+            $pedidos->count(),
             $perPage,
             $currentPage,
             ['path' => request()->url()]
         );
-
-        dd($paginatedData);
 
         $anio_actual = Carbon::now()->year;
         $presupuesto = Presupuesto::where('idUser', Auth::id())->where('anio', $anio_actual)->first();
 
         return view("profesor.misPedidos", ["paginatedData" => $paginatedData, "presupuesto" => $presupuesto]);
     }
+
 
     public function detallesPedido($idPedido)
     {
@@ -115,6 +119,10 @@ class HomeController extends Controller
         return view("admin.pedidos", ["pedidos" => $pedidos, "profesores" => $profesores]);
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function addJustificacion(Request $request)
     {
         $justificacion = Session::get("justificacion");
@@ -136,6 +144,10 @@ class HomeController extends Controller
         return $pdf->stream($pdfName);
     }
 
+    /**
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function sendMail($id)
     {
         list($pdfName, $pdf) = $this->getPDF($id);
@@ -174,8 +186,8 @@ class HomeController extends Controller
 }
 
 /**
- * @return array|array[]
  *
+ * @return array
  */
 function getAllCartsTeachers()
 {
@@ -226,7 +238,7 @@ function getAllCartsTeachers()
  * Get all elements for the Pedidos table  asocciate with a User id
  *
  * @param $identifier
- * @return array
+ * @return Collection
  */
 function getAllCarts($identifier)
 {
@@ -278,7 +290,7 @@ function getAllCarts($identifier)
  * Get a specific element of the Pedidos table and his associates rows
  *
  * @param $identifier
- * @return mixed
+ * @return Collection
  */
 function getCart($identifier)
 {
