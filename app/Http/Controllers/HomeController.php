@@ -15,6 +15,8 @@ use Gloudemans\Shoppingcart\CartItem;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Collection;
 
 class HomeController extends Controller
 {
@@ -58,10 +60,24 @@ class HomeController extends Controller
     public function misPedidos($idUser)
     {
         $pedidos = getAllCarts(Auth::id());
+        $collection = new Collection($pedidos);
+        $perPage = 2;
+        $currentPage = request()->get('page', 1);
+
+        $paginatedData = new LengthAwarePaginator(
+            $collection->forPage($currentPage, $perPage),
+            $collection->count(),
+            $perPage,
+            $currentPage,
+            ['path' => request()->url()]
+        );
+
+        dd($paginatedData);
+
         $anio_actual = Carbon::now()->year;
         $presupuesto = Presupuesto::where('idUser', Auth::id())->where('anio', $anio_actual)->first();
 
-        return view("profesor.misPedidos", ["pedidos" => $pedidos, "presupuesto" => $presupuesto]);
+        return view("profesor.misPedidos", ["paginatedData" => $paginatedData, "presupuesto" => $presupuesto]);
     }
 
     public function detallesPedido($idPedido)

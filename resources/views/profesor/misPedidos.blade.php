@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-    <div class="container" style="padding: 25px; ">
+    <div class="container" style="padding: 25px;">
         @if (session('success'))
             <div class="alert alert-success">
                 {{ session('success') }}
@@ -22,7 +22,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                @foreach($pedidos as $id => $pedido)
+                @foreach($paginatedData as $id => $pedido)
                     <tr>
                         <td>{{ $pedido->first()->options->get('fechaPedido') }}</td>
                         <td>{{ $pedido->first()->options->get('expectedDate') }}</td>
@@ -47,5 +47,8 @@
                 </tbody>
             </table>
         </div>
+            <div class="pagination" style="justify-content: center">
+                {{ $paginatedData->links() }}
+            </div>
     </div>
 @endsection
