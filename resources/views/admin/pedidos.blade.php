@@ -11,7 +11,7 @@
         <h1 style="text-align: center">Total pedidos</h1>
 
         <br>
-        @if(!empty($paginatedData) && count($paginatedData) > 0 )
+        @if(!empty($pedidos) && count($pedidos) > 0 )
             <div class="table-wrapper-scroll-y my-custom-scrollbar">
                 <table class="table mb-0 tabla-scroll ">
                     <thead>
@@ -25,7 +25,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach($paginatedData as $id => $pedido)
+                    @foreach($pedidos as $id => $pedido)
                         @php
                             $validado = \App\Models\Pedido::findOrFail($id)->validado;
                             $fechaConFormato = \Carbon\Carbon::parse($pedido[0]->first()->options->get('fechaPedido'))->format('d-m-Y');
@@ -83,10 +83,6 @@
                     </tbody>
                 </table>
                 <br>
-                <div class="pagination" style="justify-content: center">
-
-                    {{ $paginatedData->onEachSide(3)->links() }}
-                </div>
             </div>
         @else
             <div style="width: 60%; margin: auto">

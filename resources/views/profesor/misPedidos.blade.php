@@ -22,7 +22,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                @foreach($paginatedData as $id => $pedido)
+                @foreach($pedidos as $id => $pedido)
                     @php
                         $validado = \App\Models\Pedido::findOrFail($id)->validado;
                         $fechaConFormato = \Carbon\Carbon::parse($pedido->first()->options->get('fechaPedido'))->format('d-m-Y');
@@ -74,8 +74,5 @@
                 </tbody>
             </table>
         </div>
-            <div class="pagination" style="justify-content: center">
-                {{ $paginatedData->links() }}
-            </div>
     </div>
 @endsection

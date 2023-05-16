@@ -82,7 +82,7 @@ class HomeController extends Controller
         $anio_actual = Carbon::now()->year;
         $presupuesto = Presupuesto::where('idUser', Auth::id())->where('anio', $anio_actual)->first();
 
-        return view("profesor.misPedidos", ["paginatedData" => $paginatedData, "presupuesto" => $presupuesto]);
+        return view("profesor.misPedidos", ["pedidos" => $pedidos, "presupuesto" => $presupuesto]);
     }
 
     public function validarPedido($id){
@@ -148,7 +148,7 @@ class HomeController extends Controller
             return $diferencia;
         })->reverse();
 
-        $perPage = 1;
+        /*$perPage = 1;
         $currentPage = request()->get('page', 1);
 
         $paginatedData = new LengthAwarePaginator(
@@ -157,42 +157,13 @@ class HomeController extends Controller
             $perPage,
             $currentPage,
             ['path' => request()->url()]
-        );
-
-
-        /*$totalItems = $pedidos->total(); // Número total de elementos paginados
-        $perPage = $pedidos->perPage(); // Número de elementos por página
-
-        $pagesToShow = 2;
-
-        $onEachSide = floor(($pagesToShow - 1) / 2);
-
-        $currentPage = $data->currentPage();
-
-        $from = max(1, $currentPage - $onEachSide);
-        $to = min($currentPage + $onEachSide, $data->lastPage());
-
-        $paginator = new LengthAwarePaginator(
-            $pedidos->items(), // Elementos de la página actual
-            $totalItems, // Total de elementos
-            $perPage, // Número de elementos por página
-            $currentPage, // Página actual
-            [
-                'path' => LengthAwarePaginator::resolveCurrentPath(), // URL base
-                'pageName' => 'page', // Nombre del parámetro de página en la URL
-            ]
-        );
-
-        $paginator->setPageName('page')->setLastPage($data->lastPage())
-            ->setPath(LengthAwarePaginator::resolveCurrentPath())
-            ->appends(request()->except('page'))
-            ->setPageRange($from, $to);*/
+        );*/
 
 
         $profesores = User::all();
 
 
-        return view("admin.pedidos",["paginatedData" => $paginatedData, "profesores" => $profesores]);
+        return view("admin.pedidos",["pedidos" => $pedidos, "profesores" => $profesores]);
     }
 
     /**
@@ -247,7 +218,6 @@ class HomeController extends Controller
     public function getPDF($id): array
     {
         $User = User::findOrFail(Pedido::findOrFail($id)->idUser);
-        dd($User);
         $productos = getCart($id);
         $pdfName = 'Pedido_' . $productos->first()->options->expectedDate . '-' . $productos->first()->options->expectedTime . '_' . auth()->user()->nombre . '-' . auth()->user()->apellidos . '.pdf';
 
