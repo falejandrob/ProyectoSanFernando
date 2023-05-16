@@ -61,14 +61,25 @@ class HomeController extends Controller
 
     public function misPedidos($idUser)
     {
+<<<<<<< HEAD
         $pedidos = getAllCarts(Auth::id());
         $collection = new Collection($pedidos);
         $perPage = 5;
+=======
+
+        $pedidos = getAllCarts($idUser);
+
+        $pedidos = $pedidos->sortByDesc(function ($pedido) {
+            return strtotime($pedido->first()->options->fechaPedido);
+        });
+
+        $perPage = 6;
+>>>>>>> 9b9f6ccd43b84f34ef25848e426d37707533f17a
         $currentPage = request()->get('page', 1);
 
         $paginatedData = new LengthAwarePaginator(
-            $collection->forPage($currentPage, $perPage),
-            $collection->count(),
+            $pedidos->forPage($currentPage, $perPage),
+            $pedidos->count(),
             $perPage,
             $currentPage,
             ['path' => request()->url()]
@@ -77,7 +88,31 @@ class HomeController extends Controller
         $anio_actual = Carbon::now()->year;
         $presupuesto = Presupuesto::where('idUser', Auth::id())->where('anio', $anio_actual)->first();
 
-        return view("profesor.misPedidos", ["paginatedData" => $paginatedData, "presupuesto" => $presupuesto]);
+        return view("profesor.misPedidos", ["pedidos" => $pedidos, "presupuesto" => $presupuesto]);
+    }
+
+    public function validarPedido($id){
+        $pedidos = getAllCartsTeachers();
+        $profesores = User::all();
+
+        $pedido = Pedido::findOrFail($id);
+        $pedido->validado = 1;
+        $pedido->save();
+
+        session()->flash('success', 'El pedido se ha validado correctamente.');
+        return redirect()->action([HomeController::class, 'totalPedidos']);
+    }
+
+    public function desvalidarPedido($id){
+        $pedidos = getAllCartsTeachers();
+        $profesores = User::all();
+
+        $pedido = Pedido::findOrFail($id);
+        $pedido->validado = 0;
+        $pedido->save();
+
+        session()->flash('success', 'El pedido se ha desvalidado correctamente.');
+        return redirect()->action([HomeController::class, 'totalPedidos']);
     }
 
     public function detallesPedido($idPedido)
@@ -134,13 +169,41 @@ class HomeController extends Controller
         }
     }
 
+
     public function totalPedidos()
     {
         $pedidos = getAllCartsTeachers();
+        $pedidos = new Collection($pedidos);
+
+        $pedidos = $pedidos->sortByDesc(function ($pedido) {
+            $pedido = new Collection($pedido);
+            $fechaEsperada = strtotime($pedido->first()->first()->options->expectedDate);
+            $diferencia = abs(time() - $fechaEsperada);
+            return $diferencia;
+        })->reverse();
+
+        /*$perPage = 1;
+        $currentPage = request()->get('page', 1);
+
+        $paginatedData = new LengthAwarePaginator(
+            $pedidos->forPage($currentPage, $perPage),
+            $pedidos->count(),
+            $perPage,
+            $currentPage,
+            ['path' => request()->url()]
+        );*/
+
+
         $profesores = User::all();
-        return view("admin.pedidos", ["pedidos" => $pedidos, "profesores" => $profesores]);
+
+
+        return view("admin.pedidos",["pedidos" => $pedidos, "profesores" => $profesores]);
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function addJustificacion(Request $request)
     {
         $justificacion = Session::get("justificacion");
@@ -162,6 +225,10 @@ class HomeController extends Controller
         return $pdf->stream($pdfName);
     }
 
+    /**
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function sendMail($id)
     {
         list($pdfName, $pdf) = $this->getPDF($id);
@@ -184,6 +251,7 @@ class HomeController extends Controller
      */
     public function getPDF($id): array
     {
+        $User = User::findOrFail(Pedido::findOrFail($id)->idUser);
         $productos = getCart($id);
         $pdfName = 'Pedido_' . $productos->first()->options->expectedDate . '-' . $productos->first()->options->expectedTime . '_' . auth()->user()->nombre . '-' . auth()->user()->apellidos . '.pdf';
 
@@ -193,15 +261,16 @@ class HomeController extends Controller
             'justification' => $productos->first()->options->justification,
         ];
 
-        $pdf = Pdf::loadView('pdf.productos', compact('productos', 'dateTimeJustification'));
+        $pdf = Pdf::loadView('pdf.productos', compact('productos', 'dateTimeJustification', 'User'));
         return array($pdfName, $pdf);
     }
+
 
 }
 
 /**
- * @return array|array[]
  *
+ * @return array
  */
 function getAllCartsTeachers()
 {
@@ -252,7 +321,7 @@ function getAllCartsTeachers()
  * Get all elements for the Pedidos table  asocciate with a User id
  *
  * @param $identifier
- * @return array
+ * @return Collection
  */
 function getAllCarts($identifier)
 {
@@ -302,7 +371,7 @@ function getAllCarts($identifier)
  * Get a specific element of the Pedidos table and his associates rows
  *
  * @param $identifier
- * @return mixed
+ * @return Collection
  */
 function getCart($identifier)
 {

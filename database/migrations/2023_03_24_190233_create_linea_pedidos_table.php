@@ -19,6 +19,8 @@ return new class extends Migration
             $table->foreign('idProducto')->references('id')->on('productos')->onUpdate('cascade')->onDelete('cascade');
             $table->integer('cantidad');
             $table->string('observaciones')->nullable();
+            $table->string('Incidencia')->nullable();
+            $table->string('Respuesta')->nullable();
             $table->timestamps();
         });
     }

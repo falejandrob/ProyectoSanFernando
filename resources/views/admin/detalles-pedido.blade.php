@@ -8,9 +8,16 @@
 
         <h2>Detalles</h2>
         <hr>
+        @php
+            $fechaConFormatoPedido = \Carbon\Carbon::parse($pedido->first()->options->get('fechaPedido'))->format('d-m-Y');
+            $horaConFormatoPedido = \Carbon\Carbon::parse($pedido->first()->options->get('fechaPedido'))->format('H:i');
+
+            $fechaConFormatoPrevista = \Carbon\Carbon::parse($pedido->first()->options->get('expectedDate'))->format('d-m-Y');
+            $horaConFormatoPrevista = \Carbon\Carbon::parse($pedido->first()->options->get('expectedTime'))->format('H:i');
+        @endphp
         <h3>Profesor que realiza el pedido: {{$profesor}}</h3>
-        <h3>Fecha pedido: {{ $pedido->first()->options->get('fechaPedido') }}</h3>
-        <h3>Fecha prevista: {{ $pedido->first()->options->get('expectedDate') }}</h3>
+        <h3>Fecha pedido: {{ $fechaConFormatoPedido }} - {{ $horaConFormatoPedido }}h</h3>
+        <h3>Fecha prevista: {{ $fechaConFormatoPrevista }} - {{$horaConFormatoPrevista}}h</h3>
         <h3>Justificación: {{ $pedido->first()->options->get('justification') }}</h3>
         <br><br>
 
@@ -27,6 +34,8 @@
                         <th scope="col">Nombre producto</th>
                         <th scope="col">Categoria producto</th>
                         <th scope="col">Cantidad</th>
+                        <th>I</th>
+                        <th>R</th>
                         <th scope="col">Observación</th>
                     </tr>
                     </thead>
@@ -36,6 +45,8 @@
                             <td>{{ $linea->name }}</td>
                             <td>{{ $linea->options->categoria }}</td>
                             <td>{{ $linea->qty }}</td>
+                            <td></td>
+                            <td></td>
                             <td>{{ $linea->options->observacion}}</td>
                         </tr>
                     @endforeach

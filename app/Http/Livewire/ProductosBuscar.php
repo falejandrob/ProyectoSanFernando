@@ -56,15 +56,21 @@ class ProductosBuscar extends Component
 
 
         $this->searchTerm = preg_replace('/[^a-zA-Z0-9 ]/', '', $this->searchTerm);
-        if(empty($this->searchTerm)) {
-            //$this->productos = Producto::where('validado', '=','3')->skip(50)->take(50)->get();
-            //$this->productos = Producto::all()->skip(50)->take(50);
-            $this->productos = Producto::where('validado', '=','3')->get();
+        if (strlen($this->searchTerm) >= 3){
+            if(empty($this->searchTerm)) {
+                //$this->productos = Producto::where('validado', '=','3')->skip(50)->take(50)->get();
+                //$this->productos = Producto::all()->skip(50)->take(50);
+                $this->productos = Producto::where('validado', '=','3')->get();
+                $alerta = false;
+            } else {
+                $this->productos = Producto::where('nombre', 'like', '%'.$this->searchTerm.'%')->get();
+                $alerta = true;
+            }
+        }else{
+            $this->productos = collect(); // No se cumplió la condición, por lo que establecemos una colección vacía
             $alerta = false;
-        } else {
-            $this->productos = Producto::where('nombre', 'like', '%'.$this->searchTerm.'%')->get();
-            $alerta = true;
         }
+
 
         $this->categorias = Categoria::all();
         $this->cart = Cart::content();

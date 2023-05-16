@@ -51,6 +51,7 @@ class ProfesorController extends Controller
 
         $anio_actual = Carbon::now()->year;
 
+<<<<<<< HEAD
         $presupuesto = Presupuesto::all()->where("idUser", "=", $id)
             ->where("anio", "=", $anio_actual)->first();
 
@@ -65,6 +66,9 @@ class ProfesorController extends Controller
             ]);
             $presupuesto->save();
         }
+=======
+        $this->updatePresupuesto($id, $anio_actual, $profesor, $request);
+>>>>>>> 9b9f6ccd43b84f34ef25848e426d37707533f17a
 
         $profesor->update($request->all());
         session()->flash('success', 'El profesor se ha modificado correctamente.');
@@ -85,5 +89,30 @@ class ProfesorController extends Controller
 
         $user1->save();
         return redirect()->action([ProfesorController::class, 'listarProfesores']);
+    }
+
+    /**
+     * @param $id
+     * @param int $anio_actual
+     * @param $profesor
+     * @param Request $request
+     * @return void
+     */
+    public function updatePresupuesto($id, int $anio_actual, $profesor, Request $request): void
+    {
+        $presupuesto = Presupuesto::all()->where("idUser", "=", $id)
+            ->where("anio", "=", $anio_actual)->first();
+
+        if ($presupuesto == null) {
+            $presupuesto = new Presupuesto();
+            //dd($request);
+            $presupuesto->idUser = $profesor->id;
+            $presupuesto->anio = $anio_actual;
+            $presupuesto->presupuestoTotal = $request->presupuesto;
+        } else {
+            $presupuesto->presupuestoTotal = $request->presupuesto;
+        }
+
+        $presupuesto->save();
     }
 }
