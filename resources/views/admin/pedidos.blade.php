@@ -14,7 +14,6 @@
         @if(!empty($pedidos) && count($pedidos) > 0 )
             <div class="table-wrapper-scroll-y my-custom-scrollbar">
                 <table class="table mb-0 tabla-scroll ">
-<<<<<<< HEAD
                 <thead>
                 <tr style="text-align: center">
                     <th scope="col">Profesor</th>
@@ -48,7 +47,6 @@
                                 Eliminar
                             </a>
                         </td>
-=======
                     <thead>
                     <tr style="text-align: center">
                         <th scope="col">Profesor</th>
@@ -57,7 +55,6 @@
                         <th scope="col">Ver más</th>
                         <th scope="col">Eliminar</th>
                         <th scope="col">Validar / Desvalidar</th>
->>>>>>> 9b9f6ccd43b84f34ef25848e426d37707533f17a
                     </tr>
                     </thead>
                     <tbody>

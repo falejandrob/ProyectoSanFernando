@@ -51,7 +51,6 @@ class ProfesorController extends Controller
 
         $anio_actual = Carbon::now()->year;
 
-<<<<<<< HEAD
         $presupuesto = Presupuesto::all()->where("idUser", "=", $id)
             ->where("anio", "=", $anio_actual)->first();
 
@@ -66,9 +65,7 @@ class ProfesorController extends Controller
             ]);
             $presupuesto->save();
         }
-=======
         $this->updatePresupuesto($id, $anio_actual, $profesor, $request);
->>>>>>> 9b9f6ccd43b84f34ef25848e426d37707533f17a
 
         $profesor->update($request->all());
         session()->flash('success', 'El profesor se ha modificado correctamente.');

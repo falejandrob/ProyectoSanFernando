@@ -61,11 +61,9 @@ class HomeController extends Controller
 
     public function misPedidos($idUser)
     {
-<<<<<<< HEAD
         $pedidos = getAllCarts(Auth::id());
         $collection = new Collection($pedidos);
         $perPage = 5;
-=======
 
         $pedidos = getAllCarts($idUser);
 
@@ -74,7 +72,6 @@ class HomeController extends Controller
         });
 
         $perPage = 6;
->>>>>>> 9b9f6ccd43b84f34ef25848e426d37707533f17a
         $currentPage = request()->get('page', 1);
 
         $paginatedData = new LengthAwarePaginator(
