@@ -42,7 +42,6 @@ class CartController extends Controller
                 'fechaPedido' => Carbon::now()->format('d-m-Y'),
                 'observacion' => $observacion
             ]]);
-
         }
         Session::forget("justificacion");
         $dateTimeJustification = [

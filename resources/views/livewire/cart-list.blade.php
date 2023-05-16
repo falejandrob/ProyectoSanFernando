@@ -4,9 +4,6 @@
         @method("POST")
         <div>
             @if(Cart::content()->count() != 0 && $closestDate !== null)
-                <div style="margin-top: 2%">
-                    <p style="text-align: center; font-size: 22px;">Su pedido</p>
-                </div>
                 <div class="d-flex justify-content-end align-items-center">
                     <button wire:click.prevent="clearCart()"
                             class="btn btn-danger d-flex justify-content-between align-items-center">
@@ -19,9 +16,7 @@
                     </button>
                 </div>
                 <br>
-                <div>
-
-
+                <div style="display: flex; justify-content: space-around; align-items: center; text-align: center;">
                     @php
                         $fechaConFormatoMin = \Carbon\Carbon::parse($closestDate->fechaMinima)->format('d-m-Y');
                         $horaConFormatoMin = \Carbon\Carbon::parse($closestDate->fechaMinima)->format('H:i');
@@ -29,10 +24,14 @@
                         $horaConFormatoMax = \Carbon\Carbon::parse($closestDate->fechaMaxima)->format('H:i');
                     @endphp
 
-                    <p class="carrito-size">Apertura de plazo:</p>
-                    <p class="carrito-size">{{$fechaConFormatoMin}} - {{$horaConFormatoMin}}h</p>
-                    <p class="carrito-size">Cierre de plazo:</p>
-                    <p class="carrito-size">{{$fechaConFormatoMax}} - {{$horaConFormatoMax}}h</p>
+                    <div>
+                        <p class="carrito-size">Apertura de plazo:</p>
+                        <p class="carrito-size">{{$fechaConFormatoMin}} - {{$horaConFormatoMin}}h</p>
+                    </div>
+                    <div>
+                        <p class="carrito-size">Cierre de plazo:</p>
+                        <p class="carrito-size">{{$fechaConFormatoMax}} - {{$horaConFormatoMax}}h</p>
+                    </div>
                 </div><br>
                 <div class="mb-3">
                     <label class="carrito-size">Justificación pedido</label>

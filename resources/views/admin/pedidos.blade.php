@@ -21,6 +21,7 @@
                     <th scope="col">Fecha pedido</th>
                     <th scope="col">Fecha prevista</th>
                     <th scope="col">Ver más</th>
+                    <th scope="col">Proveedores</th>
                     <th scope="col">Eliminación</th>
                 </tr>
                 </thead>
@@ -35,6 +36,11 @@
                         <td>
                             <a class="btn btn-primary" href="{{ route('detallesPedidoAdmin', [$id, $profesores->where("id","=",$pedido[1])->first()->nombre . " ". $profesores->where("id","=",$pedido[1])->first()->apellidos]) }}">
                                 Ver más
+                            </a>
+                        </td>
+                        <td>
+                            <a class="btn btn-success" href="{{ route('seleccionarProveedores', [$id]) }}">
+                                Proveedores
                             </a>
                         </td>
                         <td>

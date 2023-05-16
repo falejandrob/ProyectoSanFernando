@@ -9,6 +9,7 @@ use App\Models\Pedido;
 use App\Models\Presupuesto;
 use App\Models\Producto;
 use App\Models\User;
+use App\Models\Proveedore;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Dompdf\Dompdf;
@@ -56,14 +57,13 @@ class HomeController extends Controller
         if (auth()->user()->hasRole('admin')) {
             return view('admin.home');
         }
-
     }
 
     public function misPedidos($idUser)
     {
         $pedidos = getAllCarts(Auth::id());
         $collection = new Collection($pedidos);
-        $perPage = 2;
+        $perPage = 5;
         $currentPage = request()->get('page', 1);
 
         $paginatedData = new LengthAwarePaginator(
@@ -73,8 +73,6 @@ class HomeController extends Controller
             $currentPage,
             ['path' => request()->url()]
         );
-
-        dd($paginatedData);
 
         $anio_actual = Carbon::now()->year;
         $presupuesto = Presupuesto::where('idUser', Auth::id())->where('anio', $anio_actual)->first();
@@ -100,12 +98,40 @@ class HomeController extends Controller
         $anio_actual = Carbon::now()->year;
         $presupuesto = Presupuesto::where('idUser', Auth::id())->where('anio', $anio_actual)->first();
 
-
         if (auth()->user()->hasRole('admin')) {
             return view("admin.detalles-pedido", ["pedido" => $pedido, "idPedido" => $idPedido, "profesor" => $profesor]);
         }
+    }
 
+    public function seleccionarProveedores($idPedido)
+    {
+        $productosConProveedor = [];
 
+        $pedido = getCart($idPedido);
+        $anio_actual = Carbon::now()->year;
+        $presupuesto = Presupuesto::where('idUser', Auth::id())->where('anio', $anio_actual)->first();
+        $proveedores = Proveedore::all();
+        $categorias = Categoria::all();
+
+        if (auth()->user()->hasRole('admin')) {
+            return view("admin.seleccionarProveedores", ["pedido" => $pedido, "idPedido" => $idPedido, "proveedores" => $proveedores, "categorias" => $categorias, "productosConProveedor" => $productosConProveedor]);
+        }
+    }
+
+    public function establecerProveedor(Request $request)
+    {
+        $productosConProveedor = $request->input('productos');
+        $proveedorSeleccionado = $request->input('proveedor');
+
+        $pedido = getCart($request->id);
+        $anio_actual = Carbon::now()->year;
+        $presupuesto = Presupuesto::where('idUser', Auth::id())->where('anio', $anio_actual)->first();
+        $proveedores = Proveedore::all();
+        $categorias = Categoria::all();
+
+        if (auth()->user()->hasRole('admin')) {
+            return view("admin.seleccionarProveedores", ["pedido" => $pedido, "idPedido" => $request->id, "proveedores" => $proveedores, "categorias" => $categorias, "productosConProveedor" => $productosConProveedor]);
+        }
     }
 
     public function totalPedidos()
@@ -269,9 +295,7 @@ function getAllCarts($identifier)
         $allShopingCarts->put($pedido->id, $cartCollection);
     }
 
-
     return $allShopingCarts;
-
 }
 
 /**

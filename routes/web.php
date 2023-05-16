@@ -25,6 +25,8 @@ Route::get('/imprimirPedido/{id}',[\App\Http\Controllers\HomeController::class, 
 Route::get('/enviarPedido/{id}',[\App\Http\Controllers\HomeController::class, 'sendMail'])->name('sendMail');
 Route::get('/detallesPedido/{id}',[\App\Http\Controllers\HomeController::class, 'detallesPedido'])->name('detallesPedido');
 Route::get('/detallesPedido/{id}/{profesor}',[\App\Http\Controllers\HomeController::class, 'detallesPedidoAdmin'])->name('detallesPedidoAdmin');
+Route::get('/seleccionarProveedores/{id}',[\App\Http\Controllers\HomeController::class, 'seleccionarProveedores'])->name('seleccionarProveedores');
+Route::post('/establecerProveedor',[\App\Http\Controllers\HomeController::class, 'establecerProveedor'])->name('establecerProveedor');
 Route::get('/eliminarPedido/{id}',[\App\Http\Controllers\CartController::class, 'eliminarPedido'])->name('eliminarPedido');
 Route::get('/repetirPedido/{id}',[\App\Http\Controllers\CartController::class, 'repetirPedido'])->name('repetirPedido');
 

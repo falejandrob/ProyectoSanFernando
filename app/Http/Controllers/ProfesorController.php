@@ -54,8 +54,17 @@ class ProfesorController extends Controller
         $presupuesto = Presupuesto::all()->where("idUser", "=", $id)
             ->where("anio", "=", $anio_actual)->first();
 
-        $presupuesto->presupuestoTotal = $request->presupuesto;
-        $presupuesto->save();
+        if($presupuesto != null) {
+            $presupuesto->presupuestoTotal = $request->presupuesto;
+            $presupuesto->save();
+        } else {
+            $presupuesto = Presupuesto::create([
+                'idUser' => $id,
+                'anio' => $anio_actual,
+                'presupuestoTotal' => $request->presupuesto
+            ]);
+            $presupuesto->save();
+        }
 
         $profesor->update($request->all());
         session()->flash('success', 'El profesor se ha modificado correctamente.');
