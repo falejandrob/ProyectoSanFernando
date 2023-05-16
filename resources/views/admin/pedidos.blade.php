@@ -20,21 +20,22 @@
                         <th scope="col">Fecha pedido</th>
                         <th scope="col">Fecha prevista</th>
                         <th scope="col">Ver más</th>
-                        <th scope="col">Imprimir</th>
-                        <th scope="col">Eliminación</th>
+                        <th scope="col">Eliminar</th>
+                        <th scope="col">Validar / Desvalidar</th>
                     </tr>
                     </thead>
                     <tbody>
                     @foreach($paginatedData as $id => $pedido)
                         @php
-                            $validado = \App\Models\Pedido::findOrFail($id)->validado
+                            $validado = \App\Models\Pedido::findOrFail($id)->validado;
+                            $fechaConFormato = \Carbon\Carbon::parse($pedido[0]->first()->options->get('fechaPedido'))->format('d-m-Y');
                         @endphp
                         @if($validado == 0)
                             <tr class="table-danger" style="text-align: center;">
                                 {{--@dd($profesores->where("id", "=", $pedidos->where('id','=',$id)->get()))--}}
                                 {{--@dd($profesores->where("id","=",$pedido[1])->first()->nombre . " ". $profesores->where("id","=",$pedido[1])->first()->apellidos)--}}
                                 <td>{{ $profesores->where("id","=",$pedido[1])->first()->nombre . " ". $profesores->where("id","=",$pedido[1])->first()->apellidos }}</td>
-                                <td>{{ $pedido[0]->first()->options->get('fechaPedido') }}</td>
+                                <td>{{ $fechaConFormato }}</td>
                                 <td>{{ $pedido[0]->first()->options->get('expectedDate') }}</td>
                                 <td>
                                     <a class="btn btn-primary"
@@ -58,7 +59,7 @@
                                 {{--@dd($profesores->where("id", "=", $pedidos->where('id','=',$id)->get()))--}}
                                 {{--@dd($profesores->where("id","=",$pedido[1])->first()->nombre . " ". $profesores->where("id","=",$pedido[1])->first()->apellidos)--}}
                                 <td>{{ $profesores->where("id","=",$pedido[1])->first()->nombre . " ". $profesores->where("id","=",$pedido[1])->first()->apellidos }}</td>
-                                <td>{{ $pedido[0]->first()->options->get('fechaPedido') }}</td>
+                                <td>{{ $fechaConFormato }}</td>
                                 <td>{{ $pedido[0]->first()->options->get('expectedDate') }}</td>
                                 <td>
                                     <a class="btn btn-primary"
@@ -83,7 +84,8 @@
                 </table>
                 <br>
                 <div class="pagination" style="justify-content: center">
-                    {{ $paginatedData->links() }}
+
+                    {{ $paginatedData->onEachSide(3)->links() }}
                 </div>
             </div>
         @else

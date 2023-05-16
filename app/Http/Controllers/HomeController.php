@@ -94,7 +94,7 @@ class HomeController extends Controller
         $pedido->save();
 
         session()->flash('success', 'El pedido se ha validado correctamente.');
-        return view('admin.pedidos', compact('pedidos', 'profesores'));
+        return redirect()->action([HomeController::class, 'totalPedidos']);
     }
 
     public function desvalidarPedido($id){
@@ -106,7 +106,7 @@ class HomeController extends Controller
         $pedido->save();
 
         session()->flash('success', 'El pedido se ha desvalidado correctamente.');
-        return view('admin.pedidos', compact('pedidos', 'profesores'));
+        return redirect()->action([HomeController::class, 'totalPedidos']);
     }
 
     public function detallesPedido($idPedido)
@@ -148,7 +148,7 @@ class HomeController extends Controller
             return $diferencia;
         })->reverse();
 
-        /*$perPage = 1;
+        $perPage = 1;
         $currentPage = request()->get('page', 1);
 
         $paginatedData = new LengthAwarePaginator(
@@ -157,9 +157,10 @@ class HomeController extends Controller
             $perPage,
             $currentPage,
             ['path' => request()->url()]
-        );*/
+        );
 
-        $totalItems = $pedidos->total(); // Número total de elementos paginados
+
+        /*$totalItems = $pedidos->total(); // Número total de elementos paginados
         $perPage = $pedidos->perPage(); // Número de elementos por página
 
         $pagesToShow = 2;
@@ -185,13 +186,13 @@ class HomeController extends Controller
         $paginator->setPageName('page')->setLastPage($data->lastPage())
             ->setPath(LengthAwarePaginator::resolveCurrentPath())
             ->appends(request()->except('page'))
-            ->setPageRange($from, $to);
+            ->setPageRange($from, $to);*/
 
 
         $profesores = User::all();
 
 
-        return view("admin.pedidos", compact('paginatedData', 'profesores'));
+        return view("admin.pedidos",["paginatedData" => $paginatedData, "profesores" => $profesores]);
     }
 
     /**
