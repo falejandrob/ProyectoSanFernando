@@ -11,109 +11,79 @@
         <h1 style="text-align: center">Total pedidos</h1>
 
         <br>
-        @if(!empty($pedidos) && count($pedidos) > 0 )
+        @if (!empty($pedidos) && count($pedidos) > 0 )
             <div class="table-wrapper-scroll-y my-custom-scrollbar">
                 <table class="table mb-0 tabla-scroll ">
-                <thead>
-                <tr style="text-align: center">
-                    <th scope="col">Profesor</th>
-                    <th scope="col">Fecha pedido</th>
-                    <th scope="col">Fecha prevista</th>
-                    <th scope="col">Ver más</th>
-                    <th scope="col">Proveedores</th>
-                    <th scope="col">Eliminación</th>
-                </tr>
-                </thead>
+                    <thead>
+                        <tr style="text-align: center">
+                            <th scope="col">Profesor</th>
+                            <th scope="col">Fecha pedido</th>
+                            <th scope="col">Fecha prevista</th>
+                            <th scope="col">Ver más</th>
+                            <th scope="col">Eliminar</th>
+                            <th scope="col">Validar / Desvalidar</th>
+                        </tr>
+                    </thead>
                 <tbody>
                 @foreach($pedidos as $id => $pedido)
                     <tr style="text-align: center">
-                        {{--@dd($profesores->where("id", "=", $pedidos->where('id','=',$id)->get()))--}}
-                        {{--@dd($profesores->where("id","=",$pedido[1])->first()->nombre . " ". $profesores->where("id","=",$pedido[1])->first()->apellidos)--}}
-                        <td>{{ $profesores->where("id","=",$pedido[1])->first()->nombre . " ". $profesores->where("id","=",$pedido[1])->first()->apellidos }}</td>
-                        <td>{{ $pedido[0]->first()->options->get('fechaPedido') }}</td>
-                        <td>{{ $pedido[0]->first()->options->get('expectedDate') }}</td>
-                        <td>
-                            <a class="btn btn-primary" href="{{ route('detallesPedidoAdmin', [$id, $profesores->where("id","=",$pedido[1])->first()->nombre . " ". $profesores->where("id","=",$pedido[1])->first()->apellidos]) }}">
-                                Ver más
-                            </a>
-                        </td>
-                        <td>
-                            <a class="btn btn-success" href="{{ route('seleccionarProveedores', [$id]) }}">
-                                Proveedores
-                            </a>
-                        </td>
-                        <td>
-                            <a class="btn btn-danger" href="{{ route('eliminarPedido', $id)}}">
-                                Eliminar
-                            </a>
-                        </td>
-                    <thead>
-                    <tr style="text-align: center">
-                        <th scope="col">Profesor</th>
-                        <th scope="col">Fecha pedido</th>
-                        <th scope="col">Fecha prevista</th>
-                        <th scope="col">Ver más</th>
-                        <th scope="col">Eliminar</th>
-                        <th scope="col">Validar / Desvalidar</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    @foreach($pedidos as $id => $pedido)
-                        @php
-                            $validado = \App\Models\Pedido::findOrFail($id)->validado;
-                            $fechaConFormato = \Carbon\Carbon::parse($pedido[0]->first()->options->get('fechaPedido'))->format('d-m-Y');
-                        @endphp
-                        @if($validado == 0)
-                            <tr class="table-danger" style="text-align: center;">
-                                {{--@dd($profesores->where("id", "=", $pedidos->where('id','=',$id)->get()))--}}
-                                {{--@dd($profesores->where("id","=",$pedido[1])->first()->nombre . " ". $profesores->where("id","=",$pedido[1])->first()->apellidos)--}}
-                                <td>{{ $profesores->where("id","=",$pedido[1])->first()->nombre . " ". $profesores->where("id","=",$pedido[1])->first()->apellidos }}</td>
-                                <td>{{ $fechaConFormato }}</td>
-                                <td>{{ $pedido[0]->first()->options->get('expectedDate') }}</td>
-                                <td>
-                                    <a class="btn btn-primary"
-                                       href="{{ route('detallesPedidoAdmin', [$id, $profesores->where("id","=",$pedido[1])->first()->nombre . " ". $profesores->where("id","=",$pedido[1])->first()->apellidos]) }}">
-                                        Ver más
-                                    </a>
-                                </td>
-                                <td>
-                                    <a class="btn btn-danger" href="{{ route('eliminarPedido', $id)}}">
-                                        Eliminar
-                                    </a>
-                                </td>
-                                <td>
-                                    <a class="btn btn-success" href="{{ route('validarPedido', $id)}}">
-                                        Validar
-                                    </a>
-                                </td>
-                            </tr>
-                        @else
-                            <tr class="table-success" style="text-align: center;">
-                                {{--@dd($profesores->where("id", "=", $pedidos->where('id','=',$id)->get()))--}}
-                                {{--@dd($profesores->where("id","=",$pedido[1])->first()->nombre . " ". $profesores->where("id","=",$pedido[1])->first()->apellidos)--}}
-                                <td>{{ $profesores->where("id","=",$pedido[1])->first()->nombre . " ". $profesores->where("id","=",$pedido[1])->first()->apellidos }}</td>
-                                <td>{{ $fechaConFormato }}</td>
-                                <td>{{ $pedido[0]->first()->options->get('expectedDate') }}</td>
-                                <td>
-                                    <a class="btn btn-primary"
-                                       href="{{ route('detallesPedidoAdmin', [$id, $profesores->where("id","=",$pedido[1])->first()->nombre . " ". $profesores->where("id","=",$pedido[1])->first()->apellidos]) }}">
-                                        Ver más
-                                    </a>
-                                </td>
-                                <td>
-                                    <a class="btn btn-danger" href="{{ route('eliminarPedido', $id)}}">
-                                        Eliminar
-                                    </a>
-                                </td>
-                                <td>
-                                    <a class="btn btn-dark" href="{{ route('desvalidarPedido', $id)}}">
-                                        Desvalidar
-                                    </a>
-                                </td>
-                            </tr>
-                        @endif
-                    @endforeach
+                        @foreach($pedidos as $id => $pedido)
+                            @php
+                                $validado = \App\Models\Pedido::findOrFail($id)->validado;
+                                $fechaConFormato = \Carbon\Carbon::parse($pedido[0]->first()->options->get('fechaPedido'))->format('d-m-Y');
+                            @endphp
+                            @if ($validado == 0)
+                                <tr class="table-danger" style="text-align: center;">
+                                    {{--@dd($profesores->where("id", "=", $pedidos->where('id','=',$id)->get()))--}}
+                                    {{--@dd($profesores->where("id","=",$pedido[1])->first()->nombre . " ". $profesores->where("id","=",$pedido[1])->first()->apellidos)--}}
+                                    <td>{{ $profesores->where("id","=",$pedido[1])->first()->nombre . " ". $profesores->where("id","=",$pedido[1])->first()->apellidos }}</td>
+                                    <td>{{ $fechaConFormato }}</td>
+                                    <td>{{ $pedido[0]->first()->options->get('expectedDate') }}</td>
+                                    <td>
+                                        <a class="btn btn-primary"
+                                        href="{{ route('detallesPedidoAdmin', [$id, $profesores->where("id","=",$pedido[1])->first()->nombre . " ". $profesores->where("id","=",$pedido[1])->first()->apellidos]) }}">
+                                            Ver más
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a class="btn btn-danger" href="{{ route('eliminarPedido', $id)}}">
+                                            Eliminar
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a class="btn btn-success" href="{{ route('validarPedido', $id)}}">
+                                            Validar
+                                        </a>
+                                    </td>
+                                </tr>
+                            @else
+                                <tr class="table-success" style="text-align: center;">
+                                    {{--@dd($profesores->where("id", "=", $pedidos->where('id','=',$id)->get()))--}}
+                                    {{--@dd($profesores->where("id","=",$pedido[1])->first()->nombre . " ". $profesores->where("id","=",$pedido[1])->first()->apellidos)--}}
+                                    <td>{{ $profesores->where("id","=",$pedido[1])->first()->nombre . " ". $profesores->where("id","=",$pedido[1])->first()->apellidos }}</td>
+                                    <td>{{ $fechaConFormato }}</td>
+                                    <td>{{ $pedido[0]->first()->options->get('expectedDate') }}</td>
+                                    <td>
+                                        <a class="btn btn-primary"
+                                        href="{{ route('detallesPedidoAdmin', [$id, $profesores->where("id","=",$pedido[1])->first()->nombre . " ". $profesores->where("id","=",$pedido[1])->first()->apellidos]) }}">
+                                            Ver más
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a class="btn btn-danger" href="{{ route('eliminarPedido', $id)}}">
+                                            Eliminar
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a class="btn btn-dark" href="{{ route('desvalidarPedido', $id)}}">
+                                            Desvalidar
+                                        </a>
+                                    </td>
+                                </tr>
+                            @endif
+                        @endforeach
                     </tbody>
+                @endforeach
                 </table>
                 <br>
             </div>
