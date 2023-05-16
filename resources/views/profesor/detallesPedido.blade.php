@@ -21,8 +21,15 @@
             </a>
         </div>
         <hr>
-        <h3>Fecha pedido: {{ $pedido->first()->options->get('fechaPedido') }}</h3>
-        <h3>Fecha prevista: {{ $pedido->first()->options->get('expectedDate') }}</h3>
+        @php
+            $fechaConFormatoPedido = \Carbon\Carbon::parse($pedido->first()->options->get('fechaPedido'))->format('d-m-Y');
+            $horaConFormatoPedido = \Carbon\Carbon::parse($pedido->first()->options->get('fechaPedido'))->format('H:i');
+
+            $fechaConFormatoPrevista = \Carbon\Carbon::parse($pedido->first()->options->get('expectedDate'))->format('d-m-Y');
+            $horaConFormatoPrevista = \Carbon\Carbon::parse($pedido->first()->options->get('expectedTime'))->format('H:i');
+        @endphp
+        <h3>Fecha pedido: {{ $fechaConFormatoPedido }} - {{ $horaConFormatoPedido }}h</h3>
+        <h3>Fecha prevista: {{ $fechaConFormatoPrevista }} - {{$horaConFormatoPrevista}}h</h3>
         <h3>Justificación: {{ $pedido->first()->options->get('justification') }}</h3>
 
         <br><br>

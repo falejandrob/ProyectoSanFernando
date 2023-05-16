@@ -27,10 +27,13 @@
                 <tbody>
                 @foreach($pedidos as $id => $pedido)
                     <tr style="text-align: center">
+                        @php
+                            $fechaConFormato = \Carbon\Carbon::parse($pedido[0]->first()->options->get('fechaPedido'))->format('d-m-Y');
+                        @endphp
                         {{--@dd($profesores->where("id", "=", $pedidos->where('id','=',$id)->get()))--}}
                         {{--@dd($profesores->where("id","=",$pedido[1])->first()->nombre . " ". $profesores->where("id","=",$pedido[1])->first()->apellidos)--}}
                         <td>{{ $profesores->where("id","=",$pedido[1])->first()->nombre . " ". $profesores->where("id","=",$pedido[1])->first()->apellidos }}</td>
-                        <td>{{ $pedido[0]->first()->options->get('fechaPedido') }}</td>
+                        <td>{{ $fechaConFormato }}</td>
                         <td>{{ $pedido[0]->first()->options->get('expectedDate') }}</td>
                         <td>
                             <a class="btn btn-primary" href="{{ route('detallesPedidoAdmin', [$id, $profesores->where("id","=",$pedido[1])->first()->nombre . " ". $profesores->where("id","=",$pedido[1])->first()->apellidos]) }}">
