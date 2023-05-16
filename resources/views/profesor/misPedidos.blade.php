@@ -24,7 +24,10 @@
                 <tbody>
                 @foreach($paginatedData as $id => $pedido)
                     <tr>
-                        <td>{{ $pedido->first()->options->get('fechaPedido') }}</td>
+                        @php
+                            $fechaConFormato = \Carbon\Carbon::parse($pedido->first()->options->get('fechaPedido'))->format('d-m-Y');
+                        @endphp
+                        <td>{{ $fechaConFormato }}</td>
                         <td>{{ $pedido->first()->options->get('expectedDate') }}</td>
                         <td>{{ $pedido->first()->options->get('justification') }}</td>
                         <td>
