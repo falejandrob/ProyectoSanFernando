@@ -51,20 +51,6 @@ class ProfesorController extends Controller
 
         $anio_actual = Carbon::now()->year;
 
-        $presupuesto = Presupuesto::all()->where("idUser", "=", $id)
-            ->where("anio", "=", $anio_actual)->first();
-
-        if($presupuesto != null) {
-            $presupuesto->presupuestoTotal = $request->presupuesto;
-            $presupuesto->save();
-        } else {
-            $presupuesto = Presupuesto::create([
-                'idUser' => $id,
-                'anio' => $anio_actual,
-                'presupuestoTotal' => $request->presupuesto
-            ]);
-            $presupuesto->save();
-        }
         $this->updatePresupuesto($id, $anio_actual, $profesor, $request);
 
         $profesor->update($request->all());
