@@ -18,6 +18,8 @@ return new class extends Migration
             $table->dateTime('fechaPedido');
             $table->dateTime('fechaPrevistaPedido');
             $table->string('justificacion');
+            $table->integer('validado')->default(0);
+            $table->string('estaPedido')->nullable();
             $table->timestamps();
         });
     }
