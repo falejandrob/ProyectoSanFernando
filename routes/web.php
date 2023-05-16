@@ -21,7 +21,21 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/misPedidos/{id}',[\App\Http\Controllers\HomeController::class, 'misPedidos'])->name('misPedidos');
+Route::get('/imprimirPedido/{id}',[\App\Http\Controllers\HomeController::class, 'downloadPdf'])->name('downloadPdf');
+Route::get('/enviarPedido/{id}',[\App\Http\Controllers\HomeController::class, 'sendMail'])->name('sendMail');
 Route::get('/detallesPedido/{id}',[\App\Http\Controllers\HomeController::class, 'detallesPedido'])->name('detallesPedido');
+Route::get('/detallesPedido/{id}/{profesor}',[\App\Http\Controllers\HomeController::class, 'detallesPedidoAdmin'])->name('detallesPedidoAdmin');
+Route::get('/eliminarPedido/{id}',[\App\Http\Controllers\CartController::class, 'eliminarPedido'])->name('eliminarPedido');
+Route::get('/repetirPedido/{id}',[\App\Http\Controllers\CartController::class, 'repetirPedido'])->name('repetirPedido');
+Route::get('/validarPedido/{id}',[\App\Http\Controllers\HomeController::class, 'validarPedido'])->name('validarPedido');
+Route::get('/desvalidarPedido/{id}',[\App\Http\Controllers\HomeController::class, 'desvalidarPedido'])->name('desvalidarPedido');
+
+Route::get('/fechaPedidos/',[\App\Http\Controllers\FechaController::class, 'index'])->name('fechaPedidos');
+Route::post('/fecha/store',[\App\Http\Controllers\FechaController::class, 'store'])->name('fecha.store');
+Route::get('/fecha/modificarFecha/{id}',[\App\Http\Controllers\FechaController::class, 'updateDate'])->name('updateDate');
+Route::post('/fecha/update/{id}',[\App\Http\Controllers\FechaController::class, 'update'])->name('fecha.update');
+Route::get('/fecha/listarPlazos', [\App\Http\Controllers\FechaController::class, 'listDates'])->name('listDates');
+
 
 //Ruta producto
 Route::get('/producto/aniadirProducto',[\App\Http\Controllers\ProductoController::class, 'aniadirProducto'])->name('aniadirProducto');
@@ -48,6 +62,9 @@ Route::post('/proveedor/update/{id}',[\App\Http\Controllers\ProveedorController:
 //Ruta carrito
 Route::post('/cart/store',[\App\Http\Controllers\CartController::class,'store'])->name('cart.store');
 Route::post('/cart/remove',[\App\Http\Controllers\CartController::class,'remove'])->name('cart.remove');
-Route::get('/cart/confirm',[\App\Http\Controllers\CartController::class,'confirm'])->name('cart.confirm');
+Route::post('/cart/confirm',[\App\Http\Controllers\CartController::class,'confirm'])->name('cart.confirm');
+
+//Ruta pedidos
+Route::get('/totalPedidos', [\App\Http\Controllers\HomeController::class, 'totalPedidos'])->name('totalPedidos');
 
 Route::get('/addJustificacion',[\App\Http\Controllers\HomeController::class, 'addJustificacion'])->name('addJustificacion');

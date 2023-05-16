@@ -16,7 +16,23 @@ class ProveedoreFactory extends Factory
      */
     public function definition(): array
     {
-        $proveedores = array("provecaex", "spar", "cerrato perez");
+        $proveedores = array("Alimex",
+            "Benibelmar",
+            "Carnicería Cipri",
+            "Congelados Suroeste",
+            "Delta cafés",
+            "Dicomba",
+            "Dúo harinero",
+            "Fripan",
+            "Granja El Cruce",
+            "Hosuni",
+            "Panadería J.J.",
+            "Pedro",
+            "Provecaex",
+            "Puratos T500",
+            "Sosa",
+            "Sumin. Badajoz",
+        );
         return [
             'nombre' => $this->faker->randomElement($proveedores)
         ];

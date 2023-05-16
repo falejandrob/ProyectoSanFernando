@@ -5,6 +5,12 @@
         <div class="row">
             <div class="col-md-12">
                 <div style="width: 50%; margin: auto">
+                    <br>
+                    @if (session('success'))
+                        <div class="alert alert-success">
+                            {{ session('success') }}
+                        </div>
+                    @endif
                     <h2 class="mt-4" style="text-align: center">Añadir proveedor</h2>
                     <hr>
                     <form   action="{{ route("proveedor.store") }}" method="post">

@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\Producto;
 use App\Models\Proveedore;
 use App\Models\User;
 use Livewire\Component;
@@ -19,8 +20,7 @@ class ProveedoresList extends Component
 
     public function destroyProveedor($id)
     {
-        Proveedore::destroy($id);
-        $this->emit('proveedor_update');
-        $this->emit('refresh');
+        Proveedore::find($id)->delete();
+        session()->flash('success', 'El proveedor se ha eliminado correctamente.');
     }
 }

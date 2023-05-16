@@ -17,7 +17,10 @@ class LineaPedido extends Model
     protected $fillable = [
         'idPedido',
         'idProducto',
-        'cantidad'
+        'cantidad',
+        'observaciones',
+        'Incidencia',
+        'Respuesta'
     ];
 
     /**

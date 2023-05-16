@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use App\Models\Categoria;
 use App\Models\Producto;
+use App\Models\User;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -14,6 +15,7 @@ class ProductsList extends Component
     protected $paginationTheme = 'bootstrap';
 //
     public $nombre, $validado, $idCategoria;
+    public $productosPorPagina;
     public $categoryFilter;
     public $validateFilter;
     public $searchFilter;
@@ -32,27 +34,29 @@ class ProductsList extends Component
 
     public function render()
     {
-        $productos = Producto::query()
-            ->when($this->categoryFilter, function ($query){
+        $productosPorPagina = 50; // Número de productos a mostrar por página
+        $maxPaginasMostradas = 3;
+        $query = Producto::query()
+            ->when($this->categoryFilter, function ($query) {
                 $query->where('idCategoria', $this->categoryFilter);
             })
-            ->when($this->validateFilter, function($query){
+            ->when($this->validateFilter, function ($query) {
                 $query->where('validado', $this->validateFilter);
             })
-            ->when($this->searchFilter, function($query){
+            ->when($this->searchFilter, function ($query) {
                 $query->where('nombre', 'like', '%' . $this->searchFilter . '%');
-            })->get();
+            });
 
+        $productos = $query->paginate($productosPorPagina);
 
-        return view('livewire.productos-listar', compact('productos'));
+        return view('livewire.productos-listar', compact('productos','maxPaginasMostradas'));
     }
 
 
     public function destroyProduct($id)
     {
-        Producto::destroy($id);
-        $this->emit('producto_update');
-        $this->emit('refresh');
+        Producto::find($id)->delete();
+        session()->flash('success', 'El producto se ha eliminado correctamente.');
     }
 
     public function validateProduct($id){

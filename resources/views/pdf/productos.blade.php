@@ -79,7 +79,7 @@
 
 <div id="info">
     <br>
-    <span>PROFESOR/A QUE REALIZA EL PEDIDO: <strong>{{auth()->user()->nombre}} {{auth()->user()->apellidos}}</strong></span><br>
+    <span>PROFESOR/A QUE REALIZA EL PEDIDO: <strong>{{$User->nombre}} {{$User->apellidos}}</strong></span><br>
     <span>FECHA DEL PEDIDO: <strong>{{ now()->format('d/m/Y') }}</strong></span><br>
     <span>FECHA PARA LA QUE SE SOLICITA EL PEDIDO: <strong>{{$dateTimeJustification['expectedDate']}}</strong></span><br>
     <span>HORA PARA LA QUE SE SOLICITA EL PEDIDO: <strong>{{$dateTimeJustification['expectedTime']}}</strong></span><br>
@@ -92,6 +92,9 @@
         <tr>
             <th>Artículo</th>
             <th>Cantidad</th>
+            <th>I</th>
+            <th>R</th>
+            <th>Observación</th>
         </tr>
         </thead>
         <tbody>
@@ -107,13 +110,19 @@
                     $categorias[] = $categoria;
                 @endphp
                 <tr style="text-align: center" class="hover">
-                    <td><strong>{{ $categoria }}</strong></td>
-                    <td></td>
+                    <td style="background: #E7E7E7"><strong>{{ $categoria }}</strong></td>
+                    <td style="background: #E7E7E7"></td>
+                    <td style="background: #E7E7E7"></td>
+                    <td style="background: #E7E7E7"></td>
+                    <td style="background: #E7E7E7"></td>
                 </tr>
             @endif
             <tr style="text-align: center" class="hover">
                 <td>{{ $producto->name }}</td>
                 <td>{{ $producto->qty }} ud</td>
+                <td></td>
+                <td></td>
+                <td>{{ $producto->options->observacion }}</td>
             </tr>
         @endforeach
         </tbody>

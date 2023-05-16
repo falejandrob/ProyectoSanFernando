@@ -19,8 +19,7 @@ class ProfesoresList extends Component
 
     public function destroyProfesor($id)
     {
-        User::destroy($id);
-        $this->emit('profesor_update');
-        $this->emit('refresh');
+        User::find($id)->delete();
+        session()->flash('success', 'El profesor se ha eliminado correctamente.');
     }
 }

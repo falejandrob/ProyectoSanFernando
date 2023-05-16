@@ -55,7 +55,7 @@
 
         @media (max-width: 768px) {
             img{
-                width: 80%;
+                width: 70%;
             }
             .div-padre{
             }
@@ -71,7 +71,7 @@
                 font-size: 20px;
                 outline-offset: 20px;
                 margin-left: 10%;
-                width: 80%;
+                width: 60%;
                 display: block;
                 margin: 0 auto;
             }
@@ -94,24 +94,29 @@
                 width: 70%;
                 display: block;
                 margin: 0 auto;
+                margin-bottom: 15%;
             }
         }
 
         @media (min-width: 992px) and (max-width: 1200px) {
             img{
-                width: 60%;
+                width: 40%;
             }
             .div-padre{
+                display: flex;
+                justify-content: center;
             }
             .animated-word,
             .animated-word-rigth {
-                font-size: 45px;
+                font-size: 25px;
                 outline-offset: 35px;
                 margin-left: 20%;
                 width: 60%;
-                display: block;
-                margin: 0 auto;
+                margin-bottom: 5%;
+                display: inline-block;
             }
+
+
         }
 
         @media (min-width: 1200px) {
@@ -124,7 +129,7 @@
             }
             .animated-word,
             .animated-word-rigth {
-                font-size: 45px;
+                font-size: 35px;
                 outline-offset: 35px;
                 margin-left: 20%;
                 width: 60%;

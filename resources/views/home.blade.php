@@ -9,16 +9,20 @@
         <div class="busqueda" style="margin-top: 25px">
             @livewire('productos-buscar')
         </div>
-
-        <div class="carrito" style="background: #FAFAFA; border-left: #D6D6D6 1px solid; padding: 25px">
-            @livewire('cart-list')
-        </div>
+        @if($closestDate !== null)
+            @if($fechaActual->between($closestDate->fechaMinima,$closestDate->fechaMaxima))
+                <div class="carrito" style="background: #FAFAFA; border-left: #D6D6D6 1px solid; padding: 25px">
+                    @livewire('cart-list')
+                </div>
+            @endif
+        @endif
     </div>
 @endsection
 
 
 <!-- Escribir justificacion modal -->
-<div class="modal fade modal-lg" id="justificacionModal" tabindex="-1" aria-labelledby="justificacionModal" aria-hidden="true">
+<div class="modal fade modal-lg" id="justificacionModal" tabindex="-1" aria-labelledby="justificacionModal"
+     aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -44,7 +48,8 @@
 </div>
 
 <!-- Modal realizar pedido -->
-<div class="modal fade modal-lg" id="confirmarPedido" data-bs-backdrop="true" tabindex="-1" aria-labelledby="exampleModalLabel"
+<div class="modal fade modal-lg" id="confirmarPedido" data-bs-backdrop="true" tabindex="-1"
+     aria-labelledby="exampleModalLabel"
      aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -52,14 +57,14 @@
                 <h1 class="modal-title fs-5" id="exampleModalLabel">Confirmar pedido</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
+            <!--<div class="modal-body">
                 <form action="{{route('cart.confirm')}}" method="post">
                     @csrf
-                    @method("GET")
-                    <div class="form-row">
-                        <div class="mb-3">
-                            <label>Para cuando se quiere el pedido</label>
-                            <input type="date" class="form-control" id="expectedDate" name="expectedDate" pattern="\d{4}-\d{2}-\d{2}" value="{{ $expectedDate }}" required>
+            @method("POST")
+            <div class="form-row">
+                <div class="mb-3">
+                    <label>Para cuando se quiere el pedido</label>
+                    <input type="date" class="form-control" id="expectedDate" name="expectedDate" pattern="\d{4}-\d{2}-\d{2}" value="{{ $expectedDate }}" required>
                         </div>
                         <div class="mb-3">
                             <label>Para que hora</label>
@@ -73,6 +78,28 @@
                     </div>
                     <button class="btn btn-primary" type="submit">Hacer pedido</button>
                 </form>
+            </div>-->
+        </div>
+    </div>
+</div>
+
+<div class="modal fade modal-lg" id="presupuesto" tabindex="-1" aria-labelledby="presupuesto" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" style="background: #FAC3C3">
+                <p style="font-size: 18px">No tienes presupuesto para realizar el pedido</p>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade modal-lg" id="fechapedido" tabindex="-1" aria-labelledby="fechapedido" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" style="background: #FAC3C3">
+                <p style="font-size: 18px">La fecha y hora introducida están fuera de plazo</p>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
         </div>
     </div>
