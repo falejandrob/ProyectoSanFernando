@@ -4,18 +4,25 @@
         @method("POST")
         <div>
             @if(Cart::content()->count() != 0 && $closestDate !== null)
-                <div class="d-flex justify-content-end align-items-center">
+                <div style="display: flex; justify-content: space-between;">
+                    <div style="margin-top: 2%">
+                        <p class="carrito-size" style="text-align: center; font-size: 22px; font-weight: bold;">Tu pedido</p>
+                    </div>
                     <button wire:click.prevent="clearCart()"
-                            class="btn btn-danger d-flex justify-content-between align-items-center">
-                        <span style="padding: 5px">Limpiar Carrito</span>
+                            class="btn btn-danger d-flex justify-content-between align-items-center" style="margin-left: 20%; height: 5%">
+                        <span style="padding: 5px">Vaciar Carrito</span>
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
                              class="bi bi-trash3-fill" viewBox="0 0 16 16">
                             <path
                                 d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5Zm-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5ZM4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5Z"/>
                         </svg>
                     </button>
+                </div><hr>
+                <div>
+                    <label class="carrito-size" style="margin-bottom: 2%">Justificación pedido</label>
+                    <textarea class="form-control" style="height: 50px" id="justification" placeholder="Justificacion"
+                              name="justification" required>{{ Session::get("justificacion") }}</textarea>
                 </div>
-                <br>
                 <div style="display: flex; justify-content: space-around; align-items: center; text-align: center;">
                     @php
                         $fechaConFormatoMin = \Carbon\Carbon::parse($closestDate->fechaMinima)->format('d-m-Y');
@@ -23,24 +30,10 @@
                         $fechaConFormatoMax = \Carbon\Carbon::parse($closestDate->fechaMaxima)->format('d-m-Y');
                         $horaConFormatoMax = \Carbon\Carbon::parse($closestDate->fechaMaxima)->format('H:i');
                     @endphp
-
-                    <div>
-                        <p class="carrito-size">Apertura de plazo:</p>
-                        <p class="carrito-size">{{$fechaConFormatoMin}} - {{$horaConFormatoMin}}h</p>
-                    </div>
-                    <div>
-                        <p class="carrito-size">Cierre de plazo:</p>
-                        <p class="carrito-size">{{$fechaConFormatoMax}} - {{$horaConFormatoMax}}h</p>
-                    </div>
                 </div><br>
-                <div class="mb-3">
-                    <label class="carrito-size">Justificación pedido</label>
-                    <textarea class="form-control" id="justification" placeholder="Justificacion"
-                              name="justification" required>{{ Session::get("justificacion") }}</textarea>
-                </div>
             @endif
             @if(Cart::content()->count() != 0)
-                <div style="overflow-y: scroll; height: 500px;">
+                <div style="overflow-y: scroll; height: 800px;">
                     @foreach($categorias as $categoria)
                         @php($cont = 0)
                         @foreach($cart as $productoCarrito)
@@ -52,7 +45,7 @@
                             <p class="carrito-size" style="padding-top: 20px">{{ $categoria->nombre }}</p>
                             @foreach($cart as $productoCarrito)
                                 @if($productoCarrito->options->categoria == $categoria->nombre)
-                                    <div class="cart-item" style="display: flex; flex-wrap: wrap; width: 95%">
+                                    <div class="cart-item" style="display: flex; flex-wrap: wrap; width: 95%; height: 130px">
                                         <div class="info-producto" style=" display: flex;">
                                             <span class="item-name">{{$productoCarrito->name}}</span>
                                             <div class="quantity-controls">
@@ -81,7 +74,7 @@
                                         </div>
                                         <br><br>
                                         <div class="observacion" style="width: 100%; display: flex;">
-                                            <textarea class="form-control" style="width: 100%; height: 10%"
+                                            <textarea class="form-control" style="width: 100%; height: 50px"
                                                       id="observacion{{"-".$productoCarrito->rowId}}" placeholder="Observación"
                                                       name="observacion{{"-".$productoCarrito->rowId}}">{{ Session::get("observacion") }}</textarea>
                                         </div>

@@ -1,6 +1,13 @@
 <div>
     @if($closestDate !== null)
         @if($fechaActual->between($closestDate->fechaMinima,$closestDate->fechaMaxima))
+            @php
+                $fechaConFormatoMax = \Carbon\Carbon::parse($closestDate->fechaMaxima)->format('d-m-Y');
+                $horaConFormatoMax = \Carbon\Carbon::parse($closestDate->fechaMaxima)->format('H:i');
+            @endphp
+            <div class="alert alert-warning" style="text-align: center; font-size: 100%; width: 70%; margin: auto;">
+                Puede realizar pedidos hasta el día {{$fechaConFormatoMax}} a las {{$horaConFormatoMax}}h
+            </div><br>
             <div
                 style="width: 60%; margin: auto; border: 2px solid #F6C366; border-radius: 50px; height: 50px; display: flex; justify-content: space-around; align-items: center;">
                 <input wire:model="searchTerm" type="text"
@@ -14,7 +21,7 @@
     @if($productos && $productos->count() > 0)
         <div class="table-responsive table-wrapper-scroll-y my-custom-scrollbar">
             <table class="table mb-0 tabla-scroll"
-                   style="width: 90%; margin:auto; text-align: center;  font-size: 15px">
+                   style="width: 90%; margin:auto; text-align: center;  font-size: 15px; ">
                 <tbody>
                 @foreach($productos as $producto)
                     <tr class="" style="text-align: center; height: 100px">

@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>SanCenando</title>
+    <title>EconoMando</title>
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 
     <style>
@@ -300,13 +300,14 @@
                 margin-left: 30%;
             }
             .busqueda{
-                width: 60%;
+                width: 58%;
+                margin-right: 2%
             }
             .carrito{
                 width: 40%;
             }
             .carrito-size{
-                font-size: 22px;
+                font-size: 18px;
             }
             .info-producto{
                 width: 100%;
@@ -348,7 +349,7 @@
     <nav class="navbar navbar-expand-lg navbar-light shadow-sm" >
         <div class="container">
         <a class="navbar-brand m-lg-3" href="{{ url('/home') }}">
-            SanCenando
+            EconoMando
         </a>
             @auth
                 @if(auth()->user()->hasRole('profesor'))
