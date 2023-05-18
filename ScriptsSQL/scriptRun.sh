@@ -98,15 +98,15 @@ run_command "php artisan clear-compiled" "No se pudo limpiar la cache compilada.
 
 # Limpiar la cache de bootstrap
 show_message "Limpiando la cache de bootstrap..."
-run_command "rm -r bootstrap/cache/*" "No se pudo limpiar la cache de bootstrap."
+run_command "rm -rf bootstrap/cache/*" "No se pudo limpiar la cache de bootstrap."
 
 # Limpiar la cache de migrations
 show_message "Limpiando la cache de migrations..."
-run_command "rm -r database/migrations/2023_05_16_183103_create_sessions_table.php" "No se pudo limpiar la cache de migrations."
+run_command "rm -rf database/migrations/2023_05_16_183103_create_sessions_table.php" "No se pudo limpiar la cache de migrations."
 
 # Limpiar la cache de storage
 show_message "Limpiando la cache de storage..."
-run_command "rm -r storage/framework/cache/*" "No se pudo limpiar la cache de storage."
+run_command "rm -rf storage/framework/cache/*" "No se pudo limpiar la cache de storage."
 
 # Establecer permisos
 show_message "Estableciendo permisos..."
