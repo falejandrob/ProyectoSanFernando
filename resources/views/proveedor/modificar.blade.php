@@ -4,7 +4,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <div style="width: 50%; margin: auto">
+                <div class="frm" style="margin: auto">
                     <h2 class="mt-4" style="text-align: center">Modificar proveedor</h2>
                     <hr>
                     <form action="{{ route("proveedor.update", ["id" => $proveedor->id]) }}" method="post"
@@ -17,7 +17,10 @@
                                    value="{{$proveedor->nombre}}">
                         </div>
                         <br>
-                        <button type="submit" class="btn btn-primary" style="align-items: center">MODIFICAR</button>
+                        <div style="text-align: center">
+                            <button type="submit" class="btn btn-primary" style="align-items: center">MODIFICAR</button>
+                        </div>
+
                     </form>
                 </div>
             </div>

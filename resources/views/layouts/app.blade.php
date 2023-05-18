@@ -78,7 +78,7 @@
             font-size: 16px;
         }
 
-        .nombre{
+        .nombre {
             margin-left: 1%;
         }
 
@@ -167,192 +167,233 @@
         }
 
         @media (max-width: 768px) {
-            .adm{
+            .adm {
                 margin-left: 0;
             }
-            .busqueda{
+
+            .busqueda {
                 width: 90%;
             }
-            .carrito{
+
+            .carrito {
                 width: 100%;
             }
-            .btn-carrito{
+
+            .btn-carrito {
                 font-size: 12px;
                 background: red;
             }
 
-            .carrito span{
+            .carrito span {
                 font-size: 14px;
             }
-            .busqueda-productos svg{
+
+            .busqueda-productos svg {
                 width: 15px;
             }
-            .cart-item{
+
+            .cart-item {
                 width: 170%;
             }
-            .info-producto{
+
+            .info-producto {
                 width: 100%;
                 align-items: center;
             }
+
             .quantity-controls .item-quantity {
                 font-size: 0.9rem;
                 margin: 10px;
                 vertical-align: middle;
             }
-            .justificacion{
+
+            .justificacion {
                 font-size: 15px;
             }
 
-            .cd-admin{
+            .cd-admin {
                 width: 60%;
             }
 
-            .cd-admin a{
+            .cd-admin a {
                 font-size: 16px;
             }
 
-            .div-btn{
+            .div-btn {
                 width: 160%
             }
-            .carrito-size{
+
+            .carrito-size {
                 font-size: 18px;
             }
-            .presupuesto{
+
+            .presupuesto {
                 width: 50%;
                 font-size: 12px;
             }
-            .form-fecha{
+
+            .form-fecha {
                 width: 100%;
             }
 
-            .observacion{
+            .observacion {
                 width: 40%;
             }
 
-            .plazos{
-                width:135%;
+            .plazos {
+                width: 135%;
+            }
+
+            .frm{
+                width: 90%;
             }
 
         }
 
         @media (min-width: 768px) and (max-width: 992px) {
-            .cart-item{
+            .cart-item {
                 width: 90%;
             }
-            .div-btn{
+
+            .div-btn {
                 width: 100%
             }
-            .carrito span{
+
+            .carrito span {
                 font-size: 16px;
             }
-            .info-producto{
+
+            .info-producto {
                 width: 100%;
                 align-items: center;
             }
+
             .quantity-controls .item-quantity {
                 font-size: 1.1rem;
                 margin: 10px;
                 vertical-align: middle;
             }
-            .plazos{
-                width:100%;
+
+            .plazos {
+                width: 100%;
             }
-            .busqueda{
+
+            .busqueda {
                 width: 90%;
             }
-            .carrito{
-                width: 90%;
+
+            .carrito {
+                width: 95%;
             }
-            .presupuesto{
+
+            .presupuesto {
                 width: 25%;
                 font-size: 12px;
             }
         }
+
         @media (min-width: 1024px) {
-            .adm{
+            .adm {
                 margin-left: 20%;
             }
-            .busqueda{
-                width: 50%;
+
+            .busqueda {
+                width: 53%;
+                margin-right: 2%
             }
-            .carrito{
-                width: 50%;
+
+            .carrito {
+                width: 45%;
             }
-            .carrito span{
+
+            .carrito span {
                 font-size: 16px;
             }
-            .carrito-cat{
+
+            .carrito-cat {
                 font-size: 20px;
             }
-            .info-producto{
+
+            .info-producto {
                 width: 100%;
                 align-items: center;
             }
-            .busqueda-productos{
+
+            .busqueda-productos {
                 font-size: 20px;
             }
 
-            .cd-admin{
+            .cd-admin {
                 width: 30%;
             }
 
-            .cd-admin a{
+            .cd-admin a {
                 font-size: 20px;
             }
 
-            .div-btn{
+            .div-btn {
                 width: 160%
             }
-            .plazos{
-                width:100%;
+
+            .plazos {
+                width: 100%;
             }
 
 
         }
 
         @media (min-width: 1200px) {
-            .adm{
+            .adm {
                 margin-left: 30%;
             }
-            .busqueda{
+
+            .busqueda {
                 width: 53%;
                 margin-right: 2%
             }
-            .carrito{
+
+            .carrito {
                 width: 45%;
             }
-            .carrito-size{
+
+            .carrito-size {
                 font-size: 18px;
             }
-            .info-producto{
+
+            .info-producto {
                 width: 100%;
                 align-items: center;
             }
-            .info-producto span{
+
+            .info-producto span {
                 margin-right: 20%;
             }
-            .busqueda-productos{
+
+            .busqueda-productos {
                 font-size: 20px;
             }
 
-            .cd-admin{
+            .cd-admin {
                 width: 30%;
             }
 
-            .cd-admin a{
+            .cd-admin a {
                 font-size: 20px;
             }
 
-            .div-btn{
+            .div-btn {
                 width: 60%
             }
 
-            .form-fecha{
+            .form-fecha {
                 width: 40%;
             }
 
-            .plazos{
-                width:100%;
+            .plazos {
+                width: 100%;
+            }
+            .frm{
+                width: 55%;
             }
 
         }
@@ -361,11 +402,18 @@
 </head>
 <body>
 <div id="app">
-    <nav class="navbar navbar-expand-lg navbar-light shadow-sm" >
+    <nav class="navbar navbar-expand-lg navbar-light shadow-sm">
         <div class="container">
-        <a class="navbar-brand m-lg-3" href="{{ url('/home') }}">
-            EconoMando
-        </a>
+            @if(auth()->user())
+                <a class="navbar-brand m-lg-3" href="{{ url('/home') }}">
+                    EconoMando
+                </a>
+            @else
+                <a class="navbar-brand m-lg-3" href="{{ url('/') }}">
+                    EconoMando
+                </a>
+            @endif
+
             @auth
                 @if(auth()->user()->hasRole('profesor'))
                     <div class="budget-container presupuesto">
@@ -390,7 +438,7 @@
                             aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
-                    <div class="collapse navbar-collapse adm" id="navbarNavDropdown" >
+                    <div class="collapse navbar-collapse adm" id="navbarNavDropdown">
                         <ul class="navbar-nav menu-admin">
                             <li class="nav-item">
                                 <a class="nav-link active" aria-current="page"
@@ -404,8 +452,10 @@
                                 </a>
                                 <ul class="dropdown-menu">
                                     <li><a class="dropdown-item" href="{{route('totalPedidos')}}">Ver pedidos</a></li>
-                                    <li><a class="dropdown-item" href="{{route('listDates')}}">Ver plazos de pedidos</a></li>
-                                    <li><a class="dropdown-item" href="{{route('fechaPedidos')}}">Añadir plazo de pedido</a></li>
+                                    <li><a class="dropdown-item" href="{{route('listDates')}}">Ver plazos de pedidos</a>
+                                    </li>
+                                    <li><a class="dropdown-item" href="{{route('fechaPedidos')}}">Añadir plazo de
+                                            pedido</a></li>
                                 </ul>
                             </li>
                             <li class="nav-item dropdown">
@@ -457,11 +507,11 @@
                     </a>
                     <ul class="dropdown-menu">
                         @if(auth()->user()->hasRole('profesor'))
-                        <li>
-                            <a class="dropdown-item" href="{{ route('misPedidos', Auth::user()->id) }}">
-                                Mis pedidos
-                            </a>
-                        </li>
+                            <li>
+                                <a class="dropdown-item" href="{{ route('misPedidos', Auth::user()->id) }}">
+                                    Mis pedidos
+                                </a>
+                            </li>
                         @endif
                         <li>
                             <a class="dropdown-item" href="{{ route('logout') }}"

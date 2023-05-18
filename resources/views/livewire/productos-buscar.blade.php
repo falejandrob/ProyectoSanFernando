@@ -19,9 +19,9 @@
     <br>
 
     @if($productos && $productos->count() > 0)
-        <div class="table-responsive table-wrapper-scroll-y my-custom-scrollbar">
-            <table class="table mb-0 tabla-scroll"
-                   style="width: 90%; margin:auto; text-align: center;  font-size: 15px; ">
+        <div>
+            <table
+                   style="width: 95%; margin:auto; text-align: center;  font-size: 15px; ">
                 <tbody>
                 @foreach($productos as $producto)
                     <tr class="" style="text-align: center; height: 100px">
