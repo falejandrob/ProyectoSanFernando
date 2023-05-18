@@ -3,8 +3,8 @@
 @section('content')
     <div class="container">
         <div class="row">
-            <div class="col-md-12">
-                <div style="width: 50%; margin: auto">
+            <div class="col-md-12" style="justify-content: center">
+                <div class="frm" style="margin: auto">
                     <br>
                     @if (session('success'))
                         <div class="alert alert-success">
@@ -27,8 +27,10 @@
                                     <option value="{{$categoria->id}}">{{$categoria->nombre}}</option>
                                 @endforeach
                             </select>
+                        </div ><br>
+                        <div style="text-align: center">
+                            <button type="submit" class="btn btn-primary">AÑADIR</button>
                         </div>
-                        <button type="submit" class="btn btn-primary">AÑADIR</button>
                     </form>
                 </div>
             </div>

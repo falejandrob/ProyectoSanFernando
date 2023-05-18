@@ -9,7 +9,7 @@
         <h1 style="text-align: center">Mis pedidos</h1>
         <br>
 
-        <div class="table-responsive table-wrapper-scroll-y my-custom-scrollbar" style="height: 400px">
+        <div class="table-responsive table-wrapper-scroll-y my-custom-scrollbar" style="height: 500px">
             <table class="table mb-0 tabla-scroll " style="text-align: center;">
                 <thead>
                 <tr>
@@ -28,42 +28,42 @@
                         $fechaConFormato = \Carbon\Carbon::parse($pedido->first()->options->get('fechaPedido'))->format('d-m-Y');
                     @endphp
                     @if($validado == 0)
-                        <tr class="table-danger">
-                            <td>{{ $fechaConFormato }}</td>
-                            <td>{{ $pedido->first()->options->get('expectedDate') }}</td>
-                            <td>{{ $pedido->first()->options->get('justification') }}</td>
-                            <td>
+                        <tr class="" style="background: #FED2D2">
+                            <td id="informacion" data-titulo="Fecha pedido:" >{{ $fechaConFormato }}</td>
+                            <td id="informacion" data-titulo="Fecha prevista:" >{{ $pedido->first()->options->get('expectedDate') }}</td>
+                            <td id="informacion" data-titulo="Justificación:" >{{ $pedido->first()->options->get('justification') }}</td>
+                            <td id="botones">
                                 <a class="btn btn-primary" href="{{ route('detallesPedido', [$id, ""]) }}">
                                     Ver más
                                 </a>
                             </td>
-                            <td>
+                            <td id="botones">
                                 <a class="btn btn-danger disabled">
                                     Enviar
                                 </a>
                             </td>
-                            <td>
+                            <td id="botones">
                                 <a class="btn btn-success disabled">
                                     Imprimir
                                 </a>
                             </td>
                         </tr>
                     @else
-                        <tr class="table-success">
-                            <td>{{ $fechaConFormato }}</td>
-                            <td>{{ $pedido->first()->options->get('expectedDate') }}</td>
-                            <td>{{ $pedido->first()->options->get('justification') }}</td>
-                            <td>
+                        <tr class="" style="background: #BDDECA">
+                            <td id="informacion" data-titulo="Fecha pedido:">{{ $fechaConFormato }}</td>
+                            <td id="informacion" data-titulo="Fecha prevista:">{{ $pedido->first()->options->get('expectedDate') }}</td>
+                            <td id="informacion" data-titulo="Justificación:">{{ $pedido->first()->options->get('justification') }}</td>
+                            <td id="botones">
                                 <a class="btn btn-primary" href="{{ route('detallesPedido', [$id, ""]) }}">
                                     Ver más
                                 </a>
                             </td>
-                            <td>
+                            <td id="botones">
                                 <a class="btn btn-danger" href="{{route('sendMail',[$id])}}">
                                     Enviar
                                 </a>
                             </td>
-                            <td>
+                            <td id="botones">
                                 <a class="btn btn-success" href="{{route('downloadPdf',[$id])}}" target="_blank">
                                     Imprimir
                                 </a>

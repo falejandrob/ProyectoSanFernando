@@ -9,7 +9,7 @@
         <h1 class="title-plazos" style="text-align: center; padding: 15px;">PLAZOS DE PEDIDOS</h1>
         @if($dates->count() > 0)
             <div class="table-wrapper-scroll-y my-custom-scrollbar">
-                <table class="table mb-0 tabla-scroll plazos" style="margin:auto; text-align: center;">
+                <table class="table mb-0 tabla-scroll plazos" style="margin:auto; text-align: center; width: 90%">
                     <thead>
                     <tr>
                         <th>Fecha de apertura</th>
@@ -28,17 +28,17 @@
                         @endphp
 
                         <tr class="table" style="text-align: center; background: #F6F0D2">
-                            <td>{{$fechaConFormatoMin}} - {{$horaConFormatoMin}}</td>
-                            <td>{{$fechaConFormatoMax}} - {{$horaConFormatoMax}}</td>
+                            <td id="informacion" data-titulo="Fecha apertura:">{{$fechaConFormatoMin}} - {{$horaConFormatoMin}}h</td>
+                            <td id="informacion" data-titulo="Fecha cierre:">{{$fechaConFormatoMax}} - {{$horaConFormatoMax}}h</td>
                             <td>
                                 <button type="submit" class="btn btn-primary"><a
                                         style="color:white; text-decoration: none"
-                                        href="{{route('updateDate', $date->id)}}">MODIFICAR</a>
+                                        href="{{route('updateDate', $date->id)}}">Modificar</a>
                                 </button>
                             </td>
                             <td>
                                 <button wire:click="destroyDate({{$date->id}})" class="btn btn-danger">
-                                    ELIMINAR
+                                    Eliminar
                                 </button>
                             </td>
                         </tr>

@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>SanCenando</title>
+    <title>EconoMando</title>
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 
     <style>
@@ -78,7 +78,7 @@
             font-size: 16px;
         }
 
-        .nombre{
+        .nombre {
             margin-left: 1%;
         }
 
@@ -120,7 +120,7 @@
             align-items: center;
             background: #fff;
             color: #333;
-            padding: 15px;
+            padding: 10px;
             margin: 10px;
             border-radius: 10px;
             box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
@@ -166,177 +166,315 @@
             color: #cc5555
         }
 
-        @media (max-width: 768px) {
-            .adm{
-                margin-left: 0;
+        @media (max-width: 767px) {
+            .table tr{
+                display: flex;
+                flex-wrap: wrap;
+                border: 1px solid grey;
+                padding: 1em;
+                margin-bottom: 1em;
             }
-            .busqueda{
-                width: 90%;
-            }
-            .carrito{
+            .lista-productos{
                 width: 100%;
             }
-            .btn-carrito{
+            .table tr td{
+                border: none;
+                width: 50%;
+                font-size: 14px;
+            }
+            #informacion{
+                width: 100%;
+            }
+            #botones{
+                width: 33.3%;
+                padding: 1%;
+                font-size: 10px;
+            }
+            #boton-contrasenia{
+                width: 100%;
+            }
+            #detalles{
+                font-size: 18px;
+            }
+            .table thead{
+                display:none;
+            }
+            .table td[data-titulo]{
+                display: flex;
+            }
+            .table td[data-titulo]::before{
+                content:attr(data-titulo);
+                width: 38%;
+                color:#1B1B1B;
+                font-weight: bold;
+            }
+            .adm {
+                margin-left: 0;
+            }
+
+            .busqueda {
+                width: 95%;
+            }
+
+            .inp-busqueda{
+                width: 90%;
+            }
+
+            .carrito {
+                width: 100%;
+            }
+
+            .btn-carrito {
                 font-size: 12px;
                 background: red;
             }
 
-            .carrito span{
+            .carrito span {
                 font-size: 14px;
             }
-            .busqueda-productos svg{
-                width: 15px;
+
+            .busqueda-productos svg {
+                width: 16px;
             }
-            .cart-item{
+
+            .busqueda-productos{
+                font-size: 14px;
+            }
+
+            .cart-item {
                 width: 170%;
             }
-            .info-producto{
+
+            .inp-busqueda{
+                font-size: 12px;
+            }
+
+            .info-producto {
                 width: 100%;
                 align-items: center;
             }
+
             .quantity-controls .item-quantity {
                 font-size: 0.9rem;
                 margin: 10px;
                 vertical-align: middle;
             }
-            .justificacion{
+
+            .justificacion {
                 font-size: 15px;
             }
 
-            .cd-admin{
+            .cd-admin {
                 width: 60%;
             }
 
-            .cd-admin a{
+            .cd-admin a {
                 font-size: 16px;
             }
 
-            .div-btn{
+            .div-btn {
                 width: 160%
             }
-            .carrito-size{
+
+            .carrito-size {
                 font-size: 18px;
             }
-            .presupuesto{
-                width: 60%;
+
+            .presupuesto {
+                width: 50%;
                 font-size: 12px;
             }
-            .form-fecha{
+
+            .form-fecha {
                 width: 100%;
             }
 
-            .observacion{
+            .observacion {
                 width: 40%;
             }
 
-            .plazos{
-                width:135%;
+            .frm{
+                width: 90%;
             }
 
         }
 
         @media (min-width: 768px) and (max-width: 992px) {
-            .cart-item{
+            .cart-item {
                 width: 90%;
             }
-            .div-btn{
+
+            .lista-productos{
+                width: 90%;
+            }
+
+            .inp-busqueda{
+                width: 60%;
+            }
+
+            .div-btn {
                 width: 100%
             }
-            .carrito span{
+
+            .carrito span {
                 font-size: 16px;
             }
+
+            .info-producto {
+                width: 100%;
+                align-items: center;
+            }
+
             .quantity-controls .item-quantity {
                 font-size: 1.1rem;
                 margin: 10px;
                 vertical-align: middle;
             }
-            .plazos{
-                width:100%;
+
+            .plazos {
+                width: 100%;
             }
-        }
-        @media (min-width: 1024px) {
-            .adm{
-                margin-left: 20%;
+
+            .busqueda {
+                width: 90%;
             }
-            .busqueda{
-                width: 50%;
+
+            .carrito {
+                width: 95%;
             }
-            .carrito{
-                width: 50%;
+
+            .presupuesto {
+                width: 25%;
+                font-size: 12px;
             }
-            .carrito span{
-                font-size: 16px;
-            }
-            .carrito-cat{
+            #detalles{
                 font-size: 20px;
             }
-            .info-producto{
+        }
+
+        @media (min-width: 1024px) {
+            .adm {
+                margin-left: 20%;
+            }
+            .lista-productos{
+                width: 90%;
+            }
+
+            .busqueda {
+                width: 53%;
+                margin-right: 2%
+            }
+
+            .inp-busqueda{
+                width: 50%;
+            }
+
+            .carrito {
+                width: 45%;
+            }
+
+            .carrito span {
+                font-size: 16px;
+            }
+
+            .carrito-cat {
+                font-size: 20px;
+            }
+
+            .info-producto {
                 width: 100%;
                 align-items: center;
             }
-            .busqueda-productos{
-                font-size: 20px;
+
+            .busqueda-productos {
+                font-size: 16px;
             }
 
-            .cd-admin{
+            .cd-admin {
                 width: 30%;
             }
 
-            .cd-admin a{
+            .cd-admin a {
                 font-size: 20px;
             }
+            #detalles{
+                font-size: 22px;
+            }
 
-            .div-btn{
+            .div-btn {
                 width: 160%
             }
-            .plazos{
-                width:100%;
+
+            .plazos {
+                width: 100%;
             }
+
 
         }
 
         @media (min-width: 1200px) {
-            .adm{
+            .adm {
                 margin-left: 30%;
             }
-            .busqueda{
-                width: 60%;
+
+            .lista-productos{
+                width: 90%;
             }
-            .carrito{
-                width: 40%;
+
+            .busqueda {
+                width: 53%;
+                margin-right: 2%
             }
-            .carrito-size{
+            #detalles{
                 font-size: 22px;
             }
-            .info-producto{
+
+            .inp-busqueda{
+                width: 50%;
+            }
+
+            .carrito {
+                width: 45%;
+            }
+
+            .carrito-size {
+                font-size: 18px;
+            }
+
+            .info-producto {
                 width: 100%;
                 align-items: center;
             }
-            .info-producto span{
+
+            .info-producto span {
                 margin-right: 20%;
             }
-            .busqueda-productos{
-                font-size: 20px;
+
+            .busqueda-productos {
+                font-size: 16px;
             }
 
-            .cd-admin{
+            .cd-admin {
                 width: 30%;
             }
 
-            .cd-admin a{
+            .cd-admin a {
                 font-size: 20px;
             }
 
-            .div-btn{
+            .div-btn {
                 width: 60%
             }
 
-            .form-fecha{
+            .form-fecha {
                 width: 40%;
             }
 
-            .plazos{
-                width:100%;
+            .plazos {
+                width: 100%;
+            }
+            .frm{
+                width: 55%;
             }
 
         }
@@ -345,11 +483,18 @@
 </head>
 <body>
 <div id="app">
-    <nav class="navbar navbar-expand-lg navbar-light shadow-sm" >
+    <nav class="navbar navbar-expand-lg navbar-light shadow-sm">
         <div class="container">
-        <a class="navbar-brand m-lg-3" href="{{ url('/home') }}">
-            SanCenando
-        </a>
+            @if(auth()->user())
+                <a class="navbar-brand m-lg-3" href="{{ url('/home') }}">
+                    EconoMando
+                </a>
+            @else
+                <a class="navbar-brand m-lg-3" href="{{ url('/') }}">
+                    EconoMando
+                </a>
+            @endif
+
             @auth
                 @if(auth()->user()->hasRole('profesor'))
                     <div class="budget-container presupuesto">
@@ -374,7 +519,7 @@
                             aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
-                    <div class="collapse navbar-collapse adm" id="navbarNavDropdown" >
+                    <div class="collapse navbar-collapse adm" id="navbarNavDropdown">
                         <ul class="navbar-nav menu-admin">
                             <li class="nav-item">
                                 <a class="nav-link active" aria-current="page"
@@ -388,8 +533,10 @@
                                 </a>
                                 <ul class="dropdown-menu">
                                     <li><a class="dropdown-item" href="{{route('totalPedidos')}}">Ver pedidos</a></li>
-                                    <li><a class="dropdown-item" href="{{route('listDates')}}">Ver plazos de pedidos</a></li>
-                                    <li><a class="dropdown-item" href="{{route('fechaPedidos')}}">Añadir plazo de pedido</a></li>
+                                    <li><a class="dropdown-item" href="{{route('listDates')}}">Ver plazos de pedidos</a>
+                                    </li>
+                                    <li><a class="dropdown-item" href="{{route('fechaPedidos')}}">Añadir plazo de
+                                            pedido</a></li>
                                 </ul>
                             </li>
                             <li class="nav-item dropdown">
@@ -441,11 +588,11 @@
                     </a>
                     <ul class="dropdown-menu">
                         @if(auth()->user()->hasRole('profesor'))
-                        <li>
-                            <a class="dropdown-item" href="{{ route('misPedidos', Auth::user()->id) }}">
-                                Mis pedidos
-                            </a>
-                        </li>
+                            <li>
+                                <a class="dropdown-item" href="{{ route('misPedidos', Auth::user()->id) }}">
+                                    Mis pedidos
+                                </a>
+                            </li>
                         @endif
                         <li>
                             <a class="dropdown-item" href="{{ route('logout') }}"
@@ -469,22 +616,6 @@
             </ul>
         @endauth
     </nav>
-
-    <div class="offcanvas offcanvas-end" data-bs-scroll="true" data-bs-backdrop="true" tabindex="-1"
-         id="offcanvasWithBothOptions"
-         aria-labelledby="offcanvasWithBothOptionsLabel">
-        <div class="offcanvas-header">
-            <h5 class="offcanvas-title"
-                id="offcanvasWithBothOptionsLabel">Lista de pedidos</h5>
-            <button style="display:relative" type="button" class="btn-close" data-bs-dismiss="offcanvas"
-                    aria-label="Close"></button>
-        </div>
-        <div class="offcanvas-body">
-            <div class="lista" style="width: 90%; margin: 0 auto; padding: 15px;">
-                @livewire('cart-list')
-            </div>
-        </div>
-    </div>
     <main>
         @yield('content')
     </main>

@@ -7,10 +7,10 @@
             </div>
         @endif
         <h1 style="text-align: center; padding: 15px">PROFESORES</h1>
-        <table class="table" style="width:80%; margin:auto; text-align: center;">
+        <div class="table-wrapper-scroll-y my-custom-scrollbar" style="height: 550px">
+            <table class="table mb-0 tabla-scroll " style="width:90%; margin:auto; text-align: center;">
             <thead>
             <tr>
-                <th>Nick</th>
                 <th>Nombre</th>
                 <th>Apellidos</th>
                 <th>Email</th>
@@ -22,31 +22,31 @@
             <tbody>
                 @foreach($profesores as $profesor)
                         <tr class="table" style="text-align: center; background: #F6F0D2">
-                            <td>{{$profesor->nick}}</td>
-                            <td>{{$profesor->nombre}}</td>
-                            <td>{{$profesor->apellidos}}</td>
-                            <td>{{$profesor->email}}</td>
-                            <td>
+                            <td id="informacion" data-titulo="Nombre:">{{$profesor->nombre}}</td>
+                            <td id="informacion" data-titulo="Apellidos:">{{$profesor->apellidos}}</td>
+                            <td id="informacion" data-titulo="Email:">{{$profesor->email}}</td>
+                            <td id="boton-contrasenia">
                                 <button type="submit" class="btn btn-success"><a
                                         style="color:white; text-decoration: none"
-                                        href="{{route('cambiarPassword', $profesor->id)}}">CAMBIAR CONSTRASEÑA</a>
+                                        href="{{route('cambiarPassword', $profesor->id)}}">Cambiar contraseña</a>
                                 </button>
                             </td>
-                            <td>
+                            <td >
                                 <button type="submit" class="btn btn-primary"><a
                                         style="color:white; text-decoration: none"
-                                        href="{{route('modificarProfesor', $profesor->id)}}">MODIFICAR</a>
+                                        href="{{route('modificarProfesor', $profesor->id)}}">Modificar</a>
                                 </button>
                             </td>
-                            <td>
+                            <td >
                                 <button wire:click="destroyProfesor({{$profesor->id}})" class="btn btn-danger">
-                                    ELIMINAR
+                                    Eliminar
                                 </button>
                             </td>
                         </tr>
                 @endforeach
             </tbody>
         </table>
+        </div>
     </div>
 
     <br>

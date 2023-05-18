@@ -4,7 +4,7 @@
     <div class="container" >
         <div class="row" >
             <div class="col-md-12" style="justify-content: center">
-                <div style="width: 60%; margin: auto;">
+                <div class="frm" style="margin: auto;">
                     <br>
                     @if (session('success'))
                         <div class="alert alert-success">

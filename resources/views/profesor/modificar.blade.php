@@ -4,18 +4,13 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <div style="width: 50%; margin: auto">
+                <div class="frm" style="margin: auto">
                     <h2 class="mt-4" style="text-align: center">Modificar profesor</h2>
                     <hr>
                     <form action="{{ route("profesor.update", ["id" => $profesor->id]) }}" method="post"
                           enctype="multipart/form-data">
                         @csrf
                         @method("POST")
-                        <div class="form-group">
-                            <label for="nick" style="margin:15px 0px; font-size: 18px">Nick</label>
-                            <input style="font-size: 18px" type="text" name="nick" id="nick" class="form-control"
-                                   value="{{$profesor->nick}}">
-                        </div>
                         <div class="form-group">
                             <label for="nombre" style="margin:15px 0px; font-size: 18px">Nombre</label>
                             <input style="font-size: 18px" type="text" name="nombre" id="nombre" class="form-control"
@@ -73,8 +68,9 @@
                         </div>
 
                         <br>
-
-                        <button type="submit" class="btn btn-primary" style="align-items: center">MODIFICAR</button>
+                        <div style="text-align: center">
+                            <button type="submit" class="btn btn-primary">MODIFICAR</button>
+                        </div><br><br>
                     </form>
                 </div>
             </div>

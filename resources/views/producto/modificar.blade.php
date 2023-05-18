@@ -4,7 +4,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <div style="width: 50%; margin: auto">
+                <div class="frm" style="margin: auto">
                     <h2 class="mt-4" style="text-align: center">Modificar producto</h2>
                     <hr>
                     <form action="{{ route("producto.update", ["id" => $producto->id]) }}" method="post"
@@ -24,8 +24,10 @@
                                     <option <?php if($categoria->id == $producto->idCategoria){echo("selected");}?> value="{{$categoria->id}}">{{$categoria->nombre}}</option>
                                 @endforeach
                             </select>
+                        </div><br>
+                        <div style="text-align: center">
+                            <button type="submit" class="btn btn-primary" style="align-items: center">MODIFICAR</button>
                         </div>
-                         <button type="submit" class="btn btn-primary" style="align-items: center">MODIFICAR</button>
                     </form>
                 </div>
             </div>

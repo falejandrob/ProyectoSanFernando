@@ -20,16 +20,16 @@
                 @foreach($proveedores as $proveedor)
 
                     <tr class="table" style="text-align: center; background: #F6F0D2">
-                        <td>{{$proveedor->nombre}}</td>
-                        <td>
+                        <td id="informacion" data-titulo="Nombre:">{{$proveedor->nombre}}</td>
+                        <td >
                             <button type="submit" class="btn btn-primary"><a
                                     style="color:white; text-decoration: none"
-                                    href="{{route('modificarProveedor', $proveedor->id)}}">MODIFICAR</a>
+                                    href="{{route('modificarProveedor', $proveedor->id)}}">Modificar</a>
                             </button>
                         </td>
-                        <td>
+                        <td >
                             <button wire:click="destroyProveedor({{$proveedor->id}})" class="btn btn-danger">
-                                ELIMINAR
+                                Eliminar
                             </button>
                         </td>
                     </tr>
