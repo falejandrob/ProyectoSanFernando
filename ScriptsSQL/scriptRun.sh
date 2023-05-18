@@ -80,17 +80,33 @@ run_command "php artisan optimize:clear" "No se pudo limpiar la cache de optimiz
 show_message "Limpiando la cache de la aplicación..."
 run_command "php artisan cache:clear" "No se pudo limpiar la cache de la aplicación."
 
-# Limpiar las rutas
-show_message "Limpiando las rutas..."
-run_command "php artisan route:clear" "No se pudo limpiar las rutas."
+# Limpiar la cache de rutas
+show_message "Limpiando la cache de rutas..."
+run_command "php artisan route:clear" "No se pudo limpiar la cache de rutas."
 
-# Limpiar la configuración
-show_message "Limpiando la configuración..."
-run_command "php artisan config:clear" "No se pudo limpiar la configuración."
+# Limpiar la cache de configuración
+show_message "Limpiando la cache de configuración..."
+run_command "php artisan config:clear" "No se pudo limpiar la cache de configuración."
 
-# Limpiar las vistas
-show_message "Limpiando las vistas..."
-run_command "php artisan view:clear" "No se pudo limpiar las vistas."
+# Limpiar la cache de vistas
+show_message "Limpiando la cache de vistas..."
+run_command "php artisan view:clear" "No se pudo limpiar la cache de vistas."
+
+# Limpiar la cache compilada
+show_message "Limpiando la cache compilada..."
+run_command "php artisan clear-compiled" "No se pudo limpiar la cache compilada."
+
+# Limpiar la cache de bootstrap
+show_message "Limpiando la cache de bootstrap..."
+run_command "rm -r bootstrap/cache/*" "No se pudo limpiar la cache de bootstrap."
+
+# Limpiar la cache de migrations
+show_message "Limpiando la cache de migrations..."
+run_command "rm -r database/migrations/2023_05_16_183103_create_sessions_table.php" "No se pudo limpiar la cache de migrations."
+
+# Limpiar la cache de storage
+show_message "Limpiando la cache de storage..."
+run_command "rm -r storage/framework/cache/*" "No se pudo limpiar la cache de storage."
 
 # Establecer permisos
 show_message "Estableciendo permisos..."
@@ -103,3 +119,4 @@ run_command "php artisan migrate:fresh --seed" "No se pudieron ejecutar las migr
 # Finalización exitosa
 show_message "¡El script se ha ejecutado correctamente!"
 exit 0
+
