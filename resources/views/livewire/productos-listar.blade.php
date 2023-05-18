@@ -27,15 +27,16 @@
         </div>
         <h1 style="text-align: center; padding: 15px">PRODUCTOS</h1>
         <div
-            style="width: 50%; margin: auto; border: 2px solid #F6C366; border-radius: 50px; height: 40px; display: flex; justify-content: space-around; align-items: center;">
+            class="inp-busqueda" style="margin: auto; border: 2px solid #F6C366; border-radius: 50px; height: 40px;
+             display: flex; justify-content: space-around; align-items: center;">
             <input wire:model="searchFilter" type="text" id="searchFilter"
                    style="width: 65%; height: 25px; font-size: 150%; text-align: center; outline: none; border: 2px solid white; background: white"/>
             <img src="https://cdn-icons-png.flaticon.com/512/3917/3917132.png" style="height: 25px;"/>
         </div>
         <br>
         @if($productos && $productos->count() > 0)
-            <div class="table-wrapper-scroll-y my-custom-scrollbar">
-                <table class="table mb-0 tabla-scroll " style="width:100%; margin:auto; text-align: center;">
+            <div class="">
+                <table class="table" style="width:100%; margin:auto; text-align: center;">
                     <thead style="position: static">
                     <tr>
                         <th>Nombre</th>
@@ -48,38 +49,40 @@
                     <tbody>
                     @foreach($productos as $producto)
                         @if($producto->validado == 1)
-                            <tr class="table-danger" style="text-align: center">
+                            <tr class="" style="background: #FED2D2">
                         @else
-                            <tr class="table-success" style="text-align: center">
+                            <tr class="" style="background: #BDDECA" >
                                 @endif
-                                <td>{{$producto->nombre}}</td>
+                                <td id="informacion" data-titulo="Nombre:" >{{$producto->nombre}}</td>
                                 @foreach($categorias as $categoria)
                                     @if($producto->idCategoria == $categoria->id)
-                                        <td>{{$categoria->nombre}}</td>
+                                        <td id="informacion" data-titulo="Categoría:">{{$categoria->nombre}}</td>
                                     @endif
                                 @endforeach
-                                <td>
-                                    <button wire:click.prevent="destroyProduct({{$producto->id}})"
-                                            class="btn btn-danger">
-                                        ELIMINAR
-                                    </button>
-                                </td>
-
-                                <td>
-                                    <button type="submit" class="btn btn-primary"><a
-                                            style="color:white; text-decoration: none"
-                                            href="{{route('modificarProducto',$producto->id)}}">MODIFICAR</a>
-                                    </button>
-                                </td>
-                                <td>
-                                    @csrf
-                                    @method('POST')
-                                    @if($producto->validado == 1)
-                                        <button wire:click.prevent="validateProduct({{$producto->id}})"
-                                                class="btn btn-success">VALIDAR
+                                <div>
+                                    <td id="botones">
+                                        <button wire:click.prevent="destroyProduct({{$producto->id}})"
+                                                class="btn btn-danger">
+                                            Eliminar
                                         </button>
-                                    @endif
-                                </td>
+                                    </td>
+
+                                    <td id="botones">
+                                        <button type="submit" class="btn btn-primary"><a
+                                                style="color:white; text-decoration: none"
+                                                href="{{route('modificarProducto',$producto->id)}}">Modificar</a>
+                                        </button>
+                                    </td>
+                                    <td id="botones">
+                                        @csrf
+                                        @method('POST')
+
+                                        <button wire:click.prevent="validateProduct({{$producto->id}})"
+                                                class="btn btn-success" @if($producto->validado == 0) disabled @endif>Validar
+                                        </button>
+
+                                    </td>
+                                </div>
                             </tr>
                             @endforeach
                     </tbody>

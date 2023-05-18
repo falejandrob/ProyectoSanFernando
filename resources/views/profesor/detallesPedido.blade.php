@@ -28,13 +28,13 @@
             $fechaConFormatoPrevista = \Carbon\Carbon::parse($pedido->first()->options->get('expectedDate'))->format('d-m-Y');
             $horaConFormatoPrevista = \Carbon\Carbon::parse($pedido->first()->options->get('expectedTime'))->format('H:i');
         @endphp
-        <h3>Fecha pedido: {{ $fechaConFormatoPedido }} - {{ $horaConFormatoPedido }}h</h3>
-        <h3>Fecha prevista: {{ $fechaConFormatoPrevista }} - {{$horaConFormatoPrevista}}h</h3>
-        <h3>Justificación: {{ $pedido->first()->options->get('justification') }}</h3>
+        <p id="detalles">Fecha pedido: {{ $fechaConFormatoPedido }} - {{ $horaConFormatoPedido }}h</p>
+        <p id="detalles">Fecha prevista: {{ $fechaConFormatoPrevista }} - {{$horaConFormatoPrevista}}h</p>
+        <p id="detalles">Justificación: {{ $pedido->first()->options->get('justification') }}</p>
 
-        <br><br>
+        <br>
 
-        <h2>Productos</h2>
+        <h2 style="text-align: center">Productos</h2>
         <hr>
 <!---->
         @if(count($pedido) == 0)
@@ -55,12 +55,12 @@
                     <tbody>
                     @foreach($pedido as $linea)
                         <tr>
-                            <td>{{ $linea->name }}</td>
-                            <td>{{ $linea->options->categoria }}</td>
-                            <td>{{ $linea->qty }}</td>
-                            <td></td>
-                            <td></td>
-                            <td>{{ $linea->options->observacion }}</td>
+                            <td id="informacion" data-titulo="Nombre:">{{ $linea->name }}</td>
+                            <td id="informacion" data-titulo="Categoría:">{{ $linea->options->categoria }}</td>
+                            <td id="informacion" data-titulo="Cantidad:">{{ $linea->qty }}</td>
+                            <td id="informacion" data-titulo="Incidencia:"></td>
+                            <td id="informacion" data-titulo="Respuesta:"></td>
+                            <td id="informacion" data-titulo="Observación:">{{ $linea->options->observacion}}</td>
                         </tr>
                     @endforeach
                     </tbody>

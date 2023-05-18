@@ -5,10 +5,10 @@
                 $fechaConFormatoMax = \Carbon\Carbon::parse($closestDate->fechaMaxima)->format('d-m-Y');
                 $horaConFormatoMax = \Carbon\Carbon::parse($closestDate->fechaMaxima)->format('H:i');
             @endphp
-            <div class="alert alert-warning" style="text-align: center; font-size: 100%; width: 70%; margin: auto;">
+            <div class="alert alert-danger" style="text-align: center; font-size: 100%; width: 70%; margin: auto;">
                 Puede realizar pedidos hasta el día {{$fechaConFormatoMax}} a las {{$horaConFormatoMax}}h
             </div><br>
-            <div
+            <div class="inp-busqueda"
                 style="width: 60%; margin: auto; border: 2px solid #F6C366; border-radius: 50px; height: 50px; display: flex; justify-content: space-around; align-items: center;">
                 <input wire:model="searchTerm" type="text"
                        style="width: 70%; height: 35px; font-size: 150%; text-align: center; outline: none; border: 2px solid white; background: white"/>
@@ -19,27 +19,27 @@
     <br>
 
     @if($productos && $productos->count() > 0)
-        <div>
-            <table
-                   style="width: 95%; margin:auto; text-align: center;  font-size: 15px; ">
+        <!--<div>
+            <table style="width: 95%; margin:auto; text-align: center;  font-size: 15px; ">
                 <tbody>
                 @foreach($productos as $producto)
-                    <tr class="" style="text-align: center; height: 100px">
-                        <td style="text-align: center; vertical-align: middle;">{{$producto->nombre}}</td>
+            <tr class="" style="text-align: center; height: 100px">
+                <td style="text-align: center; vertical-align: middle;">{{$producto->nombre}}</td>
                         @foreach($categorias as $categoria)
-                            @if($producto->idCategoria == $categoria->id)
-                                <td style="width: 50px; height: 50px; text-align: center; vertical-align: middle;">{{$categoria->nombre}}</td>
-                            @endif
-                        @endforeach
+                @if($producto->idCategoria == $categoria->id)
+                    <td style="width: 50px; height: 50px; text-align: center; vertical-align: middle;">{{$categoria->nombre}}</td>
 
-                        <td style="text-align: center; vertical-align: middle;">
-                            <div style="width: 50%; display: inline-block">
-                                <div class="d-flex align-items-center justify-content-center div-btn">
-                                    @if(optional($carrito->where('id', $producto->id)->first())->qty != null)
-                                        @if($carrito->where('id',$producto->id)->first()->qty == 1)
+                @endif
+            @endforeach
 
-                                            <button
-                                                wire:click.prevent="removeFromCart('{{ $carrito->where('id', $producto->id)->first()->rowId }}')"
+            <td style="text-align: center; vertical-align: middle;">
+                <div style="width: 50%; display: inline-block">
+                    <div class="d-flex align-items-center justify-content-center div-btn">
+@if(optional($carrito->where('id', $producto->id)->first())->qty != null)
+                @if($carrito->where('id',$producto->id)->first()->qty == 1)
+
+                    <button
+                        wire:click.prevent="removeFromCart('{{ $carrito->where('id', $producto->id)->first()->rowId }}')"
                                                 class="btn" style="background: #CB5F5F; ">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
                                                      fill="currentColor"
@@ -49,9 +49,9 @@
                                                 </svg>
                                             </button>
                                             <p style="margin: 5px">{{$carrito->where('id',$producto->id)->first()->qty}}
-                                                ud</p>
-                                            <button
-                                                wire:click.prevent="addElementToProduct('{{ $carrito->where('id', $producto->id)->first()->rowId }}')"
+                    ud</p>
+                <button
+                    wire:click.prevent="addElementToProduct('{{ $carrito->where('id', $producto->id)->first()->rowId }}')"
                                                 class="btn" style="background: #61CB5F; ">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
                                                      fill="currentColor"
@@ -61,13 +61,14 @@
                                                 </svg>
                                             </button>
 
-                                        @endif
-                                    @endif
-                                    @if(optional($carrito->where('id', $producto->id)->first())->qty != null)
-                                        @if($carrito->where('id',$producto->id)->first()->qty > 1)
 
-                                            <button
-                                                wire:click.prevent="restElementToProduct('{{ $carrito->where('id', $producto->id)->first()->rowId }}')"
+                @endif
+            @endif
+            @if(optional($carrito->where('id', $producto->id)->first())->qty != null)
+                @if($carrito->where('id',$producto->id)->first()->qty > 1)
+
+                    <button
+                        wire:click.prevent="restElementToProduct('{{ $carrito->where('id', $producto->id)->first()->rowId }}')"
                                                 class="btn" style="background: #CB5F5F; ">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
                                                      fill="currentColor" class="bi bi-dash" viewBox="0 0 16 16">
@@ -76,9 +77,9 @@
                                                 </svg>
                                             </button>
                                             <p style="margin: 5px">{{$carrito->where('id',$producto->id)->first()->qty}}
-                                                ud</p>
-                                            <button
-                                                wire:click.prevent="addElementToProduct('{{ $carrito->where('id', $producto->id)->first()->rowId }}')"
+                    ud</p>
+                <button
+                    wire:click.prevent="addElementToProduct('{{ $carrito->where('id', $producto->id)->first()->rowId }}')"
                                                 class="btn" style="background: #61CB5F; ">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
                                                      fill="currentColor" class="bi bi-plus-lg"
@@ -87,10 +88,11 @@
                                                           d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"/>
                                                 </svg>
                                             </button>
-                                        @endif
-                                    @endif
-                                    @if(optional($carrito->where('id', $producto->id)->first())->qty == null)
-                                        <button wire:click.prevent="addToCart({{$producto->id}})"
+
+                @endif
+            @endif
+            @if(optional($carrito->where('id', $producto->id)->first())->qty == null)
+                <button wire:click.prevent="addToCart({{$producto->id}})"
                                                 style=" width: 180%; font-size: 120%; background: #F6C366; box-sizing: border-box;"
                                                 type="submit"
                                                 class="btn">
@@ -101,37 +103,37 @@
                                                     d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
                                             </svg>
                                         </button>
-                                    @endif
-                                </div>
-                            </div>
-                        </td>
 
-                    </tr>
-                @endforeach
-                </tbody>
-            </table>
+            @endif
+            </div>
         </div>
+    </td>
 
+</tr>
 
-        <!-- <div class="busqueda-productos" style="display: flex; flex-wrap: wrap; justify-content: center;">
-            <ul class="list-group" style="width: 90%; margin: auto">
+        @endforeach
+        </tbody>
+    </table>
+</div>-->
+
+        <div class="busqueda-productos" style="display: flex; flex-wrap: wrap; justify-content: center;">
+            <ul class="list-group lista-productos" style=" margin: auto">
                 @foreach($productos as $producto)
-            <li class="list-group-item" style="width: 100%">
-                <div class="d-flex align-items-center justify-content-between">
-                    <p style="width: 30%">{{ $producto->nombre}}</p>
-                           @foreach($categorias as $categoria)
-                @if($producto->idCategoria == $categoria->id)
-                    <p class="p-categoria" style="width:20%;">{{$categoria->nombre}}</p>
+                    <li class="list-group-item" style="width: 100%">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <p style="width: 30%">{{ $producto->nombre}}</p>
+                            @foreach($categorias as $categoria)
+                                @if($producto->idCategoria == $categoria->id)
+                                    <p class="p-categoria" style="width:20%;">{{$categoria->nombre}}</p>
 
-
-                @endif
-            @endforeach
-            @if(optional($carrito->where('id', $producto->id)->first())->qty != null)
-                @if($carrito->where('id',$producto->id)->first()->qty == 1)
-                    <div style="width: 30%; box-sizing: border-box">
-                        <div class="d-flex align-items-center justify-content-center">
-                            <button
-                                wire:click.prevent="removeFromCart('{{ $carrito->where('id', $producto->id)->first()->rowId }}')"
+                                @endif
+                            @endforeach
+                            @if(optional($carrito->where('id', $producto->id)->first())->qty != null)
+                                @if($carrito->where('id',$producto->id)->first()->qty == 1)
+                                    <div style="width: 30%; box-sizing: border-box">
+                                        <div class="d-flex align-items-center justify-content-center">
+                                            <button
+                                                wire:click.prevent="removeFromCart('{{ $carrito->where('id', $producto->id)->first()->rowId }}')"
                                                 class="btn" style="background: #CB5F5F; margin: 5px">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
                                                      fill="currentColor"
@@ -141,9 +143,9 @@
                                                 </svg>
                                             </button>
                                             <p style="margin: 5px">{{$carrito->where('id',$producto->id)->first()->qty}}
-                    ud</p>
-                <button
-                    wire:click.prevent="addElementToProduct('{{ $carrito->where('id', $producto->id)->first()->rowId }}')"
+                                                ud</p>
+                                            <button
+                                                wire:click.prevent="addElementToProduct('{{ $carrito->where('id', $producto->id)->first()->rowId }}')"
                                                 class="btn" style="background: #61CB5F; margin: 5px">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
                                                      fill="currentColor"
@@ -155,15 +157,14 @@
                                         </div>
                                     </div>
 
-
-                @endif
-            @endif
-            @if(optional($carrito->where('id', $producto->id)->first())->qty != null)
-                @if($carrito->where('id',$producto->id)->first()->qty > 1)
-                    <div style="width: 30%; box-sizing: border-box">
-                        <div class="d-flex align-items-center justify-content-center">
-                            <button
-                                wire:click.prevent="restElementToProduct('{{ $carrito->where('id', $producto->id)->first()->rowId }}')"
+                                @endif
+                            @endif
+                            @if(optional($carrito->where('id', $producto->id)->first())->qty != null)
+                                @if($carrito->where('id',$producto->id)->first()->qty > 1)
+                                    <div style="width: 30%; box-sizing: border-box">
+                                        <div class="d-flex align-items-center justify-content-center">
+                                            <button
+                                                wire:click.prevent="restElementToProduct('{{ $carrito->where('id', $producto->id)->first()->rowId }}')"
                                                 class="btn" style="background: #CB5F5F; margin: 5px">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
                                                      fill="currentColor" class="bi bi-dash" viewBox="0 0 16 16">
@@ -172,9 +173,9 @@
                                                 </svg>
                                             </button>
                                             <p style="margin: 5px">{{$carrito->where('id',$producto->id)->first()->qty}}
-                    ud</p>
-                <button
-                    wire:click.prevent="addElementToProduct('{{ $carrito->where('id', $producto->id)->first()->rowId }}')"
+                                                ud</p>
+                                            <button
+                                                wire:click.prevent="addElementToProduct('{{ $carrito->where('id', $producto->id)->first()->rowId }}')"
                                                 class="btn" style="background: #61CB5F; margin: 5px">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
                                                      fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
@@ -185,11 +186,10 @@
                                         </div>
                                     </div>
 
-
-                @endif
-            @endif
-            @if(optional($carrito->where('id', $producto->id)->first())->qty == null)
-                <button wire:click.prevent="addToCart({{$producto->id}})"
+                                @endif
+                            @endif
+                            @if(optional($carrito->where('id', $producto->id)->first())->qty == null)
+                                <button wire:click.prevent="addToCart({{$producto->id}})"
                                         style="width: 30%; font-size: 120%; background: #F6C366; box-sizing: border-box;"
                                         type="submit"
                                         class="btn">
@@ -200,15 +200,13 @@
                                     </svg>
                                 </button>
 
+                            @endif
+                        </div>
+                    </li>
 
-            @endif
-            </div>
-        </li>
-
-
-        @endforeach
-        </ul>
-    </div>-->
+                @endforeach
+            </ul>
+        </div>
     @else
         <div style="width: 60%; margin: auto">
             @if($closestDate === null)
