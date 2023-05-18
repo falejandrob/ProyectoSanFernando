@@ -76,6 +76,22 @@ run_command "npm run build" "No se pudo compilar."
 show_message "Limpiando la cache de optimización..."
 run_command "php artisan optimize:clear" "No se pudo limpiar la cache de optimización."
 
+# Limpiar la cache de la aplicación
+show_message "Limpiando la cache de la aplicación..."
+run_command "php artisan cache:clear" "No se pudo limpiar la cache de la aplicación."
+
+# Limpiar las rutas
+show_message "Limpiando las rutas..."
+run_command "php artisan route:clear" "No se pudo limpiar las rutas."
+
+# Limpiar la configuración
+show_message "Limpiando la configuración..."
+run_command "php artisan config:clear" "No se pudo limpiar la configuración."
+
+# Limpiar las vistas
+show_message "Limpiando las vistas..."
+run_command "php artisan view:clear" "No se pudo limpiar las vistas."
+
 # Establecer permisos
 show_message "Estableciendo permisos..."
 run_command "chmod -R 777 *" "No se pudieron establecer los permisos."
