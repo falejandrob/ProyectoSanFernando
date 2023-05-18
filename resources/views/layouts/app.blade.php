@@ -120,7 +120,7 @@
             align-items: center;
             background: #fff;
             color: #333;
-            padding: 15px;
+            padding: 10px;
             margin: 10px;
             border-radius: 10px;
             box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
@@ -218,7 +218,7 @@
                 font-size: 18px;
             }
             .presupuesto{
-                width: 60%;
+                width: 50%;
                 font-size: 12px;
             }
             .form-fecha{
@@ -245,6 +245,10 @@
             .carrito span{
                 font-size: 16px;
             }
+            .info-producto{
+                width: 100%;
+                align-items: center;
+            }
             .quantity-controls .item-quantity {
                 font-size: 1.1rem;
                 margin: 10px;
@@ -252,6 +256,16 @@
             }
             .plazos{
                 width:100%;
+            }
+            .busqueda{
+                width: 90%;
+            }
+            .carrito{
+                width: 90%;
+            }
+            .presupuesto{
+                width: 25%;
+                font-size: 12px;
             }
         }
         @media (min-width: 1024px) {
@@ -293,6 +307,7 @@
                 width:100%;
             }
 
+
         }
 
         @media (min-width: 1200px) {
@@ -300,11 +315,11 @@
                 margin-left: 30%;
             }
             .busqueda{
-                width: 58%;
+                width: 53%;
                 margin-right: 2%
             }
             .carrito{
-                width: 40%;
+                width: 45%;
             }
             .carrito-size{
                 font-size: 18px;
@@ -470,22 +485,6 @@
             </ul>
         @endauth
     </nav>
-
-    <div class="offcanvas offcanvas-end" data-bs-scroll="true" data-bs-backdrop="true" tabindex="-1"
-         id="offcanvasWithBothOptions"
-         aria-labelledby="offcanvasWithBothOptionsLabel">
-        <div class="offcanvas-header">
-            <h5 class="offcanvas-title"
-                id="offcanvasWithBothOptionsLabel">Lista de pedidos</h5>
-            <button style="display:relative" type="button" class="btn-close" data-bs-dismiss="offcanvas"
-                    aria-label="Close"></button>
-        </div>
-        <div class="offcanvas-body">
-            <div class="lista" style="width: 90%; margin: 0 auto; padding: 15px;">
-                @livewire('cart-list')
-            </div>
-        </div>
-    </div>
     <main>
         @yield('content')
     </main>

@@ -31,9 +31,12 @@
                         $horaConFormatoMax = \Carbon\Carbon::parse($closestDate->fechaMaxima)->format('H:i');
                     @endphp
                 </div><br>
+                <div style="margin-top: 2%">
+                    <p class="carrito-size" style="text-align: center; font-size: 22px; font-weight: bold;">Productos</p>
+                </div>
             @endif
             @if(Cart::content()->count() != 0)
-                <div style="overflow-y: scroll; height: 800px;">
+                <div >
                     @foreach($categorias as $categoria)
                         @php($cont = 0)
                         @foreach($cart as $productoCarrito)
@@ -42,12 +45,12 @@
                             @endif
                         @endforeach
                         @if($cont > 0)
-                            <p class="carrito-size" style="padding-top: 20px">{{ $categoria->nombre }}</p>
+                            <p class="carrito-size" style="padding-top: 20px; color: #EE9900">{{ $categoria->nombre }}</p>
                             @foreach($cart as $productoCarrito)
                                 @if($productoCarrito->options->categoria == $categoria->nombre)
-                                    <div class="cart-item" style="display: flex; flex-wrap: wrap; width: 95%; height: 130px">
+                                    <div class="cart-item" style="display: flex; flex-wrap: wrap; width: 95%; height: 115px">
                                         <div class="info-producto" style=" display: flex;">
-                                            <span class="item-name">{{$productoCarrito->name}}</span>
+                                            <span class="item-name" style="font-size: 14px">{{$productoCarrito->name}}</span>
                                             <div class="quantity-controls">
                                                 <button
                                                     wire:click.prevent="restElementToProduct('{{ json_encode($productoCarrito) }}')"
@@ -74,7 +77,7 @@
                                         </div>
                                         <br><br>
                                         <div class="observacion" style="width: 100%; display: flex;">
-                                            <textarea class="form-control" style="width: 100%; height: 50px"
+                                            <textarea class="form-control" style="width: 100%; height: 40px"
                                                       id="observacion{{"-".$productoCarrito->rowId}}" placeholder="Observación"
                                                       name="observacion{{"-".$productoCarrito->rowId}}">{{ Session::get("observacion") }}</textarea>
                                         </div>
@@ -89,14 +92,14 @@
         </div>
         <br><br>
         @if(Cart::content()->count() != 0)
-            <div class="d-flex justify-content-around align-items-center">
-                <div class="mb-3" style="width: 40%">
-                    <label>Fecha pedido</label>
+            <div class="d-flex justify-content-around align-items-center" style="flex-wrap: wrap; text-align: center">
+                <div class="mb-3 fecha-hora" style="width: 40%">
+                    <label>Fecha prevista de pedido </label>
                     <input type="date" class="form-control" id="expectedDate" name="expectedDate"
                            pattern="\d{4}-\d{2}-\d{2}" value="{{ $expectedDate }}" required>
                 </div>
-                <div class="mb-3" style="width: 40%">
-                    <label>Hora pedido</label>
+                <div class="mb-3 fecha-hora" style="width: 40%">
+                    <label style="margin-bottom: 2px">Hora prevista de pedido</label>
                     <input type="time" class="form-control" id="expectedTime" name="expectedTime"
                            value="{{ $expectedTime }}" required>
                 </div>
@@ -104,7 +107,7 @@
             <div style="width: 100%; text-align: center; padding: 10px">
                 @if(Cart::content()->count() != 0)
                     <button style="font-size: 130%; width: 50%; padding: 10px; background: #F6C366"
-                            class="btn" data-bs-toggle="modal" @if($presupuesto == null) data-bs-target="#presupuesto"
+                            class="btn" data-bs-toggle="modal" @if($presupuesto == null or $total=="0") data-bs-target="#presupuesto"
                             type="button" @else type="submit" @endif >
                         Hacer pedido
                     </button>
@@ -114,3 +117,13 @@
     </form>
 </div>
 
+<div class="modal fade modal-lg" id="presupuesto" tabindex="-1" aria-labelledby="presupuesto" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" style="background: #FAC3C3">
+                <p style="font-size: 18px">No tienes presupuesto para realizar el pedido</p>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+        </div>
+    </div>
+</div>

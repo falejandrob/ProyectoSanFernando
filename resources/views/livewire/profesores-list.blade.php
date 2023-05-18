@@ -7,7 +7,8 @@
             </div>
         @endif
         <h1 style="text-align: center; padding: 15px">PROFESORES</h1>
-        <table class="table" style="width:80%; margin:auto; text-align: center;">
+        <div class="table-wrapper-scroll-y my-custom-scrollbar">
+            <table class="table mb-0 tabla-scroll " style="width:100%; margin:auto; text-align: center;">
             <thead>
             <tr>
                 <th>Nick</th>
@@ -47,6 +48,7 @@
                 @endforeach
             </tbody>
         </table>
+        </div>
     </div>
 
     <br>

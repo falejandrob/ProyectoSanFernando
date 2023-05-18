@@ -54,11 +54,12 @@ class CartList extends Component
         $categorias = Categoria::all();
         $anio_actual = Carbon::now()->year;
         $presupuesto = Presupuesto::where('idUser', Auth::id())->where('anio', $anio_actual)->first();
-
+        $presupuestoTotal = Presupuesto::where('idUser', Auth::id())->where('anio', $anio_actual)->get();
+        $total = $presupuestoTotal[0]->getAttribute('presupuestoTotal');
         $fechaPedido = null;
 
         return view('livewire.cart-list', ['cart'=>$this->cart, 'categorias'=>$categorias, "expectedDate" => $expectedDate, "expectedTime" => $expectedTime,
-            "presupuesto" => $presupuesto, 'closestDate'=>$closestDate]);
+            "presupuesto" => $presupuesto, 'closestDate'=>$closestDate, 'total'=>$total]);
     }
 
     public function removeFromCart($productoCarritoJson){
