@@ -99,31 +99,39 @@
         </thead>
         <tbody>
         @php
-            $categorias = array();
+            $categoryMap = [];
         @endphp
         @foreach($productos as $producto)
             @php
                 $categoria = $producto->options->categoria;
             @endphp
-            @if(!in_array($categoria, $categorias))
+            @if (!isset($categoryMap[$categoria]))
                 @php
-                    $categorias[] = $categoria;
+                    $categoryMap[$categoria] = [];
                 @endphp
-                <tr style="text-align: center" class="hover">
-                    <td style="background: #E7E7E7"><strong>{{ $categoria }}</strong></td>
-                    <td style="background: #E7E7E7"></td>
-                    <td style="background: #E7E7E7"></td>
-                    <td style="background: #E7E7E7"></td>
-                    <td style="background: #E7E7E7"></td>
-                </tr>
             @endif
+            @php
+                $categoryMap[$categoria][] = $producto;
+            @endphp
+        @endforeach
+
+        @foreach($categoryMap as $categoria => $productosCategoria)
             <tr style="text-align: center" class="hover">
-                <td>{{ $producto->name }}</td>
-                <td>{{ $producto->qty }} ud</td>
-                <td></td>
-                <td></td>
-                <td>{{ $producto->options->observacion }}</td>
+                <td style="background: #E7E7E7"><strong>{{ $categoria }}</strong></td>
+                <td style="background: #E7E7E7"></td>
+                <td style="background: #E7E7E7"></td>
+                <td style="background: #E7E7E7"></td>
+                <td style="background: #E7E7E7"></td>
             </tr>
+            @foreach($productosCategoria as $producto)
+                <tr style="text-align: center" class="hover">
+                    <td>{{ $producto->name }}</td>
+                    <td>{{ $producto->qty }} ud</td>
+                    <td></td>
+                    <td></td>
+                    <td>{{ $producto->options->observacion }}</td>
+                </tr>
+            @endforeach
         @endforeach
         </tbody>
     </table>
