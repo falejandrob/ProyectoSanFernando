@@ -107,7 +107,7 @@
             <div style="width: 100%; text-align: center; padding: 10px">
                 @if(Cart::content()->count() != 0)
                     <button style="font-size: 130%; width: 50%; padding: 10px; background: #F6C366"
-                            class="btn" data-bs-toggle="modal" @if($presupuesto == null or $total=="0") data-bs-target="#presupuesto"
+                            class="btn" data-bs-toggle="modal" @if($presupuesto == null or $total == "0") data-bs-target="#presupuesto"
                             type="button" @else type="submit" @endif >
                         Hacer pedido
                     </button>
