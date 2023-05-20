@@ -143,7 +143,7 @@
 
 <body>
 <div class="todo">
-    <img src="logoSanCenando.png" alt="logo" />
+    <img src="logo economando.png" alt="logo" />
     @if (Route::has('login'))
         <div class="div-padre">
             @auth
