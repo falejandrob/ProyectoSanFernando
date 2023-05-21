@@ -22,6 +22,7 @@
                             <th scope="col">Ver más</th>
                             <th scope="col">Eliminar</th>
                             <th scope="col">Validar / Desvalidar</th>
+                            <th scope="col">Proveedores</th>
                         </tr>
                     </thead>
                 <tbody>
@@ -53,11 +54,14 @@
                                         Validar
                                     </a>
                                 </td>
+                                <td id="botones">
+                                    <a class="btn btn-success disabled" href="{{ route('seleccionarProveedores', $id)}}">
+                                        Proveedores
+                                    </a>
+                                </td>
                             </tr>
                         @else
                             <tr class="" style="text-align: center; background: #BDDECA ">
-                                {{--@dd($profesores->where("id", "=", $pedidos->where('id','=',$id)->get()))--}}
-                                {{--@dd($profesores->where("id","=",$pedido[1])->first()->nombre . " ". $profesores->where("id","=",$pedido[1])->first()->apellidos)--}}
                                 <td id="informacion" data-titulo="Profesor:">{{ $profesores->where("id","=",$pedido[1])->first()->nombre . " ". $profesores->where("id","=",$pedido[1])->first()->apellidos }}</td>
                                 <td id="informacion" data-titulo="Fecha pedido:">{{ $fechaConFormato }}</td>
                                 <td id="informacion" data-titulo="Fecha prevista:">{{ $pedido[0]->first()->options->get('expectedDate') }}</td>
@@ -75,6 +79,11 @@
                                 <td id="botones">
                                     <a class="btn btn-dark" href="{{ route('desvalidarPedido', $id)}}">
                                         Desvalidar
+                                    </a>
+                                </td>
+                                <td id="botones">
+                                    <a class="btn btn-success" href="{{ route('seleccionarProveedores', $id)}}">
+                                        Proveedores
                                     </a>
                                 </td>
                             </tr>

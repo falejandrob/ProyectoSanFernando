@@ -13,9 +13,10 @@ use Livewire\Component;
 class CartList extends Component
 {
     //
-    protected $listeners = ['cart_update' =>'render'];
+    protected $listeners = ['cart_update' => 'render'];
     public $cart;
     public $rowId;
+
     public function render()
     {
         /*$fechaActual = Carbon::now();
@@ -54,38 +55,49 @@ class CartList extends Component
         $categorias = Categoria::all();
         $anio_actual = Carbon::now()->year;
         $presupuesto = Presupuesto::where('idUser', Auth::id())->where('anio', $anio_actual)->first();
-        $presupuestoTotal = Presupuesto::where('idUser', Auth::id())->where('anio', $anio_actual)->get();
-        $total = $presupuestoTotal[0]->getAttribute('presupuestoTotal');
         $fechaPedido = null;
+        if ($presupuesto != null) {
+            $presupuestoTotal = Presupuesto::where('idUser', Auth::id())->where('anio', $anio_actual)->get();
+            $total = $presupuestoTotal[0]->getAttribute('presupuestoTotal');
+            return view('livewire.cart-list', ['cart' => $this->cart, 'categorias' => $categorias, "expectedDate" => $expectedDate, "expectedTime" => $expectedTime,
+                "presupuesto" => $presupuesto, 'closestDate' => $closestDate, 'total' => $total]);
+        }
+        return view('livewire.cart-list', ['cart' => $this->cart, 'categorias' => $categorias, "expectedDate" => $expectedDate, "expectedTime" => $expectedTime,
+            "presupuesto" => $presupuesto, 'closestDate' => $closestDate]);
 
-        return view('livewire.cart-list', ['cart'=>$this->cart, 'categorias'=>$categorias, "expectedDate" => $expectedDate, "expectedTime" => $expectedTime,
-            "presupuesto" => $presupuesto, 'closestDate'=>$closestDate, 'total'=>$total]);
     }
 
-    public function removeFromCart($productoCarritoJson){
+    public function removeFromCart($productoCarritoJson)
+    {
         $productoCarrito = json_decode($productoCarritoJson);
         //@dd($productoCarrito);
         $this->rowId = $productoCarrito->rowId;
         Cart::remove($this->rowId);
         $this->emit('product_listeners');
     }
-    public function restElementToProduct($productoCarritoJson){
+
+    public function restElementToProduct($productoCarritoJson)
+    {
         $productoCarrito = json_decode($productoCarritoJson);
         //@dd($productoCarrito);
         $this->rowId = $productoCarrito->rowId;
         $this->cart = Cart::get($this->rowId);
-        Cart::update($this->rowId, $this->cart->qty-1);
+        Cart::update($this->rowId, $this->cart->qty - 1);
         $this->emit('product_listeners');
     }
-    public function addElementToProduct($productoCarritoJson){
+
+    public function addElementToProduct($productoCarritoJson)
+    {
         $productoCarrito = json_decode($productoCarritoJson);
         //@dd($productoCarrito);
         $this->rowId = $productoCarrito->rowId;
         $this->cart = Cart::get($this->rowId);
-        Cart::update($this->rowId, $this->cart->qty+1);
+        Cart::update($this->rowId, $this->cart->qty + 1);
         $this->emit('product_listeners');
     }
-    public function clearCart(){
+
+    public function clearCart()
+    {
         Cart::destroy();
         $this->emit('product_listeners');
     }

@@ -10,6 +10,7 @@ use App\Models\Presupuesto;
 use App\Models\Producto;
 use App\Models\User;
 use App\Models\Proveedore;
+use App\Models\ProductoProveedor;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Dompdf\Dompdf;
@@ -137,35 +138,77 @@ class HomeController extends Controller
 
     public function seleccionarProveedores($idPedido)
     {
-        $productosConProveedor = [];
-
-        $pedido = getCart($idPedido);
-        $anio_actual = Carbon::now()->year;
-        $presupuesto = Presupuesto::where('idUser', Auth::id())->where('anio', $anio_actual)->first();
+        $productosConProveedor = ProductoProveedor::where('pedido', $idPedido)->get();
+        $lineasPedido = LineaPedido::where('idPedido', $idPedido)->get();
         $proveedores = Proveedore::all();
         $categorias = Categoria::all();
 
         if (auth()->user()->hasRole('admin')) {
-            return view("admin.seleccionarProveedores", ["pedido" => $pedido, "idPedido" => $idPedido, "proveedores" => $proveedores, "categorias" => $categorias, "productosConProveedor" => $productosConProveedor]);
+            return view("admin.seleccionarProveedores", ["lineasPedido" => $lineasPedido, "idPedido" => $idPedido, "proveedores" => $proveedores, "categorias" => $categorias, "productosConProveedor" => $productosConProveedor]);
+        }
+    }
+
+    public function quitarRelacion($idRelacion)
+    {
+        if(ProductoProveedor::find($idRelacion) != null) {
+            $idPedido = ProductoProveedor::find($idRelacion)->pedido;
+
+            ProductoProveedor::destroy($idRelacion);
+
+            $productosConProveedor = ProductoProveedor::where('pedido', $idPedido)->get();
+            $lineasPedido = LineaPedido::where('idPedido', $idPedido)->get();
+            $proveedores = Proveedore::all();
+            $categorias = Categoria::all();
+
+            if (auth()->user()->hasRole('admin')) {
+                session()->flash('success', 'La relacion se ha eliminado correctamente.');
+                return view("admin.seleccionarProveedores", ["lineasPedido" => $lineasPedido, "idPedido" => $idPedido, "proveedores" => $proveedores, "categorias" => $categorias, "productosConProveedor" => $productosConProveedor]);
+            }
+        } else {
+            return redirect()->action([HomeController::class, 'totalPedidos']);
         }
     }
 
     public function establecerProveedor(Request $request)
     {
-        $productosConProveedor = $request->input('productos');
+        $productosSeleccionados = $request->input('productos');
         $proveedorSeleccionado = $request->input('proveedor');
 
-        $pedido = getCart($request->id);
-        $anio_actual = Carbon::now()->year;
-        $presupuesto = Presupuesto::where('idUser', Auth::id())->where('anio', $anio_actual)->first();
+        $lineasPedido = LineaPedido::where('idPedido', $request->id)->get();
         $proveedores = Proveedore::all();
         $categorias = Categoria::all();
 
+        foreach ($productosSeleccionados as $item) {
+            if(! $this->relacionExiste($request->id, $item)) {
+                $nuevo = ProductoProveedor::create([
+                    'pedido' => $request->id,
+                    'lineaPedido' => $item,
+                    'proveedor' => $proveedorSeleccionado,
+                ]);
+    
+                $nuevo->save();
+                session()->flash('success', 'El proveedor se ha guardado correctamente.');
+            }
+        }
+
+        $productosConProveedor = ProductoProveedor::where('pedido', $request->id)->get();
+
         if (auth()->user()->hasRole('admin')) {
-            return view("admin.seleccionarProveedores", ["pedido" => $pedido, "idPedido" => $request->id, "proveedores" => $proveedores, "categorias" => $categorias, "productosConProveedor" => $productosConProveedor]);
+            return view("admin.seleccionarProveedores", ["lineasPedido" => $lineasPedido, "idPedido" => $request->id, "proveedores" => $proveedores, "categorias" => $categorias, "productosConProveedor" => $productosConProveedor]);
         }
     }
 
+    function relacionExiste($idPedido, $lineaPedido) {
+        $productosConProveedor = ProductoProveedor::where('pedido', $idPedido)->get();
+
+        foreach($productosConProveedor as $item) {
+            if($item->pedido == $idPedido && $item->lineaPedido == $lineaPedido) {
+                return true; 
+            }
+        }
+
+        return false;
+    }
 
     public function totalPedidos()
     {
