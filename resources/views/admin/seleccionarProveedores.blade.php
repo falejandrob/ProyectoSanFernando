@@ -15,7 +15,14 @@
             <form action="{{ route('establecerProveedor') }}" method="POST">
                 <input type="hidden" name="id" value="{{ $idPedido }}" id="id">
                 @csrf
+                @php($categoriasMostradas = [])
                 @foreach ($lineasPedido as $linea)
+                    @foreach($categorias as $categoria)
+                        @if(App\Models\Producto::find($linea->idProducto)->idCategoria == $categoria->id && !in_array($categoria->id, $categoriasMostradas))
+                            <h3>{{ $categoria->nombre }}</h3>
+                            @php(array_push($categoriasMostradas, $categoria->id))
+                        @endif
+                    @endforeach
                     @php($esta = false)
                     @foreach ($productosConProveedor as $item)
                         @if ($item->lineaPedido == $linea->id)
