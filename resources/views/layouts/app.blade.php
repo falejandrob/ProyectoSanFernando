@@ -190,6 +190,11 @@
                 padding: 1%;
                 font-size: 10px;
             }
+            #botones-pedidos{
+                width: 50%;
+                padding: 2%;
+                font-size: 10px;
+            }
             #boton-contrasenia{
                 width: 100%;
             }
@@ -409,6 +414,9 @@
                 width: 100%;
             }
 
+            .btn-volver{
+                visibility: hidden;
+            }
 
         }
 
@@ -475,6 +483,9 @@
             }
             .frm{
                 width: 55%;
+            }
+            .btn-volver{
+                visibility: hidden;
             }
 
         }
