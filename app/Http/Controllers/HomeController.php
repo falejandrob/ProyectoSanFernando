@@ -178,6 +178,11 @@ class HomeController extends Controller
         $proveedores = Proveedore::all();
         $categorias = Categoria::all();
 
+        if($productosSeleccionados == null || $proveedorSeleccionado == null) {
+            $productosConProveedor = ProductoProveedor::where('pedido', $request->id)->get();
+            return view("admin.seleccionarProveedores", ["lineasPedido" => $lineasPedido, "idPedido" => $request->id, "proveedores" => $proveedores, "categorias" => $categorias, "productosConProveedor" => $productosConProveedor]);
+        }
+
         foreach ($productosSeleccionados as $item) {
             if(! $this->relacionExiste($request->id, $item)) {
                 $nuevo = ProductoProveedor::create([

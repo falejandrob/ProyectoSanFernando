@@ -22,14 +22,14 @@
                 @foreach ($lineasPedido as $linea)
                     @foreach($categorias as $categoria)
                         @if(App\Models\Producto::find($linea->idProducto)->idCategoria == $categoria->id && !in_array($categoria->id, $categoriasMostradas))
-                            <h3>{{ $categoria->nombre }}</h3>
+                            <h3 style="margin-top: 25px;">{{ $categoria->nombre }}</h3>
                             @php(array_push($categoriasMostradas, $categoria->id))
                         @endif
                     @endforeach
                     @php($esta = false)
                     @foreach ($productosConProveedor as $item)
                         @if ($item->lineaPedido == $linea->id)
-                            <div style="font-size: 150%; margin: 8px;">
+                            <div style="font-size: 150%; margin: 8px; margin-left: 20px;">
                                 <a class="btn btn-danger" href="{{ route('quitarRelacion', $item->id) }}">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                          class="bi bi-x-lg" viewBox="0 0 16 16">
@@ -45,7 +45,7 @@
                         @endif
                     @endforeach
                     @if(!$esta)
-                        <div style="font-size: 150%; margin: 8px;">
+                        <div style="font-size: 150%; margin: 8px; margin-left: 20px;">
                             <input style="width: 20px; height: 20px; cursor: pointer;" type="checkbox"
                                    name="productos[]" value="{{ $linea->id }}">
                             <span>{{ App\Models\Producto::find($linea->idProducto)->nombre }}</span>
