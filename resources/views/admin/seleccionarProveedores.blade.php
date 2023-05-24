@@ -1,6 +1,13 @@
 @extends('layouts.app')
 
 @section('content')
+    <div style="width: 100%;">
+        @if (session('success'))
+            <div class="alert alert-success" style="width: 60%; margin: auto; margin-top: 2%">
+                {{ session('success') }}
+            </div>
+        @endif
+    </div>
     <div class="btn-volver" style="margin: 25px">
         <a class="btn btn-secondary" href="{{ route('totalPedidos') }}">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -11,7 +18,6 @@
             Volver
         </a>
     </div>
-
     <div class="container d-flex justify-content-around align-items-center"
          style="border: black solid 1px; background: rgb(237, 237, 237); padding: 10px; width: 90%">
         <div style="width: 50%">
