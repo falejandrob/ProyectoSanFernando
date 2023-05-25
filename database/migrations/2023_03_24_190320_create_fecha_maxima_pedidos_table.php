@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->dateTime('fechaMinima');
             $table->dateTime('fechaMaxima');
-            $table->integer('fechaVencida');
             $table->timestamps();
         });
     }

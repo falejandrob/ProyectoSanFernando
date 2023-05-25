@@ -12,39 +12,13 @@ use Livewire\Component;
 
 class CartList extends Component
 {
-    //
+    //Global variables
     protected $listeners = ['cart_update' => 'render'];
     public $cart;
     public $rowId;
 
     public function render()
     {
-        /*$fechaActual = Carbon::now();
-        $hora = strtotime($fechaActual);
-        $horaActual =  date("H:i", $hora);
-
-        $fechaInicioPlazo = FechaMaximaPedido::selectRaw('fechaMinima')
-            ->where('fechaMinima', '>=', $fechaActual)
-            ->orderByRaw('fechaMinima ASC')
-            ->limit(1)
-            ->value('fechaMinima');
-
-        $fechaMasProxima = FechaMaximaPedido::selectRaw('fechaMaxima')
-            ->where('fechaMaxima', '>', $fechaActual)
-            ->orderByRaw('fechaMaxima ASC')
-            ->limit(1)
-            ->value('fechaMaxima');
-
-        $fechaMin = strtotime($fechaInicioPlazo);
-        $fechaConFormatoMin = date('d-m-Y',$fechaMin);
-        $fechaMinFormato = date('Y-m-d',$fechaMin);
-        $horaConFormatoMin = date("H:i", $fechaMin);
-
-        $fechaMax = strtotime($fechaMasProxima);
-        $fechaMaxFormato = date('Y-m-d',$fechaMax);
-        $fechaConFormatoMax = date('d-m-Y',$fechaMax);
-        $horaConFormatoMax = date("H:i", $fechaMax);*/
-
         $closestDate = FechaMaximaPedido::closestToDate()->first();
 
         $expectedDate = date('Y-m-d');
@@ -55,7 +29,6 @@ class CartList extends Component
         $categorias = Categoria::all();
         $anio_actual = Carbon::now()->year;
         $presupuesto = Presupuesto::where('idUser', Auth::id())->where('anio', $anio_actual)->first();
-        $fechaPedido = null;
         if ($presupuesto != null) {
             $presupuestoTotal = Presupuesto::where('idUser', Auth::id())->where('anio', $anio_actual)->get();
             $total = $presupuestoTotal[0]->getAttribute('presupuestoTotal');
@@ -67,34 +40,55 @@ class CartList extends Component
 
     }
 
+    /**
+     * Remove element from the cart session
+     *
+     * @param $productoCarritoJson
+     * @return void
+     */
     public function removeFromCart($productoCarritoJson)
     {
         $productoCarrito = json_decode($productoCarritoJson);
-        //@dd($productoCarrito);
         $this->rowId = $productoCarrito->rowId;
         Cart::remove($this->rowId);
         $this->emit('product_listeners');
     }
 
+    /**
+     * Rest one number to the element from the cart session
+     *
+     * @param $productoCarritoJson
+     * @return void
+     */
     public function restElementToProduct($productoCarritoJson)
     {
         $productoCarrito = json_decode($productoCarritoJson);
-        //@dd($productoCarrito);
         $this->rowId = $productoCarrito->rowId;
         $this->cart = Cart::get($this->rowId);
         Cart::update($this->rowId, $this->cart->qty - 1);
         $this->emit('product_listeners');
     }
 
+    /**
+     * Plus one number to the element from the cart session
+     *
+     * @param $productoCarritoJson
+     * @return void
+     */
     public function addElementToProduct($productoCarritoJson)
     {
         $productoCarrito = json_decode($productoCarritoJson);
-        //@dd($productoCarrito);
         $this->rowId = $productoCarrito->rowId;
         $this->cart = Cart::get($this->rowId);
         Cart::update($this->rowId, $this->cart->qty + 1);
         $this->emit('product_listeners');
     }
+
+    /**
+     * Remove all elements from the cart session
+     *
+     * @return void
+     */
 
     public function clearCart()
     {

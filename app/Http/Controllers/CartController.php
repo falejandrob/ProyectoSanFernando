@@ -15,14 +15,9 @@ use Illuminate\Support\Facades\Session;
 
 class CartController extends Controller
 {
-
-    public function store(Request $request)
-    {
-
-    }
-
-
     /**
+     * Confirm the request of the order
+     *
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
@@ -57,12 +52,26 @@ class CartController extends Controller
         return redirect()->route('misPedidos', [Auth::id()]);
     }
 
+    /**
+     * Delete an order
+     *
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+
     function eliminarPedido($id)
     {
         Pedido::destroy($id);
         session()->flash('success', 'El pedido se ha eliminado correctamente.');
         return redirect()->action([HomeController::class, 'totalPedidos']);
     }
+
+    /**
+     * Repeat an order
+     *
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
 
     function repetirPedido($id)
     {
@@ -108,6 +117,12 @@ class CartController extends Controller
 
 }
 
+/**
+ * Save an order in the database serialized
+ *
+ * @param $identifier
+ * @return void
+ */
 function store($identifier)
 {
     $pedido = new Pedido();

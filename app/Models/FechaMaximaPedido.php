@@ -13,7 +13,6 @@ class FechaMaximaPedido extends Model
     protected $fillable = [
         'fechaMinima',
         'fechaMaxima',
-        'fechaVencida',
     ];
 
     public function scopeClosestToDate($query)

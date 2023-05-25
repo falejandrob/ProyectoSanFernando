@@ -53,12 +53,24 @@ class ProductsList extends Component
     }
 
 
+    /**
+     * Destroy product from database
+     *
+     * @param $id
+     * @return void
+     */
     public function destroyProduct($id)
     {
         Producto::find($id)->delete();
         session()->flash('success', 'El producto se ha eliminado correctamente.');
     }
 
+    /**
+     * Validate a product from database
+     *
+     * @param $id
+     * @return void
+     */
     public function validateProduct($id){
         $producto = Producto::findOrFail($id);
         $producto->validado = 0;

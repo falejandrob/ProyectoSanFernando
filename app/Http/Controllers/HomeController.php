@@ -60,6 +60,14 @@ class HomeController extends Controller
         }
     }
 
+    /**
+     * Shows all the orders of a specific User
+     *
+     * @param $idUser
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @throws \Psr\Container\ContainerExceptionInterface
+     * @throws \Psr\Container\NotFoundExceptionInterface
+     */
     public function misPedidos($idUser)
     {
         $pedidos = getAllCarts(Auth::id());
@@ -89,6 +97,12 @@ class HomeController extends Controller
         return view("profesor.misPedidos", ["pedidos" => $pedidos, "presupuesto" => $presupuesto]);
     }
 
+    /**
+     * Validate an order from a User
+     *
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function validarPedido($id){
         $pedidos = getAllCartsTeachers();
         $profesores = User::all();
@@ -101,6 +115,12 @@ class HomeController extends Controller
         return redirect()->action([HomeController::class, 'totalPedidos']);
     }
 
+    /**
+     * Invalidate an order from a User
+     *
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function desvalidarPedido($id){
         $pedidos = getAllCartsTeachers();
         $profesores = User::all();
@@ -113,6 +133,12 @@ class HomeController extends Controller
         return redirect()->action([HomeController::class, 'totalPedidos']);
     }
 
+    /**
+     * Show the details from a specific order
+     *
+     * @param $idPedido
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|void
+     */
     public function detallesPedido($idPedido)
     {
         $pedido = getCart($idPedido);
@@ -125,6 +151,13 @@ class HomeController extends Controller
 
     }
 
+    /**
+     * Show the details from a specific order for an Admin User
+     *
+     * @param $idPedido
+     * @param $profesor
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|void
+     */
     public function detallesPedidoAdmin($idPedido, $profesor)
     {
         $pedido = getCart($idPedido);
@@ -136,6 +169,12 @@ class HomeController extends Controller
         }
     }
 
+    /**
+     * Select a provider
+     *
+     * @param $idPedido
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|void
+     */
     public function seleccionarProveedores($idPedido)
     {
         $productosConProveedor = ProductoProveedor::where('pedido', $idPedido)->get();
@@ -148,6 +187,12 @@ class HomeController extends Controller
         }
     }
 
+    /**
+     * Delete a relation between provider and product of LineaPedido
+     *
+     * @param $idRelacion
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\RedirectResponse|void
+     */
     public function quitarRelacion($idRelacion)
     {
         if(ProductoProveedor::find($idRelacion) != null) {
@@ -169,6 +214,12 @@ class HomeController extends Controller
         }
     }
 
+    /**
+     * Set the provider of a specific product for LineaPedido
+     *
+     * @param Request $request
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|void
+     */
     public function establecerProveedor(Request $request)
     {
         $productosSeleccionados = $request->input('productos');
@@ -190,7 +241,7 @@ class HomeController extends Controller
                     'lineaPedido' => $item,
                     'proveedor' => $proveedorSeleccionado,
                 ]);
-    
+
                 $nuevo->save();
                 session()->flash('success', 'El proveedor se ha guardado correctamente.');
             }
@@ -203,17 +254,30 @@ class HomeController extends Controller
         }
     }
 
+    /**
+     * Check if there is an existing relation between a provider and a product from LineaPedido
+     *
+     * @param $idPedido
+     * @param $lineaPedido
+     * @return bool
+     */
     function relacionExiste($idPedido, $lineaPedido) {
         $productosConProveedor = ProductoProveedor::where('pedido', $idPedido)->get();
 
         foreach($productosConProveedor as $item) {
             if($item->pedido == $idPedido && $item->lineaPedido == $lineaPedido) {
-                return true; 
+                return true;
             }
         }
 
         return false;
     }
+
+    /**
+     * get the all the orders from all teachers
+     *
+     * @return view
+     */
 
     public function totalPedidos()
     {
@@ -227,17 +291,6 @@ class HomeController extends Controller
             return $diferencia;
         })->reverse();
 
-        /*$perPage = 1;
-        $currentPage = request()->get('page', 1);
-
-        $paginatedData = new LengthAwarePaginator(
-            $pedidos->forPage($currentPage, $perPage),
-            $pedidos->count(),
-            $perPage,
-            $currentPage,
-            ['path' => request()->url()]
-        );*/
-
 
         $profesores = User::all();
 
@@ -245,10 +298,6 @@ class HomeController extends Controller
         return view("admin.pedidos",["pedidos" => $pedidos, "profesores" => $profesores]);
     }
 
-    /**
-     * @param Request $request
-     * @return \Illuminate\Http\RedirectResponse
-     */
     public function addJustificacion(Request $request)
     {
         $justificacion = Session::get("justificacion");
@@ -260,6 +309,8 @@ class HomeController extends Controller
     }
 
     /**
+     * get a pdf stream
+     *
      * @param $id
      * @return mixed
      */
@@ -271,6 +322,8 @@ class HomeController extends Controller
     }
 
     /**
+     * send a Mail with the pdf
+     *
      * @param $id
      * @return \Illuminate\Http\RedirectResponse
      */
@@ -291,6 +344,8 @@ class HomeController extends Controller
     }
 
     /**
+     * Get the pdf view
+     *
      * @param $id
      * @return array
      */
@@ -314,6 +369,7 @@ class HomeController extends Controller
 }
 
 /**
+ *  Get all teacher cart from the databases
  *
  * @return array
  */

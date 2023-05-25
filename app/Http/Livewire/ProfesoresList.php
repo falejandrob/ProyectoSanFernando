@@ -17,6 +17,13 @@ class ProfesoresList extends Component
         return view('livewire.profesores-list', ["profesores" => $profesores]);
     }
 
+    /**
+     * Destroy a Teacher from the database
+     *
+     * @param $id
+     * @return void
+     */
+
     public function destroyProfesor($id)
     {
         User::find($id)->delete();
