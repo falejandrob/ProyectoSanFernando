@@ -61,7 +61,7 @@ class ProductosBuscar extends Component
         Cart::add([
             'id'=>$producto->id,
             'name'=>$producto->nombre,
-            'qty'=>$this->cantidad[$product_id],
+            'qty'=>1,
             'price'=>0.00,
             'weight'=>0.00,
             'options'=>[

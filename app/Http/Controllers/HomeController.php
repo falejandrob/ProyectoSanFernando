@@ -103,13 +103,20 @@ class HomeController extends Controller
      * @param $id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function validarPedido($id){
+    public function validarPedido($id,$nombre, $apellido,$email){
         $pedidos = getAllCartsTeachers();
         $profesores = User::all();
 
         $pedido = Pedido::findOrFail($id);
         $pedido->validado = 1;
         $pedido->save();
+
+        Mail::send([], [], function($message) use ($nombre, $apellido,$email) {
+            $message->to($email, $nombre.' '.$apellido)
+                ->subject('Estado de su pedido')
+                ->text('Hola buenas, Sr/Sra '.$nombre.' '.$apellido.', el estado de su pedido se ha actualizado. Un saludo');
+        });
+
 
         session()->flash('success', 'El pedido se ha validado correctamente.');
         return redirect()->action([HomeController::class, 'totalPedidos']);
@@ -121,15 +128,21 @@ class HomeController extends Controller
      * @param $id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function desvalidarPedido($id){
+    public function desvalidarPedido($id,$nombre, $apellido,$email){
         $pedidos = getAllCartsTeachers();
         $profesores = User::all();
 
         $pedido = Pedido::findOrFail($id);
-        $pedido->validado = 0;
+        $pedido->validado = 2;
         $pedido->save();
 
-        session()->flash('success', 'El pedido se ha desvalidado correctamente.');
+        Mail::send([], [], function($message) use ($nombre, $apellido,$email) {
+            $message->to($email, $nombre.' '.$apellido)
+                ->subject('Estado de su pedido')
+                ->text('Hola buenas, Sr/Sra '.$nombre.' '.$apellido.', el estado de su pedido se ha actualizado. Un saludo');
+        });
+
+        session()->flash('success', 'El pedido se ha invalidado correctamente.');
         return redirect()->action([HomeController::class, 'totalPedidos']);
     }
 
@@ -331,10 +344,10 @@ class HomeController extends Controller
     {
         list($pdfName, $pdf) = $this->getPDF($id);
 
-        Mail::send('correo.enviar', [], function($message) use ($pdf, $pdfName){
+        Mail::send('correo.pedido', [], function($message) use ($pdf, $pdfName){
 
             $message->to(Auth::user()->email, Auth::user()->nombre.' '.Auth::user()->apellidos)
-                ->subject('Send mail from laravel')
+                ->subject('Su pedido Sr/Sra '.' '.Auth::user()->nombre.' '.Auth::user()->apellidos)
                 ->attachData($pdf->output(), $pdfName);
 
         });

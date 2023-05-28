@@ -101,10 +101,23 @@
         @php
             $categoryMap = [];
         @endphp
+
         @foreach($productos as $producto)
             @php
                 $categoria = $producto->options->categoria;
+
+                // Map the categories to the desired categories
+                if ($categoria === 'Hortalizas' || $categoria === 'Frutas, Frutos Secos') {
+                    $categoria = 'Vegetales';
+                } elseif ($categoria === 'Carnes, Aves, Embutidos') {
+                    $categoria = 'Carne y Embutidos';
+                } elseif ($categoria === 'Pescados, Mariscos') {
+                    $categoria = 'Pescados y mariscos';
+                } else {
+                    $categoria = 'Varios';
+                }
             @endphp
+
             @if (!isset($categoryMap[$categoria]))
                 @php
                     $categoryMap[$categoria] = [];
@@ -115,24 +128,32 @@
             @endphp
         @endforeach
 
-        @foreach($categoryMap as $categoria => $productosCategoria)
-            <tr style="text-align: center" class="hover">
-                <td style="background: #E7E7E7"><strong>{{ $categoria }}</strong></td>
-                <td style="background: #E7E7E7"></td>
-                <td style="background: #E7E7E7"></td>
-                <td style="background: #E7E7E7"></td>
-                <td style="background: #E7E7E7"></td>
-            </tr>
-            @foreach($productosCategoria as $producto)
+        @php
+            $categoryOrder = ['Vegetales', 'Carne y Embutidos', 'Pescados y mariscos', 'Varios'];
+        @endphp
+
+        @foreach($categoryOrder as $categoria)
+            @if(isset($categoryMap[$categoria]))
                 <tr style="text-align: center" class="hover">
-                    <td>{{ $producto->name }}</td>
-                    <td>{{ $producto->qty }} ud</td>
-                    <td></td>
-                    <td></td>
-                    <td>{{ $producto->options->observacion }}</td>
+                    <td style="background: #E7E7E7"><strong>{{ $categoria }}</strong></td>
+                    <td style="background: #E7E7E7"></td>
+                    <td style="background: #E7E7E7"></td>
+                    <td style="background: #E7E7E7"></td>
+                    <td style="background: #E7E7E7"></td>
                 </tr>
-            @endforeach
+                @foreach($categoryMap[$categoria] as $producto)
+                    <tr style="text-align: center" class="hover">
+                        <td>{{ $producto->name }}</td>
+                        <td>{{ $producto->qty }} ud</td>
+                        <td></td>
+                        <td></td>
+                        <td>{{ $producto->options->observacion }}</td>
+                    </tr>
+                @endforeach
+            @endif
         @endforeach
+
+
         </tbody>
     </table>
 

@@ -36,6 +36,27 @@
                         $fechaConFormato = \Carbon\Carbon::parse($pedido->first()->options->get('fechaPedido'))->format('d-m-Y');
                     @endphp
                     @if($validado == 0)
+                        <tr class="" style="background: #ffffff">
+                            <td id="informacion" data-titulo="Fecha pedido:" >{{ $fechaConFormato }}</td>
+                            <td id="informacion" data-titulo="Fecha prevista:" >{{ $pedido->first()->options->get('expectedDate') }}</td>
+                            <td id="informacion" data-titulo="Justificación:" >{{ $pedido->first()->options->get('justification') }}</td>
+                            <td id="botones">
+                                <a class="btn btn-primary" href="{{ route('detallesPedido', [$id, ""]) }}">
+                                    Ver más
+                                </a>
+                            </td>
+                            <td id="botones">
+                                <a class="btn btn-danger disabled">
+                                    Enviar
+                                </a>
+                            </td>
+                            <td id="botones">
+                                <a class="btn btn-success disabled">
+                                    Imprimir
+                                </a>
+                            </td>
+                        </tr>
+                    @elseif($validado == 2)
                         <tr class="" style="background: #FED2D2">
                             <td id="informacion" data-titulo="Fecha pedido:" >{{ $fechaConFormato }}</td>
                             <td id="informacion" data-titulo="Fecha prevista:" >{{ $pedido->first()->options->get('expectedDate') }}</td>

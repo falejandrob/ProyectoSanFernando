@@ -39,7 +39,7 @@
                             $validado = \App\Models\Pedido::findOrFail($id)->validado;
                             $fechaConFormato = \Carbon\Carbon::parse($pedido[0]->first()->options->get('fechaPedido'))->format('d-m-Y');
                         @endphp
-                        @if ($validado == 0)
+                        @if ($validado == 0 || $validado == 2)
                             <tr class="" style="text-align: center;background:#FED2D2">
                                 {{--@dd($profesores->where("id", "=", $pedidos->where('id','=',$id)->get()))--}}
                                 {{--@dd($profesores->where("id","=",$pedido[1])->first()->nombre . " ". $profesores->where("id","=",$pedido[1])->first()->apellidos)--}}
@@ -58,9 +58,9 @@
                                     </a>
                                 </td>
                                 <td id="botones-pedidos">
-                                    <a class="btn btn-success" href="{{ route('validarPedido', $id)}}">
+                                    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#validateModal{{$id}}">
                                         Validar
-                                    </a>
+                                    </button>
                                 </td>
                                 <td id="botones-pedidos">
                                     <a class="btn btn-success disabled" href="{{ route('seleccionarProveedores', $id)}}">
@@ -85,9 +85,9 @@
                                     </a>
                                 </td>
                                 <td id="botones-pedidos">
-                                    <a class="btn btn-dark" href="{{ route('desvalidarPedido', $id)}}">
-                                        Desvalidar
-                                    </a>
+                                    <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#validateModal{{$id}}">
+                                        Corregir
+                                    </button>
                                 </td>
                                 <td id="botones-pedidos">
                                     <a class="btn btn-success" href="{{ route('seleccionarProveedores', $id)}}">
@@ -97,6 +97,48 @@
                             </tr>
                         @endif
                     </tbody>
+                    <!-- Modal -->
+                    <div class="modal fade" id="validateModal{{$id}}" tabindex="-1" role="dialog" aria-labelledby="validateModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="validateModalLabel">¿Esta bien el pedido?</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-footer">
+                                    <a class="btn btn-success" href="{{ route('validarPedido', [$id, $profesores->where("id","=",$pedido[1])->first()->nombre, $profesores->where("id","=",$pedido[1])->first()->apellidos, $profesores->where("id","=",$pedido[1])->first()->email])}}">
+                                        Si
+                                    </a>
+                                    <a class="btn btn-danger" href="{{ route('desvalidarPedido', [$id, $profesores->where("id","=",$pedido[1])->first()->nombre, $profesores->where("id","=",$pedido[1])->first()->apellidos, $profesores->where("id","=",$pedido[1])->first()->email])}}">
+                                        No
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Modal -->
+                    <div class="modal fade" id="validateModal{{$id}}" tabindex="-1" role="dialog" aria-labelledby="validateModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="validateModalLabel">¿Esta bien el pedido?</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-footer">
+                                    <a class="btn btn-success" href="{{ route('validarPedido', [$id, $profesores->where("id","=",$pedido[1])->first()->nombre, $profesores->where("id","=",$pedido[1])->first()->apellidos, $profesores->where("id","=",$pedido[1])->first()->email])}}">
+                                        Si
+                                    </a>
+                                    <a class="btn btn-danger" href="{{ route('desvalidarPedido', [$id, $profesores->where("id","=",$pedido[1])->first()->nombre, $profesores->where("id","=",$pedido[1])->first()->apellidos, $profesores->where("id","=",$pedido[1])->first()->email])}}">
+                                        No
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 @endforeach
                 </table>
                 <br>

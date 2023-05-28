@@ -131,6 +131,7 @@ function store($identifier)
     $pedido->fechaPedido = Carbon::now();
     $pedido->fechaPrevistaPedido = Carbon::parse(Cart::content()->first()->options->expectedDate . Cart::content()->first()->options->expectedTime);
     $pedido->justificacion = Cart::content()->first()->options->justification;
+    $pedido->estaPedido = true;
     $pedido->save();
 
     foreach (Cart::content() as $cartItem) {
