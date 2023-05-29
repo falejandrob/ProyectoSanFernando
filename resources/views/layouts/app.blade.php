@@ -502,10 +502,6 @@
                 width: 100%;
             }
 
-            .btn-volver{
-                visibility: hidden;
-            }
-
         }
 
         @media (min-width: 1200px) {
@@ -579,9 +575,6 @@
             }
             .frm{
                 width: 55%;
-            }
-            .btn-volver{
-                visibility: hidden;
             }
 
         }
