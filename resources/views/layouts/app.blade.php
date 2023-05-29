@@ -9,7 +9,6 @@
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 
     <style>
-
         html, body {
             height: 100%;
             margin: 0;
@@ -612,7 +611,6 @@
                             <span class="budget-amount"
                                   style="font-size: 120%">{{$presupuesto->presupuestoTotal}} €</span>
                         @endif
-
                     </div>
                 @endif
             @endauth
@@ -698,6 +696,11 @@
                             <li>
                                 <a class="dropdown-item" href="{{ route('misPedidos', Auth::user()->id) }}">
                                     Mis pedidos
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="{{ route('perfil', Auth::user()->id) }}">
+                                    Perfil
                                 </a>
                             </li>
                         @endif

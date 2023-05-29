@@ -72,3 +72,8 @@ Route::post('/cart/confirm',[\App\Http\Controllers\CartController::class,'confir
 Route::get('/totalPedidos', [\App\Http\Controllers\HomeController::class, 'totalPedidos'])->name('totalPedidos');
 
 Route::get('/addJustificacion',[\App\Http\Controllers\HomeController::class, 'addJustificacion'])->name('addJustificacion');
+
+// Perfil
+Route::get('/perfil/{id}',[\App\Http\Controllers\PerfilController::class, 'perfil'])->name('perfil');
+Route::post('/perfil/cambiarDatos/{id}',[\App\Http\Controllers\PerfilController::class, 'cambiarDatos'])->name('perfil.cambiarDatos');
+Route::post('/perfil/cambiarPass/{id}',[\App\Http\Controllers\PerfilController::class, 'cambiarPass'])->name('perfil.cambiarPass');
