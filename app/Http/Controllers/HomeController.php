@@ -391,7 +391,7 @@ function getAllCartsTeachers()
 
 
     $allShopingCarts = [];
-    $pedidos = Pedido::all();
+    $pedidos = Pedido::where('estaPedido', true)->get();
 
     foreach ($pedidos as $pedido) {
         $cartCollection = collect();
