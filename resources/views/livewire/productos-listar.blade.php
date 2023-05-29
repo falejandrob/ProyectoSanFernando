@@ -49,9 +49,9 @@
                     <tr>
                         <th>Nombre</th>
                         <th>Categoría</th>
-                        <th>Borrar producto</th>
                         <th>Modificar producto</th>
                         <th>Validar producto</th>
+                        <th>Eliminar producto</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -69,13 +69,6 @@
                                 @endforeach
                                 <div>
                                     <td id="botones">
-                                        <button wire:click.prevent="destroyProduct({{$producto->id}})"
-                                                class="btn btn-danger">
-                                            Eliminar
-                                        </button>
-                                    </td>
-
-                                    <td id="botones">
                                         <button type="submit" class="btn btn-primary"><a
                                                 style="color:white; text-decoration: none"
                                                 href="{{route('modificarProducto',$producto->id)}}">Modificar</a>
@@ -88,7 +81,12 @@
                                         <button wire:click.prevent="validateProduct({{$producto->id}})"
                                                 class="btn btn-success" @if($producto->validado == 0) disabled @endif>Validar
                                         </button>
-
+                                    </td>
+                                    <td id="botones">
+                                        <button wire:click.prevent="destroyProduct({{$producto->id}})"
+                                                class="btn btn-danger">
+                                            Eliminar
+                                        </button>
                                     </td>
                                 </div>
                             </tr>

@@ -20,6 +20,8 @@
                 <thead>
                 <tr>
                     <th>Nombre</th>
+                    <th>Telefono</th>
+                    <th>Poblacion</th>
                     <th>Modificar</th>
                     <th>Eliminar</th>
                 </tr>
@@ -29,6 +31,8 @@
 
                     <tr class="table" style="text-align: center; background: #F6F0D2">
                         <td id="informacion" data-titulo="Nombre:">{{$proveedor->nombre}}</td>
+                        <td></td>
+                        <td></td>
                         <td >
                             <button type="submit" class="btn btn-primary"><a
                                     style="color:white; text-decoration: none"
@@ -43,7 +47,7 @@
                     </tr>
                 @endforeach
                 </tbody>
-            </table>
+            </table><br><br>
         @else
             <div style="width: 60%; margin: auto">
                 <div class="alert alert-danger" style="text-align: center; font-size: 120%">

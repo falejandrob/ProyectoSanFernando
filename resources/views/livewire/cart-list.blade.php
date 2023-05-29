@@ -94,12 +94,12 @@
         @if(Cart::content()->count() != 0)
             <div class="d-flex justify-content-around align-items-center" style="flex-wrap: wrap; text-align: center">
                 <div class="mb-3 fecha-hora" style="width: 40%">
-                    <label>Fecha prevista de pedido </label>
+                    <abbr title="Introduce la fecha para la que se necesita el pedido"><label>Fecha prevista de pedido </label></abbr>
                     <input type="date" class="form-control" id="expectedDate" name="expectedDate"
                            pattern="\d{4}-\d{2}-\d{2}" value="{{ $expectedDate }}" required>
                 </div>
                 <div class="mb-3 fecha-hora" style="width: 40%">
-                    <label style="margin-bottom: 2px">Hora prevista de pedido</label>
+                    <abbr title="Introduce la hora para la que se necesita el pedido"><label style="margin-bottom: 2px">Hora prevista de pedido</label></abbr>
                     <input type="time" class="form-control" id="expectedTime" name="expectedTime"
                            value="{{ $expectedTime }}" required>
                 </div>
