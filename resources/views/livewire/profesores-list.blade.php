@@ -1,4 +1,4 @@
-<div>
+<div style="width: 100%">
     <div class="mt-2 table-responsive-md">
         <br>
         @if (session('success'))
@@ -15,7 +15,7 @@
             </a>
         </div>
         <h1 style="text-align: center; padding: 15px">PROFESORES</h1>
-        <div class="table-wrapper-scroll-y my-custom-scrollbar" style="height: 550px">
+        <div class="table-wrapper-scroll-y my-custom-scrollbar full-screen-div" style="height: 550px">
             <table class="table mb-0 tabla-scroll " style="width:90%; margin:auto; text-align: center;">
             <thead>
             <tr>

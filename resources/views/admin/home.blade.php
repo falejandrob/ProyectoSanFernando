@@ -5,7 +5,7 @@
                 display: flex;
                 flex-wrap: wrap;
                 justify-content: center;
-                margin-top:3%;">
+                margin-top:3%; margin-bottom: 2%">
         <div class="card border-success mb-3 cd-admin" style="margin:2%;">
             <a title="Profesores" href="{{ route('listarProfesores') }}" style="text-align: center"> <img class="card-img-top" src="profesores.png" alt="Card image cap" style="margin-top: 5%;height: auto;max-width: 40%; min-width: 40%; align-self: center"></a>
             <div class="card-body text-success">

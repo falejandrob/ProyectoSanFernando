@@ -1,5 +1,5 @@
-<div>
-    <div class="mt-2 table-responsive-md">
+<div style="width: 100%" >
+    <div class="mt-2 table-responsive-md" >
         <br>
         @if (session('success'))
             <div class="alert alert-success">

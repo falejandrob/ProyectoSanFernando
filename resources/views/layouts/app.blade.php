@@ -9,6 +9,21 @@
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 
     <style>
+
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        .full-screen-div {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
         body {
             background: white;
         }
@@ -64,6 +79,17 @@
 
         #app > nav {
             background: #f6f0d2;
+        }
+
+        #app{
+            min-height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        main{
+            position: relative;
+            min-height: calc(100% - 5%);
         }
 
         table.scroll thead {
@@ -164,6 +190,52 @@
 
         .minus-btn {
             color: #cc5555
+        }
+
+        footer {
+            background-color: #f6f0d2;
+            text-align: center;
+            left: 0;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+            height: 5%;
+            margin-top: auto;
+        }
+
+        .footer-content {
+            max-width: 800px;
+            margin: 0 auto;
+            align-items: center;
+        }
+
+        .footer-content p {
+            margin: 0;
+            padding: 20px;
+        }
+
+        .footer-content ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .footer-content ul li {
+            display: inline;
+            margin-right: 10px;
+        }
+
+        .footer-content ul li:last-child {
+            margin-right: 0;
+        }
+
+        .footer-content ul li a {
+            color: #333;
+            text-decoration: none;
+        }
+
+        .footer-content ul li a:hover {
+            text-decoration: underline;
         }
 
         @media (max-width: 767px) {
@@ -654,7 +726,14 @@
     <main>
         @yield('content')
     </main>
+    <footer>
+        <div class="footer-content">
+            <p> © {{ date('Y') }} EconoMando</p>
+
+        </div>
+    </footer>
 </div>
+
 @livewireScripts
 
 <!-- jQuery -->
