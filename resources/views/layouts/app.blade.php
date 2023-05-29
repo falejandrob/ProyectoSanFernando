@@ -238,6 +238,14 @@
                 font-size: 14px;
             }
 
+            .proveedores{
+                font-size: 100%;
+            }
+
+            #title-categories{
+                font-size: 14px;
+            }
+
             .busqueda-productos svg {
                 width: 16px;
             }
@@ -395,6 +403,14 @@
                 font-size: 16px;
             }
 
+            #title-categories{
+                font-size: 18px;
+            }
+
+            .proveedores{
+                font-size: 120%;
+            }
+
             .cd-admin {
                 width: 30%;
             }
@@ -456,6 +472,14 @@
 
             .info-producto span {
                 margin-right: 20%;
+            }
+
+            #title-categories{
+                font-size: 24px;
+            }
+
+            .proveedores{
+                font-size: 150%;
             }
 
             .busqueda-productos {

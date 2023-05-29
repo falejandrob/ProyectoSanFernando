@@ -25,19 +25,20 @@
                 <input type="hidden" name="id" value="{{ $idPedido }}" id="id">
                 @csrf
                 @php($categoriasMostradas = [])
-                @foreach ($lineasPedido as $linea)
+                <p id="title-categories" style="margin-top: 25px; font-weight: bold; text-align: center">Productos</p>
+            @foreach ($lineasPedido as $linea)
                     @foreach($categorias as $categoria)
                         @if(App\Models\Producto::find($linea->idProducto)->idCategoria == $categoria->id && !in_array($categoria->id, $categoriasMostradas))
-                            <h3 style="margin-top: 25px;">{{ $categoria->nombre }}</h3>
+                            <p id="title-categories" style="margin-top: 25px; font-weight: bold; text-align: center">{{ $categoria->nombre }}</p>
                             @php(array_push($categoriasMostradas, $categoria->id))
                         @endif
                     @endforeach
                     @php($esta = false)
                     @foreach ($productosConProveedor as $item)
                         @if ($item->lineaPedido == $linea->id)
-                            <div style="font-size: 150%; margin: 8px; margin-left: 20px;">
+                            <div class="proveedores" style="margin: 8px; margin-left: 20px;">
                                 <a class="btn btn-danger" href="{{ route('quitarRelacion', $item->id) }}">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor"
                                          class="bi bi-x-lg" viewBox="0 0 16 16">
                                         <path
                                             d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
@@ -51,7 +52,7 @@
                         @endif
                     @endforeach
                     @if(!$esta)
-                        <div style="font-size: 150%; margin: 8px; margin-left: 20px;">
+                        <div class="proveedores" style="margin: 8px; margin-left: 20px;">
                             <input style="width: 20px; height: 20px; cursor: pointer;" type="checkbox"
                                    name="productos[]" value="{{ $linea->id }}">
                             <span>{{ App\Models\Producto::find($linea->idProducto)->nombre }}</span>
@@ -60,8 +61,9 @@
             @endforeach
         </div>
         <div style="width: 50%;">
-            @foreach ($proveedores as $proveedor)
-                <div style="font-size: 150%;">
+            <p id="title-categories" style="margin-top: 25px; font-weight: bold; text-align: center">Proveedores</p>
+        @foreach ($proveedores as $proveedor)
+                <div class="proveedores" style="margin-left:20px;">
                     <input style="width: 20px; height: 20px; cursor: pointer;" type="radio" name="proveedor"
                            value="{{ $proveedor->id }}">
                     {{ $proveedor->nombre }}
