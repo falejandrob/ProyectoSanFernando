@@ -26,6 +26,7 @@ Route::get('/enviarPedido/{id}',[\App\Http\Controllers\HomeController::class, 's
 Route::get('/detallesPedido/{id}',[\App\Http\Controllers\HomeController::class, 'detallesPedido'])->name('detallesPedido');
 Route::get('/detallesPedido/{id}/{profesor}',[\App\Http\Controllers\HomeController::class, 'detallesPedidoAdmin'])->name('detallesPedidoAdmin');
 Route::get('/eliminarPedido/{id}',[\App\Http\Controllers\CartController::class, 'eliminarPedido'])->name('eliminarPedido');
+Route::get('/eliminarPedidoProfesor/{id}',[\App\Http\Controllers\CartController::class, 'eliminarPedidoProfesor'])->name('eliminarPedidoProfesor');
 Route::get('/repetirPedido/{id}',[\App\Http\Controllers\CartController::class, 'repetirPedido'])->name('repetirPedido');
 Route::get('/validarPedido/{id}/{nombre}/{apellido}/{email}',[\App\Http\Controllers\HomeController::class, 'validarPedido'])->name('validarPedido');
 Route::get('/desvalidarPedido/{id}/{nombre}/{apellido}/{email}',[\App\Http\Controllers\HomeController::class, 'desvalidarPedido'])->name('desvalidarPedido');

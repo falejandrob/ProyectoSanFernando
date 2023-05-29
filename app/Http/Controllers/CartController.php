@@ -67,6 +67,19 @@ class CartController extends Controller
     }
 
     /**
+     * Delete an order
+     *
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    function eliminarPedidoProfesor($id)
+    {
+        Pedido::destroy($id);
+        session()->flash('success', 'El pedido se ha eliminado correctamente.');
+        return redirect()->action([HomeController::class, 'misPedidos'], [Auth::id()]);
+    }
+
+    /**
      * Repeat an order
      *
      * @param $id
