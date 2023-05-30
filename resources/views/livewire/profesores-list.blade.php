@@ -34,9 +34,11 @@
                             <td id="informacion" data-titulo="Apellidos:">{{$profesor->apellidos}}</td>
                             <td id="informacion" data-titulo="Email:">{{$profesor->email}}</td>
                             <td id="boton-contrasenia">
-                                <button type="submit" class="btn btn-success"><a
-                                        style="color:white; text-decoration: none;"
-                                        href="{{route('cambiarPassword', $profesor->id)}}">Cambiar contraseña</a>
+                                <button type="submit" class="btn btn-success">
+                                    <a style="color:white; text-decoration: none;" href="{{route('cambiarPassword', $profesor->id)}}">
+                                        Cambiar contraseña
+
+                                    </a>
                                 </button>
                             </td>
                             <td >
@@ -45,7 +47,7 @@
                                         href="{{route('modificarProfesor', $profesor->id)}}">Modificar</a>
                                 </button>
                             </td>
-                            <td >
+                            <td>
                                 <button wire:click="destroyProfesor({{$profesor->id}})" class="btn btn-danger">
                                     Eliminar
                                 </button>

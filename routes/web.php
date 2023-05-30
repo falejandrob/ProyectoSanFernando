@@ -42,7 +42,6 @@ Route::get('/fecha/modificarFecha/{id}',[\App\Http\Controllers\FechaController::
 Route::post('/fecha/update/{id}',[\App\Http\Controllers\FechaController::class, 'update'])->name('fecha.update');
 Route::get('/fecha/listarPlazos', [\App\Http\Controllers\FechaController::class, 'listDates'])->name('listDates');
 
-
 //Ruta producto
 Route::get('/producto/aniadirProducto',[\App\Http\Controllers\ProductoController::class, 'aniadirProducto'])->name('aniadirProducto');
 Route::get('/producto/modificarProducto/{id}',[\App\Http\Controllers\ProductoController::class, 'modificarProducto'])->name('modificarProducto');

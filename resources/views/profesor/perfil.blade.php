@@ -52,7 +52,12 @@
                         <input style="font-size: 18px" type="email" name="email" id="email" class="form-control" value="{{$user->email}}">
                     </div><br>
                     <div class="d-flex justify-content-end">
-                        <button type="submit" class="btn btn-primary">GUARDAR</button>
+                        <button type="submit" class="btn btn-primary">
+                            GUARDAR
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-check2" viewBox="0 0 16 16">
+                                <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/>
+                            </svg>
+                        </button>
                     </div>
                 </form>
             </div>
@@ -75,7 +80,12 @@
                         <input style="font-size: 18px" type="password" name="password" id="password" class="form-control">
                     </div><br>
                     <div class="d-flex justify-content-end">
-                        <button type="submit" class="btn btn-primary">GUARDAR</button>
+                        <button type="submit" class="btn btn-primary">
+                            GUARDAR
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-check2" viewBox="0 0 16 16">
+                                <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/>
+                            </svg>
+                        </button>
                     </div>
                 </form>
             </div>
