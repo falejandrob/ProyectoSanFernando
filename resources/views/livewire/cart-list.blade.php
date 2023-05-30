@@ -6,10 +6,12 @@
             @if(Cart::content()->count() != 0 && $closestDate !== null)
                 <div style="display: flex; justify-content: space-between;">
                     <div style="margin-top: 2%">
-                        <p class="carrito-size" style="text-align: center; font-size: 22px; font-weight: bold;">Tu pedido</p>
+                        <p class="carrito-size" style="text-align: center; font-size: 22px; font-weight: bold;">Tu
+                            pedido</p>
                     </div>
                     <button wire:click.prevent="clearCart()"
-                            class="btn btn-danger d-flex justify-content-between align-items-center" style="margin-left: 20%; height: 5%">
+                            class="btn btn-danger d-flex justify-content-between align-items-center"
+                            style="margin-left: 20%; height: 5%">
                         <span style="padding: 5px">Vaciar Carrito</span>
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
                              class="bi bi-trash3-fill" viewBox="0 0 16 16">
@@ -17,7 +19,8 @@
                                 d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5Zm-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5ZM4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5Z"/>
                         </svg>
                     </button>
-                </div><hr>
+                </div>
+                <hr>
                 <div>
                     <label class="carrito-size" style="margin-bottom: 2%">Justificación pedido</label>
                     <textarea class="form-control" style="height: 50px" id="justification" placeholder="Justificacion"
@@ -32,11 +35,12 @@
                     @endphp
                 </div><br>
                 <div style="margin-top: 2%">
-                    <p class="carrito-size" style="text-align: center; font-size: 22px; font-weight: bold;">Productos</p>
+                    <p class="carrito-size" style="text-align: center; font-size: 22px; font-weight: bold;">
+                        Productos</p>
                 </div>
             @endif
             @if(Cart::content()->count() != 0)
-                <div >
+                <div>
                     @foreach($categorias as $categoria)
                         @php($cont = 0)
                         @foreach($cart as $productoCarrito)
@@ -45,12 +49,15 @@
                             @endif
                         @endforeach
                         @if($cont > 0)
-                            <p class="carrito-size" style="padding-top: 20px; color: #EE9900">{{ $categoria->nombre }}</p>
+                            <p class="carrito-size"
+                               style="padding-top: 20px; color: #EE9900">{{ $categoria->nombre }}</p>
                             @foreach($cart as $productoCarrito)
                                 @if($productoCarrito->options->categoria == $categoria->nombre)
-                                    <div class="cart-item" style="display: flex; flex-wrap: wrap; width: 95%; height: 115px">
+                                    <div class="cart-item"
+                                         style="display: flex; flex-wrap: wrap; width: 95%; height: 115px">
                                         <div class="info-producto" style=" display: flex;">
-                                            <span class="item-name" style="font-size: 14px">{{$productoCarrito->name}}</span>
+                                            <span class="item-name"
+                                                  style="font-size: 14px">{{$productoCarrito->name}}</span>
                                             <div class="quantity-controls">
                                                 <button
                                                     wire:click.prevent="restElementToProduct('{{ json_encode($productoCarrito) }}')"
@@ -78,7 +85,8 @@
                                         <br><br>
                                         <div class="observacion" style="width: 100%; display: flex;">
                                             <textarea class="form-control" style="width: 100%; height: 40px"
-                                                      id="observacion{{"-".$productoCarrito->rowId}}" placeholder="Observación"
+                                                      id="observacion{{"-".$productoCarrito->rowId}}"
+                                                      placeholder="Observación"
                                                       name="observacion{{"-".$productoCarrito->rowId}}">{{ Session::get("observacion") }}</textarea>
                                         </div>
                                         <!--<button type="button" class="btn btn-primary btn-lg justificacion" data-bs-toggle="modal" data-bs-target="#justificacionModal">Justificación</button>-->
@@ -93,13 +101,23 @@
         <br><br>
         @if(Cart::content()->count() != 0)
             <div class="d-flex justify-content-around align-items-center" style="flex-wrap: wrap; text-align: center">
-                <div class="mb-3 fecha-hora" style="width: 40%">
-                    <abbr title="Introduce la fecha para la que se necesita el pedido"><label>Fecha prevista de pedido </label></abbr>
-                    <input type="date" class="form-control" id="expectedDate" name="expectedDate"
+                <div class="mb-3" style="width: 40%">
+                    <br><div class="mensaje-emergente" style="margin-top: 2%">
+                        <label style="margin-bottom: 2px">Fecha prevista de pedido</label>
+                        <img src="duda.png" alt="" style="width: 22px; height: 22px">
+                        <div class="contenido" style="background: lightblue; font-size: 16px">Introduce la fecha para la que necesite el pedido
+                        </div>
+                    </div>
+                    <input type="date" class="form-control" id="expectedDate" name="expectedDate" style="margin-top: 1%"
                            pattern="\d{4}-\d{2}-\d{2}" value="{{ $expectedDate }}" required>
                 </div>
-                <div class="mb-3 fecha-hora" style="width: 40%">
-                    <abbr title="Introduce la hora para la que se necesita el pedido"><label style="margin-bottom: 2px">Hora prevista de pedido</label></abbr>
+                <div class="mb-3" style="width: 40%">
+                    <br><div class="mensaje-emergente" style="margin-top: 2%">
+                        <label style="margin-bottom: 2px">Hora prevista de pedido</label>
+                        <img src="duda.png" alt="" style="width: 22px; height: 22px">
+                        <div class="contenido" style="background: lightblue; font-size: 16px">Introduce la hora para la que necesite el pedido
+                        </div>
+                    </div>
                     <input type="time" class="form-control" id="expectedTime" name="expectedTime"
                            value="{{ $expectedTime }}" required>
                 </div>
@@ -107,7 +125,8 @@
             <div style="width: 100%; text-align: center; padding: 10px">
                 @if(Cart::content()->count() != 0)
                     <button style="font-size: 130%; width: 50%; padding: 10px; background: #F6C366"
-                            class="btn" data-bs-toggle="modal" @if($presupuesto == null or $total == "0") data-bs-target="#presupuesto"
+                            class="btn" data-bs-toggle="modal"
+                            @if($presupuesto == null or $total == "0") data-bs-target="#presupuesto"
                             type="button" @else type="submit" @endif >
                         Hacer pedido
                     </button>

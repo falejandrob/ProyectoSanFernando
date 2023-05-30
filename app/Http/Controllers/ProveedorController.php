@@ -20,6 +20,8 @@ class ProveedorController extends Controller
     {
         $proveedor = Proveedore::create([
             'nombre' => $request->nombre,
+            'telefono' => $request->telefono,
+            'poblacion' => $request->poblacion
         ]);
 
         $proveedor->save();

@@ -20,8 +20,8 @@
                 <thead>
                 <tr>
                     <th>Nombre</th>
-                    <th>Telefono</th>
-                    <th>Poblacion</th>
+                    <th>Teléfono</th>
+                    <th>Población</th>
                     <th>Modificar</th>
                     <th>Eliminar</th>
                 </tr>
@@ -31,8 +31,8 @@
 
                     <tr class="table" style="text-align: center; background: #F6F0D2">
                         <td id="informacion" data-titulo="Nombre:">{{$proveedor->nombre}}</td>
-                        <td></td>
-                        <td></td>
+                        <td id="informacion" data-titulo="Teléfono:">{{$proveedor->telefono}}</td>
+                        <td id="informacion" data-titulo="Población:">{{$proveedor->poblacion}}</td>
                         <td >
                             <button type="submit" class="btn btn-primary"><a
                                     style="color:white; text-decoration: none"

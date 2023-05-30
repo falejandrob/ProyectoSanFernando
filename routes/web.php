@@ -20,6 +20,7 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/realizarPedido', [App\Http\Controllers\HomeController::class, 'realizarPedido'])->name('realizarPedido');
 Route::get('/misPedidos/{id}',[\App\Http\Controllers\HomeController::class, 'misPedidos'])->name('misPedidos');
 Route::get('/imprimirPedido/{id}',[\App\Http\Controllers\HomeController::class, 'downloadPdf'])->name('downloadPdf');
 Route::get('/enviarPedido/{id}',[\App\Http\Controllers\HomeController::class, 'sendMail'])->name('sendMail');

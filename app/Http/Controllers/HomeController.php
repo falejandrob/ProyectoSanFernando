@@ -42,6 +42,19 @@ class HomeController extends Controller
      */
     public function index()
     {
+        $anio_actual = Carbon::now()->year;
+        $presupuesto = Presupuesto::where('idUser', Auth::id())->where('anio', $anio_actual)->first();
+
+        if (auth()->user()->hasRole('profesor')) {
+            return view('profesor.principal', ["presupuesto" => $presupuesto]);
+        }
+
+        if (auth()->user()->hasRole('admin')) {
+            return view('admin.home');
+        }
+    }
+
+    public function realizarPedido(){
         $fechaActual = Carbon::now();
         $closestDate = FechaMaximaPedido::closestToDate()->first();
         $expectedDate = date("Y-m-d");
@@ -51,13 +64,7 @@ class HomeController extends Controller
         $anio_actual = Carbon::now()->year;
         $presupuesto = Presupuesto::where('idUser', Auth::id())->where('anio', $anio_actual)->first();
 
-        if (auth()->user()->hasRole('profesor')) {
-            return view('home', ["productos" => $productos, "presupuesto" => $presupuesto, "expectedDate" => $expectedDate, "expectedTime" => $expectedTime, 'closestDate' => $closestDate, 'fechaActual' => $fechaActual]);
-        }
-
-        if (auth()->user()->hasRole('admin')) {
-            return view('admin.home');
-        }
+        return view("home", ["productos" => $productos, "presupuesto" => $presupuesto, "expectedDate" => $expectedDate, "expectedTime" => $expectedTime, 'closestDate' => $closestDate, 'fechaActual' => $fechaActual]);
     }
 
     /**

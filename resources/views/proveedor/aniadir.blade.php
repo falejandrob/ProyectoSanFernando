@@ -27,6 +27,10 @@
                         <div class="form-group">
                             <label for="nombre" style="margin:15px 0px; font-size: 18px">Nombre</label>
                             <input style="font-size: 18px" type="text" name="nombre" id="nombre" class="form-control">
+                            <label for="telefono" style="margin:15px 0px; font-size: 18px">Teléfono</label>
+                            <input style="font-size: 18px" type="text" name="telefono" id="telefono" class="form-control">
+                            <label for="poblacion" style="margin:15px 0px; font-size: 18px">Población</label>
+                            <input style="font-size: 18px" type="text" name="poblacion" id="poblacion" class="form-control">
                         </div>
                         <br>
                         <div style="text-align: center">
