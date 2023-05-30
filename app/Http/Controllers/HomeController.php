@@ -49,7 +49,7 @@ class HomeController extends Controller
             return view('profesor.principal', ["presupuesto" => $presupuesto]);
         }
 
-        if (auth()->user()->hasRole('admin')) {
+        if (auth()->user()->hasRole('admin') or auth()->user()->hasRole('gestor')) {
             return view('admin.home');
         }
     }

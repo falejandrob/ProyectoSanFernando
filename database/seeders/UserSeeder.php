@@ -19,6 +19,7 @@ class UserSeeder extends Seeder
     {
         //
         $roleAdmin = Role::create(['name' => 'admin']);
+        $roleGestor = Role::create(['name' => 'gestor']);
         $roleProfesor = Role::create(['name' => 'profesor']);
 
         User::create([
@@ -28,6 +29,13 @@ class UserSeeder extends Seeder
             'email' => "admin@admin.com",
             'remember_token' => Str::random(10),
         ])->assignRole($roleAdmin);
+        User::create([
+            'nombre' => "gestor",
+            'apellidos' => "gestor",
+            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password,
+            'email' => "gestor@gestor.com",
+            'remember_token' => Str::random(10),
+        ])->assignRole($roleGestor);
         User::create([
             'nombre' => "profesor",
             'apellidos' => "profesor",

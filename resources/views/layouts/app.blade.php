@@ -659,7 +659,7 @@
             @guest
 
             @else
-                @if(auth()->user()->hasRole('admin'))
+                @if(auth()->user()->hasRole('admin') or auth()->user()->hasRole('gestor'))
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                             data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                             aria-expanded="false" aria-label="Toggle navigation">
@@ -667,10 +667,12 @@
                     </button>
                     <div class="collapse navbar-collapse adm" id="navbarSupportedContent" style="">
                         <ul class="navbar-nav menu-admin">
-                            <li class="nav-item">
-                                <a class="nav-link active" aria-current="page"
-                                   href="{{ route('listarProfesores') }}">Profesores</a>
-                            </li>
+                            @if(auth()->user()->hasRole('admin'))
+                                <li class="nav-item">
+                                    <a class="nav-link active" aria-current="page"
+                                       href="{{ route('listarProfesores') }}">Profesores</a>
+                                </li>
+                            @endif
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle active" href="#" role="button"
                                    data-toggle="dropdown"

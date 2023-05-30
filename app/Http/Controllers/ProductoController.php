@@ -53,7 +53,7 @@ class ProductoController extends Controller
      */
     public function store(Request $request)
     {
-        if(auth()->user()->hasRole('admin')){
+        if(auth()->user()->hasRole('admin') or auth()->user()->hasRole('gestor')){
             $product = Producto::create([
                 'nombre' => $request->nombre,
                 'validado' => 0,
