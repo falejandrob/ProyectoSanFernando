@@ -13,16 +13,15 @@ class ProductsList extends Component
     use WithPagination;
 
     protected $paginationTheme = 'bootstrap';
-//
     public $nombre, $validado, $idCategoria;
     public $productosPorPagina;
     public $categoryFilter;
     public $validateFilter;
     public $searchFilter;
     public $categorias;
+    public $orden = 'asc';
 
     protected $listeners = ['producto_update' =>'render'];
-
 
     public function mount(){
         $this->categorias = Categoria::all();
@@ -47,11 +46,31 @@ class ProductsList extends Component
                 $query->where('nombre', 'like', '%' . $this->searchFilter . '%');
             });
 
-        $productos = $query->paginate($productosPorPagina);
+        $productos = $query->orderBy('nombre', $this->orden)->paginate($productosPorPagina);
 
         return view('livewire.productos-listar', compact('productos','maxPaginasMostradas'));
     }
 
+    public function ordenarAlfabeticamente()
+    {
+        $productosPorPagina = 10;
+        $maxPaginasMostradas = 3;
+        $query = Producto::query()
+            ->when($this->categoryFilter, function ($query) {
+                $query->where('idCategoria', $this->categoryFilter);
+            })
+            ->when($this->validateFilter, function ($query) {
+                $query->where('validado', $this->validateFilter);
+            })
+            ->when($this->searchFilter, function ($query) {
+                $query->where('nombre', 'like', '%' . $this->searchFilter . '%');
+            });
+
+        $this->orden = $this->orden === 'asc' ? 'desc' : 'asc';
+        $productos = $query->orderBy('nombre', $this->orden)->paginate($productosPorPagina);
+
+        return view('livewire.productos-listar', compact('productos','maxPaginasMostradas'));
+    }
 
     /**
      * Destroy product from database
@@ -75,6 +94,5 @@ class ProductsList extends Component
         $producto = Producto::findOrFail($id);
         $producto->validado = 0;
         $producto->save();
-
     }
 }
