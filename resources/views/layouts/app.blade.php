@@ -642,7 +642,7 @@
                     </div>
                     <div style="display: flex; flex-direction: column">
                         <span id="titulo" style="font-family: 'Titan One', cursive; color:#C60000 ">EconoMando</span>
-                        <span style="font-size: 15px">Descripcion</span>
+                        <span style="font-size: 15px">Pedidos San Fernando</span>
                     </div>
                 </a>
             @else
@@ -652,7 +652,7 @@
                     </div>
                     <div style="display: flex; flex-direction: column">
                         <span id="titulo" style="font-family: 'Titan One', cursive; color:#C60000 ">EconoMando</span>
-                        <span style="font-size: 15px">Descripcion</span>
+                        <span style="font-size: 15px">Pedidos San Fernando</span>
                     </div>
                 </a>
             @endif
@@ -736,7 +736,7 @@
                         <ul class="dropdown-menu">
                             @if(auth()->user()->hasRole('profesor'))
                                 <li>
-                                    <a class="dropdown-item" href="" style="cursor: default; pointer-events: none;">
+                                    <a class="dropdown-item" style="cursor: default; pointer-events: none;">
                                         Presupuesto:
                                         @if($presupuesto == null)
                                             <br><span class="budget-amount ">Aún no tienes presupuesto</span>
