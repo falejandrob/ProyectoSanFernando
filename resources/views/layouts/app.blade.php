@@ -222,18 +222,17 @@
         }
 
         footer {
-            background-color: #f6f0d2;
             text-align: center;
             left: 0;
             position: relative;
             bottom: 0;
             width: 100%;
-            height: 5%;
+            height: 40%;
             margin-top: auto;
         }
 
         .footer-content {
-            max-width: 800px;
+            width: 100%;
             margin: 0 auto;
             align-items: center;
         }
@@ -323,6 +322,16 @@
                 width: 38%;
                 color: #1B1B1B;
                 font-weight: bold;
+            }
+
+            .card-deck{
+                display: flex;
+                width: 100%;
+                flex-direction: column;
+            }
+
+            .card-datos{
+                width: 95%; margin:10px;
             }
 
             .adm {
@@ -422,6 +431,10 @@
                 width: 90%;
             }
 
+            #departamento{
+                font-size: 16px;
+            }
+
         }
 
         @media (min-width: 768px) and (max-width: 992px) {
@@ -475,6 +488,23 @@
 
             #detalles {
                 font-size: 20px;
+            }
+
+            #departamento{
+                font-size: 16px;
+            }
+
+            .card-deck{
+                display: flex;
+                width: 100%;
+                flex-direction: column;
+            }
+
+            .card-datos{
+                width: 55%;
+                margin:auto;
+                margin-top:10px;
+                margin-bottom:10px;
             }
         }
 
@@ -545,6 +575,20 @@
                 width: 100%;
             }
 
+            #departamento{
+                font-size: 18px;
+            }
+
+            .card-deck{
+                display: flex;
+                width: 100%;
+                flex-direction: row;
+            }
+
+            .card-datos{
+                width: 33%; margin:10px;
+            }
+
         }
 
         @media (min-width: 1200px) {
@@ -555,6 +599,10 @@
 
             #titulo{
                 font-size: 22px;
+            }
+
+            #departamento{
+                font-size: 18px;
             }
 
             .lista-productos {
@@ -568,6 +616,16 @@
 
             #detalles {
                 font-size: 22px;
+            }
+
+            .card-deck{
+                display: flex;
+                width: 100%;
+                flex-direction: row;
+            }
+
+            .card-datos{
+                width: 33%; margin:10px;
             }
 
             .inp-busqueda {
@@ -791,9 +849,23 @@
         @yield('content')
     </main>
     <footer>
-        <div class="footer-content">
-            <p> © {{ date('Y') }} EconoMando</p>
+        <div class="" style="background: #EBE0AB80; width: 100%;">
+            <!-- Facebook -->
+            <a class="btn btn-link btn-floating btn-lg text-dark m-1"
+               href="https://sites.google.com/educarex.es/hytiessanfernando/noticias"
+               style="font-size: 14px; text-decoration: none;">Contacto</a>
 
+            <!-- Twitter -->
+            <a
+                class="btn btn-link btn-floating btn-lg text-dark m-1"
+                href="{{route('autores')}}"
+                style="font-size: 14px; text-decoration: none">Autores</a>
+
+
+
+        </div>
+        <div class="footer-content" style="background: #EBE0AB">
+            <p> © {{ date('Y') }} EconoMando</p>
         </div>
     </footer>
 </div>

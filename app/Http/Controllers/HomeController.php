@@ -459,6 +459,12 @@ class HomeController extends Controller
         return array($pdfName, $pdf);
     }
 
+    public function autores(){
+        $anio_actual = Carbon::now()->year;
+        $presupuesto = Presupuesto::where('idUser', Auth::id())->where('anio', $anio_actual)->first();
+        return view('autores', ['presupuesto'=>$presupuesto]);
+    }
+
 }
 
 /**
@@ -603,6 +609,8 @@ function getCart($identifier)
     }
 
     return $allShopingCarts;
+
+
 }
 
 
