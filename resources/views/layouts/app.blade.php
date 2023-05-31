@@ -305,7 +305,7 @@
             }
 
             #botones {
-                width: 33.3%;
+                width: 50%;
                 padding: 1%;
                 font-size: 10px;
             }
