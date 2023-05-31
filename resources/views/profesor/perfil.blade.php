@@ -31,11 +31,11 @@
             @endif
         </div>
 
-        <div class="d-flex" style="padding: 25px">
-            <div style="width: 35%; padding: 25px; background: #F6C366; padding-top: 50px;">
+        <div class="datos-personales" style="padding: 25px">
+            <div class="cajon1" style="padding: 25px; background: #F6C366; padding-top: 50px;">
                 <h2>Información personal</h2>
             </div>
-            <div style="width: 65%; padding: 25px; background: #f6e9d2;">
+            <div class="cajon2" style="padding: 25px; background: #f6e9d2;">
                 <form action="{{ route("perfil.cambiarDatos", ["id" => $user->id]) }}" method="post" enctype="multipart/form-data">
                     @csrf
                     @method("POST")
@@ -63,11 +63,11 @@
             </div>
         </div>
 
-        <div class="d-flex" style="padding: 25px">
-            <div style="width: 35%; padding: 25px; background: #F6C366; padding-top: 50px;">
+        <div class="datos-personales" style="padding: 25px;">
+            <div class="cajon1" style="padding: 25px; background: #F6C366; padding-top: 50px;">
                 <h2>Cambiar contraseña</h2>
             </div>
-            <div style="width: 65%; padding: 25px; background: #f6e9d2;">
+            <div class="cajon2" style="padding: 25px; background: #f6e9d2;">
                 <form action="{{ route("perfil.cambiarPass", ["id" => $user->id]) }}" method="post" enctype="multipart/form-data">
                     @csrf
                     @method("POST")

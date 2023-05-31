@@ -275,6 +275,21 @@
                 margin-bottom: 1em;
             }
 
+            .datos-personales{
+                display: flex;
+                flex-direction: column;
+
+            }
+
+            .cajon1{
+                width: 100%;
+            }
+
+            .cajon2{
+                width: 100%;
+            }
+
+
             .lista-productos {
                 width: 100%;
             }
@@ -513,6 +528,35 @@
                 margin-left: 3%;
             }
 
+            .datos-personales{
+                display: flex;
+                flex-direction: row;
+            }
+
+            .cajon1{
+                width: 35%;
+            }
+
+            .cajon2{
+                width: 65%;
+            }
+
+            .info-personal{
+                display: flex;
+                flex-direction: row;
+            }
+
+            #cajon1{
+                width: 35%;
+                padding: 25px;
+                padding-top: 50px;
+            }
+
+            #cajon2{
+                width: 65%;
+                padding: 25px;
+            }
+
             .lista-productos {
                 width: 90%;
             }
@@ -595,6 +639,22 @@
             .adm {
                 margin-right: 10%;
                 justify-content: center;
+            }
+
+            .info-personal{
+                display: flex;
+                flex-direction: row;
+            }
+
+            #cajon1{
+                width: 35%;
+                padding: 25px;
+                padding-top: 50px;
+            }
+
+            #cajon2{
+                width: 65%;
+                padding: 25px;
             }
 
             #titulo{
