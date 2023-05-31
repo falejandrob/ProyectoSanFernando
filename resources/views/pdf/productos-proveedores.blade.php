@@ -6,30 +6,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hoja de pedido</title>
     <style>
-        @page {
-            margin: 5cm 1cm 2cm 1cm;
+        @page{
+            margin:5cm 1cm 2cm 1cm;
         }
-
-        #header {
+        #header{
             position: fixed;
-            top: -4cm;
-            left: 0cm;
+            top:-4cm;
+            left:0cm;
             bottom: 1cm;
             width: 100%;
         }
-
-        #info {
+        #info{
             margin-top: -1cm;
         }
-
-        #container {
+        #container{
             width: 100%;
         }
-
         .page-break {
             page-break-after: always;
         }
-
         table {
             width: 100%;
         }
@@ -60,13 +55,12 @@
 </head>
 <body>
 <!---->
-<div id="header">
+<div id ="header">
     <table>
         <tbody>
         <tr>
-            <td rowspan="3"><img
-                    src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('/logo.png')))}}"
-                    style="width: 100%"></td>
+            <td rowspan="3"><img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('/logo.png')))}}"
+                                 style="width: 100%"></td>
             <td rowspan="3" style="text-align: center">Hoja de pedido</td>
             <td>Documento</td>
             <td>Norma</td>
@@ -77,9 +71,7 @@
         </tr>
         <tr>
             <td>Rev.3</td>
-            <td>
-                <div class="page-break"></div>
-            </td>
+            <td><div class="page-break"></div></td>
         </tr>
         </tbody>
     </table>
@@ -158,30 +150,20 @@
                         <td></td>
                         <td></td>
                         <td>{{ $producto->options->observacion }}</td>
-                        @php
-                            $array = array();
-                        @endphp
+                        <td>
                         @if($lineasConProveedor->count() > 0)
-                            @for($i = 0; $i < $lineasConProveedor->count(); $i++)
-                                @php
-                                    $array[$i] = $lineasConProveedor[$i]->lineaPedido;
-                                @endphp
-                            @endfor
-
-                            @foreach($lineas as $linea)
-                                @foreach($lineasConProveedor as $lineaProv)
-                                    @foreach($proveedores as $proveedor)
-                                        @if($lineaProv->lineaPedido == $linea->id and $linea->idProducto == $producto->id
-                                        and $lineaProv->proveedor == $proveedor->id)
-                                            <td>{{ $proveedor->nombre }}</td>
-                                        @endif
+                           @foreach($lineas as $linea)
+                                    @foreach($lineasConProveedor as $lineaProv)
+                                        @foreach($proveedores as $proveedor)
+                                            @if($lineaProv->lineaPedido == $linea->id and $linea->idProducto == $producto->id
+                                            and $lineaProv->proveedor == $proveedor->id)
+                                                {{ $proveedor->nombre }}
+                                            @endif
+                                        @endforeach
                                     @endforeach
                                 @endforeach
-                            @endforeach
-                        @else
-                            <td>Sin proveedor</td>
                         @endif
-
+                        </td>
                     </tr>
                 @endforeach
             @endif
@@ -199,7 +181,6 @@
                 $pdf->text(420, 92, "Pág. $PAGE_NUM/$PAGE_COUNT", $font, 12);
             ');
         }
-
-</script>
+	</script>
 </body>
 </html>

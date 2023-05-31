@@ -97,11 +97,6 @@
                                         Proveedores
                                     </a>
                                 </td>
-                                <!--<td id="botones-pedidos">
-                                    <a class="btn btn-danger" href="{{route('downloadPdf',[$id])}}" target="_blank">
-                                        Imprimir
-                                    </a>
-                                </td>-->
                                 <td id="botones-pedidos">
                                     <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#imprimir{{$id}}">
                                         Imprimir

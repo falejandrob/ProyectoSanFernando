@@ -202,7 +202,7 @@ class HomeController extends Controller
         $proveedores = Proveedore::all();
         $categorias = Categoria::all();
 
-        if (auth()->user()->hasRole('admin')) {
+        if (auth()->user()->hasRole('admin') or auth()->user()->hasRole('gestor')) {
             return view("admin.seleccionarProveedores", ["lineasPedido" => $lineasPedido, "idPedido" => $idPedido, "proveedores" => $proveedores, "categorias" => $categorias, "productosConProveedor" => $productosConProveedor]);
         }
     }
@@ -225,7 +225,7 @@ class HomeController extends Controller
             $proveedores = Proveedore::all();
             $categorias = Categoria::all();
 
-            if (auth()->user()->hasRole('admin')) {
+            if (auth()->user()->hasRole('admin') or auth()->user()->hasRole('gestor')) {
                 session()->flash('success', 'La relacion se ha eliminado correctamente.');
                 return view("admin.seleccionarProveedores", ["lineasPedido" => $lineasPedido, "idPedido" => $idPedido, "proveedores" => $proveedores, "categorias" => $categorias, "productosConProveedor" => $productosConProveedor]);
             }
@@ -269,7 +269,7 @@ class HomeController extends Controller
 
         $productosConProveedor = ProductoProveedor::where('pedido', $request->id)->get();
 
-        if (auth()->user()->hasRole('admin')) {
+        if (auth()->user()->hasRole('admin') or auth()->user()->hasRole('gestor')) {
             return view("admin.seleccionarProveedores", ["lineasPedido" => $lineasPedido, "idPedido" => $request->id, "proveedores" => $proveedores, "categorias" => $categorias, "productosConProveedor" => $productosConProveedor]);
         }
     }
