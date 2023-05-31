@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('justificacion');
             $table->integer('validado')->default(0);
             $table->string('estaPedido')->nullable();
+            $table->string('eliminado')->default(0);
             $table->timestamps();
         });
     }

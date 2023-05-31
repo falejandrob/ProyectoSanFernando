@@ -23,7 +23,6 @@ class CartController extends Controller
      */
     public function confirm(Request $request)
     {
-
         $fecha = strtotime($request->expectedDate);
         $fechaConFormato = date('d-m-Y', $fecha);
         foreach (Cart::content() as $item) {
@@ -61,7 +60,9 @@ class CartController extends Controller
 
     function eliminarPedido($id)
     {
-        Pedido::destroy($id);
+        $pedido = Pedido::find($id);
+        $pedido->eliminado = "1";
+        $pedido->save();
         session()->flash('success', 'El pedido se ha eliminado correctamente.');
         return redirect()->action([HomeController::class, 'totalPedidos']);
     }
@@ -74,7 +75,9 @@ class CartController extends Controller
      */
     function eliminarPedidoProfesor($id)
     {
-        Pedido::destroy($id);
+        $pedido = Pedido::find($id);
+        $pedido->eliminado = "1";
+        $pedido->save();
         session()->flash('success', 'El pedido se ha eliminado correctamente.');
         return redirect()->action([HomeController::class, 'misPedidos'], [Auth::id()]);
     }

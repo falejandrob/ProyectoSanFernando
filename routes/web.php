@@ -72,6 +72,10 @@ Route::post('/cart/confirm',[\App\Http\Controllers\CartController::class,'confir
 
 //Ruta pedidos
 Route::get('/totalPedidos', [\App\Http\Controllers\HomeController::class, 'totalPedidos'])->name('totalPedidos');
+Route::get('/papeleraPedidos', [\App\Http\Controllers\HomeController::class, 'papeleraPedidos'])->name('papeleraPedidos');
+Route::get('/restaurarPedido/{id}', [\App\Http\Controllers\HomeController::class, 'restaurarPedido'])->name('restaurarPedido');
+Route::get('/papeleraPedidosProfesor/{id}', [\App\Http\Controllers\HomeController::class, 'papeleraPedidosProfesor'])->name('papeleraPedidosProfesor');
+Route::get('/restaurarPedidoProfesor/{id}', [\App\Http\Controllers\HomeController::class, 'restaurarPedidoProfesor'])->name('restaurarPedidoProfesor');
 
 Route::get('/addJustificacion',[\App\Http\Controllers\HomeController::class, 'addJustificacion'])->name('addJustificacion');
 

@@ -311,11 +311,60 @@ class HomeController extends Controller
             return $diferencia;
         })->reverse();
 
-
         $profesores = User::all();
 
-
         return view("admin.pedidos",["pedidos" => $pedidos, "profesores" => $profesores]);
+    }
+
+    public function papeleraPedidos()
+    {
+        $pedidos = Pedido::where('eliminado', '1')->get();
+        $profesores = User::all();
+
+        return view("admin.papeleraPedidos",["pedidos" => $pedidos, "profesores" => $profesores]);
+    }
+
+    public function restaurarPedido($idPedido)
+    {
+        $pedido = Pedido::find($idPedido);
+        $pedido->eliminado = '0';
+        $pedido->save();
+
+        $pedidos = Pedido::where('eliminado', '1')->get();
+        $profesores = User::all();
+
+        session()->flash('success', 'El pedido se ha restaurado correctamente.');
+        return view("admin.papeleraPedidos",["pedidos" => $pedidos, "profesores" => $profesores]);
+    }
+
+    public function papeleraPedidosProfesor($idProfesor)
+    {
+        $pedidos = Pedido::where('eliminado', '1')
+            ->where('idUser', $idProfesor)
+            ->get();
+
+        $anio_actual = Carbon::now()->year;
+        $presupuesto = Presupuesto::where('idUser', $idProfesor)->where('anio', $anio_actual)->first();
+
+        return view("profesor.papeleraPedidos",["pedidos" => $pedidos, "presupuesto" => $presupuesto]);
+    }
+
+    public function restaurarPedidoProfesor($idPedido)
+    {
+        $pedido = Pedido::find($idPedido);
+        $idProfesor = $pedido->idUser;
+        $pedido->eliminado = '0';
+        $pedido->save();
+
+        $pedidos = Pedido::where('eliminado', '1')
+            ->where('idUser', $idProfesor)
+            ->get();
+
+        $anio_actual = Carbon::now()->year;
+        $presupuesto = Presupuesto::where('idUser', $idProfesor)->where('anio', $anio_actual)->first();
+
+        session()->flash('success', 'El pedido se ha restaurado correctamente.');
+        return view("profesor.papeleraPedidos",["pedidos" => $pedidos, "presupuesto" => $presupuesto]);
     }
 
     public function addJustificacion(Request $request)
@@ -323,7 +372,6 @@ class HomeController extends Controller
         $justificacion = Session::get("justificacion");
         $justificacion = $justificacion . "\n" . $request->justificacion;
         Session::put("justificacion", $justificacion);
-
 
         return redirect()->action([HomeController::class, 'index']);
     }

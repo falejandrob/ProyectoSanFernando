@@ -681,6 +681,7 @@
                                 </a>
                                 <ul class="dropdown-menu">
                                     <li><a class="dropdown-item" href="{{route('totalPedidos', "")}}">Ver pedidos</a></li>
+                                    <li><a class="dropdown-item" href="{{route('papeleraPedidos', "")}}">Papelera de pedidos</a></li>
                                     <li><a class="dropdown-item" href="{{route('listDates')}}">Ver plazos de pedidos</a>
                                     </li>
                                     <li><a class="dropdown-item" href="{{route('fechaPedidos')}}">Añadir plazo de
@@ -748,6 +749,11 @@
                                 <li>
                                     <a class="dropdown-item" href="{{ route('misPedidos', Auth::user()->id) }}">
                                         Mis pedidos
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="{{route('papeleraPedidosProfesor', Auth::user()->id)}}">
+                                        Papelera de pedidos
                                     </a>
                                 </li>
                                 <li>

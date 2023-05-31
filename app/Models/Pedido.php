@@ -20,7 +20,8 @@ class Pedido extends Model
         'fechaPrevistaPedido',
         'justificacion',
         'validado',
-        'estaPedido'
+        'estaPedido',
+        'eliminado'
     ];
 
     /**
