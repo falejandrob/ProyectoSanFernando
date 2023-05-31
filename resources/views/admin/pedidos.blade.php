@@ -30,8 +30,6 @@
                             <th scope="col">Estado del pedido</th>
                             <th scope="col">Detalles</th>
                             <th scope="col">Validar / Desvalidar</th>
-                            <th scope="col">Proveedores</th>
-                            <th scope="col">Imprimir</th>
                             <th scope="col">Eliminar</th>
                         </tr>
                     </thead>
@@ -66,23 +64,6 @@
                                         </button>
                                     </td>
                                     <td id="botones-pedidos">
-                                        <a class="btn btn-info disabled" href="{{ route('seleccionarProveedores', $id)}}" style="color:white; background: #01B3E3; border: none">
-                                            Proveedores
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-people-fill" viewBox="0 0 16 16">
-                                                <path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H7Zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm-5.784 6A2.238 2.238 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.325 6.325 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1h4.216ZM4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z"/>
-                                            </svg>
-                                        </a>
-                                    </td>
-                                    <td id="botones-pedidos">
-                                        <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#imprimir{{$id}}">
-                                            Imprimir
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-printer-fill" viewBox="0 0 16 16">
-                                                <path d="M5 1a2 2 0 0 0-2 2v1h10V3a2 2 0 0 0-2-2H5zm6 8H5a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1z"/>
-                                                <path d="M0 7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2h-1v-2a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v2H2a2 2 0 0 1-2-2V7zm2.5 1a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z"/>
-                                            </svg>
-                                        </button>
-                                    </td>
-                                    <td id="botones-pedidos">
                                         <a type="button" class="btn btn-danger" href="{{ route('eliminarPedido', $id) }}">
                                             Eliminar
                                             <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="24" height="24" viewBox="0 0 24 24"style="fill:#FFFFFF;">
@@ -109,23 +90,6 @@
                                     <td id="botones-pedidos">
                                         <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#validateModal{{$id}}">
                                             Corregir
-                                        </button>
-                                    </td>
-                                    <td id="botones-pedidos">
-                                        <a class="btn " href="{{ route('seleccionarProveedores', $id)}}"  style="color:white; background: #01B3E3; border: none">
-                                            Proveedores
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-people-fill" viewBox="0 0 16 16">
-                                                <path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H7Zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm-5.784 6A2.238 2.238 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.325 6.325 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1h4.216ZM4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z"/>
-                                            </svg>
-                                        </a>
-                                    </td>
-                                    <td id="botones-pedidos">
-                                        <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#imprimir{{$id}}">
-                                            Imprimir
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-printer-fill" viewBox="0 0 16 16">
-                                                <path d="M5 1a2 2 0 0 0-2 2v1h10V3a2 2 0 0 0-2-2H5zm6 8H5a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1z"/>
-                                                <path d="M0 7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2h-1v-2a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v2H2a2 2 0 0 1-2-2V7zm2.5 1a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z"/>
-                                            </svg>
                                         </button>
                                     </td>
                                     <td id="botones-pedidos">
