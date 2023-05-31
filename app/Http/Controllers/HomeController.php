@@ -328,6 +328,12 @@ class HomeController extends Controller
         return redirect()->action([HomeController::class, 'index']);
     }
 
+    function downloadProvPdf($id){
+        list($pdfName, $pdf) = $this->getPDFProv($id);
+
+        return $pdf->stream($pdfName);
+    }
+
     /**
      * get a pdf stream
      *
@@ -363,6 +369,26 @@ class HomeController extends Controller
         return redirect()->route('misPedidos', [Auth::id()]);
     }
 
+    public function getPDFProv($id): array
+    {
+        $User = User::findOrFail(Pedido::findOrFail($id)->idUser);
+        $lineasConProveedor = ProductoProveedor::where('pedido', $id)->get();
+        $lineas = LineaPedido::all();
+
+        $proveedores = Proveedore::all();
+        $productos = getCart($id);
+        $pdfNameP = 'Pedido_' .  auth()->user()->nombre . '-' . auth()->user()->apellidos . '.pdf';
+
+        $dateTimeJustification = [
+            'expectedDate' => $productos->first()->options->expectedDate,
+            'expectedTime' => $productos->first()->options->expectedTime,
+            'justification' => $productos->first()->options->justification,
+        ];
+
+        $pdfD = Pdf::loadView('pdf.productos-proveedores', compact('proveedores', 'productos', 'lineas', 'lineasConProveedor', 'dateTimeJustification', 'User'));
+        return array($pdfNameP, $pdfD);
+    }
+
     /**
      * Get the pdf view
      *
@@ -384,7 +410,6 @@ class HomeController extends Controller
         $pdf = Pdf::loadView('pdf.productos', compact('productos', 'dateTimeJustification', 'User'));
         return array($pdfName, $pdf);
     }
-
 
 }
 

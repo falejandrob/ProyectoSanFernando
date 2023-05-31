@@ -40,7 +40,10 @@
                         <tr class="" style="background: #ffffff">
                             <td id="informacion" data-titulo="Fecha pedido:" >{{ $fechaConFormato }}</td>
                             <td id="informacion" data-titulo="Fecha prevista:" >{{ $pedido->first()->options->get('expectedDate') }}</td>
-                            <td id="informacion" data-titulo="Justificación:" >{{ $pedido->first()->options->get('justification') }}</td>
+                            <td id="informacion" data-titulo="Justificación:" >
+                                <a style="text-decoration: none; color: black" href="{{ route('detallesPedido', [$id, ""]) }}">
+                                    {{ $pedido->first()->options->get('justification') }}
+                                </a></td>
                             <td id="informacion" data-titulo="Estado del pedido:">En proceso</td>
                             <td id="botones">
                                 <a class="btn btn-primary" href="{{ route('detallesPedido', [$id, ""]) }}">
@@ -48,12 +51,12 @@
                                 </a>
                             </td>
                             <td id="botones">
-                                <a class="btn btn-danger disabled">
+                                <a class="btn btn-success disabled">
                                     Enviar
                                 </a>
                             </td>
                             <td id="botones">
-                                <a class="btn btn-success disabled">
+                                <a class="btn btn-danger disabled">
                                     Imprimir
                                 </a>
                             </td>
@@ -62,7 +65,11 @@
                         <tr class="" style="background: #FED2D2">
                             <td id="informacion" data-titulo="Fecha pedido:" >{{ $fechaConFormato }}</td>
                             <td id="informacion" data-titulo="Fecha prevista:" >{{ $pedido->first()->options->get('expectedDate') }}</td>
-                            <td id="informacion" data-titulo="Justificación:" >{{ $pedido->first()->options->get('justification') }}</td>
+                            <td id="informacion" data-titulo="Justificación:" >
+                                <a style="text-decoration: none; color: black" href="{{ route('detallesPedido', [$id, ""]) }}">
+                                    {{ $pedido->first()->options->get('justification') }}
+                                </a>
+                            </td>
                             <td id="informacion" data-titulo="Estado del pedido:">Denegado</td>
                             <td id="botones">
                                 <a class="btn btn-primary" href="{{ route('detallesPedido', [$id, ""]) }}">
@@ -70,12 +77,12 @@
                                 </a>
                             </td>
                             <td id="botones">
-                                <a class="btn btn-danger disabled">
+                                <a class="btn btn-success disabled">
                                     Enviar
                                 </a>
                             </td>
                             <td id="botones">
-                                <a class="btn btn-success disabled">
+                                <a class="btn btn-danger disabled">
                                     Imprimir
                                 </a>
                             </td>
@@ -84,7 +91,11 @@
                         <tr class="" style="background: #BDDECA">
                             <td id="informacion" data-titulo="Fecha pedido:">{{ $fechaConFormato }}</td>
                             <td id="informacion" data-titulo="Fecha prevista:">{{ $pedido->first()->options->get('expectedDate') }}</td>
-                            <td id="informacion" data-titulo="Justificación:">{{ $pedido->first()->options->get('justification') }}</td>
+                            <td id="informacion" data-titulo="Justificación:">
+                                <a style="text-decoration: none; color: black" href="{{ route('detallesPedido', [$id, ""]) }}">
+                                    {{ $pedido->first()->options->get('justification') }}
+                                </a>
+                            </td>
                             <td id="informacion" data-titulo="Estado del pedido:">Validado</td>
                             <td id="botones">
                                 <a class="btn btn-primary" href="{{ route('detallesPedido', [$id, ""]) }}">
@@ -92,12 +103,12 @@
                                 </a>
                             </td>
                             <td id="botones">
-                                <a class="btn btn-danger" href="{{route('sendMail',[$id])}}">
+                                <a class="btn btn-success" href="{{route('sendMail',[$id])}}">
                                     Enviar
                                 </a>
                             </td>
                             <td id="botones">
-                                <a class="btn btn-success" href="{{route('downloadPdf',[$id])}}" target="_blank">
+                                <a class="btn btn-danger" href="{{route('downloadPdf',[$id])}}" target="_blank">
                                     Imprimir
                                 </a>
                             </td>

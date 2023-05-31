@@ -680,7 +680,7 @@
                                     Pedidos
                                 </a>
                                 <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="{{route('totalPedidos')}}">Ver pedidos</a></li>
+                                    <li><a class="dropdown-item" href="{{route('totalPedidos', "")}}">Ver pedidos</a></li>
                                     <li><a class="dropdown-item" href="{{route('listDates')}}">Ver plazos de pedidos</a>
                                     </li>
                                     <li><a class="dropdown-item" href="{{route('fechaPedidos')}}">Añadir plazo de
@@ -736,7 +736,7 @@
                         <ul class="dropdown-menu">
                             @if(auth()->user()->hasRole('profesor'))
                                 <li>
-                                    <a class="dropdown-item" href="">
+                                    <a class="dropdown-item" href="" style="cursor: default; pointer-events: none;">
                                         Presupuesto:
                                         @if($presupuesto == null)
                                             <br><span class="budget-amount ">Aún no tienes presupuesto</span>

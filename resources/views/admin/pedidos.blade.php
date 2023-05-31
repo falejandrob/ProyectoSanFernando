@@ -31,6 +31,7 @@
                             <th scope="col">Detalles</th>
                             <th scope="col">Validar / Desvalidar</th>
                             <th scope="col">Proveedores</th>
+                            <th scope="col">Imprimir</th>
                         </tr>
                     </thead>
                 <tbody>
@@ -59,9 +60,19 @@
                                     </button>
                                 </td>
                                 <td id="botones-pedidos">
-                                    <a class="btn btn-success disabled" href="{{ route('seleccionarProveedores', $id)}}">
+                                    <a class="btn btn-info disabled" href="{{ route('seleccionarProveedores', $id)}}" style="color:white; background: #01B3E3; border: none">
                                         Proveedores
                                     </a>
+                                </td>
+                                <!--<td id="botones-pedidos">
+                                    <a class="btn btn-danger" href="{{route('downloadPdf',[$id])}}" target="_blank">
+                                        Imprimir
+                                    </a>
+                                </td>-->
+                                <td id="botones-pedidos">
+                                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#imprimir{{$id}}">
+                                        Imprimir
+                                    </button>
                                 </td>
                             </tr>
                         @else
@@ -82,9 +93,19 @@
                                     </button>
                                 </td>
                                 <td id="botones-pedidos">
-                                    <a class="btn btn-success" href="{{ route('seleccionarProveedores', $id)}}">
+                                    <a class="btn " href="{{ route('seleccionarProveedores', $id)}}"  style="color:white; background: #01B3E3; border: none">
                                         Proveedores
                                     </a>
+                                </td>
+                                <!--<td id="botones-pedidos">
+                                    <a class="btn btn-danger" href="{{route('downloadPdf',[$id])}}" target="_blank">
+                                        Imprimir
+                                    </a>
+                                </td>-->
+                                <td id="botones-pedidos">
+                                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#imprimir{{$id}}">
+                                        Imprimir
+                                    </button>
                                 </td>
                             </tr>
                         @endif
@@ -126,6 +147,26 @@
                                     </a>
                                     <a class="btn btn-danger" href="{{ route('desvalidarPedido', [$id, $profesores->where("id","=",$pedido[1])->first()->nombre, $profesores->where("id","=",$pedido[1])->first()->apellidos, $profesores->where("id","=",$pedido[1])->first()->email])}}">
                                         No
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal fade" id="imprimir{{$id}}" tabindex="-1" role="dialog" aria-labelledby="validateModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="validateModalLabel">Imprimir pedido</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body" style="display:flex; justify-content: center;">
+                                    <a class="btn btn-success"  style="margin:2%" href="{{route('downloadProvPdf',[$id])}}" target="_blank">
+                                        Imprimir con proveedores
+                                    </a>
+                                    <a class="btn btn-success" style="margin:2%" href="{{route('downloadPdf',[$id])}}" target="_blank">
+                                        Imprimir sin proveedores
                                     </a>
                                 </div>
                             </div>

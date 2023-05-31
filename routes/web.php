@@ -23,6 +23,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::get('/realizarPedido', [App\Http\Controllers\HomeController::class, 'realizarPedido'])->name('realizarPedido');
 Route::get('/misPedidos/{id}',[\App\Http\Controllers\HomeController::class, 'misPedidos'])->name('misPedidos');
 Route::get('/imprimirPedido/{id}',[\App\Http\Controllers\HomeController::class, 'downloadPdf'])->name('downloadPdf');
+Route::get('/imprimirPedidoProveedores/{id}',[\App\Http\Controllers\HomeController::class, 'downloadProvPdf'])->name('downloadProvPdf');
 Route::get('/enviarPedido/{id}',[\App\Http\Controllers\HomeController::class, 'sendMail'])->name('sendMail');
 Route::get('/detallesPedido/{id}',[\App\Http\Controllers\HomeController::class, 'detallesPedido'])->name('detallesPedido');
 Route::get('/detallesPedido/{id}/{profesor}',[\App\Http\Controllers\HomeController::class, 'detallesPedidoAdmin'])->name('detallesPedidoAdmin');
