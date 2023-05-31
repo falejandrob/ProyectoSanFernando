@@ -124,7 +124,7 @@ class CartController extends Controller
 
         }
 
-        return redirect()->action([HomeController::class, 'index']);
+        return redirect()->action([HomeController::class, 'realizarPedido']);
 
     }
 
