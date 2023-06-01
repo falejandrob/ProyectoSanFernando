@@ -29,9 +29,9 @@
                     <tbody>
                     @foreach($dates as $date)
                         @php
-                            $fechaConFormatoMin = \Carbon\Carbon::parse($date->fechaMinima)->format('d-m-Y');
+                            $fechaConFormatoMin = \Carbon\Carbon::parse($date->fechaMinima)->format('d/m/Y');
                             $horaConFormatoMin = \Carbon\Carbon::parse($date->fechaMinima)->format('H:i');
-                            $fechaConFormatoMax = \Carbon\Carbon::parse($date->fechaMaxima)->format('d-m-Y');
+                            $fechaConFormatoMax = \Carbon\Carbon::parse($date->fechaMaxima)->format('d/m/Y');
                             $horaConFormatoMax = \Carbon\Carbon::parse($date->fechaMaxima)->format('H:i');
                         @endphp
 

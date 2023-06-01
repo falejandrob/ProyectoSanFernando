@@ -41,13 +41,14 @@
                         @if ($eliminado == 0)
                             @php
                                 $validado = \App\Models\Pedido::findOrFail($id)->validado;
-                                $fechaConFormato = \Carbon\Carbon::parse($pedido[0]->first()->options->get('fechaPedido'))->format('d-m-Y');
+                                $fechaConFormato = \Carbon\Carbon::parse($pedido[0]->first()->options->get('fechaPedido'))->format('d/m/Y');
+                                $fechaConFormato2 = \Carbon\Carbon::parse($pedido[0]->first()->options->get('expectedDate'))->format('d/m/Y');
                             @endphp
                             @if ($validado == 0 || $validado == 2)
                                 <tr class="" style="text-align: center;background:#FED2D2">
                                     <td id="informacion" data-titulo="Profesor:">{{ $profesores->where("id","=",$pedido[1])->first()->nombre . " ". $profesores->where("id","=",$pedido[1])->first()->apellidos }}</td>
                                     <td id="informacion" data-titulo="Fecha pedido:">{{ $fechaConFormato }}</td>
-                                    <td id="informacion" data-titulo="Fecha prevista:">{{ $pedido[0]->first()->options->get('expectedDate') }}</td>
+                                    <td id="informacion" data-titulo="Fecha prevista:">{{ $fechaConFormato2 }}</td>
                                     <td id="informacion" data-titulo="Estado del pedido:">Sin validar</td>
                                     <td id="botones-pedidos">
                                         <a class="btn btn-primary"
@@ -76,7 +77,7 @@
                                 <tr class="" style="text-align: center; background: #BDDECA ">
                                     <td id="informacion" data-titulo="Profesor:">{{ $profesores->where("id","=",$pedido[1])->first()->nombre . " ". $profesores->where("id","=",$pedido[1])->first()->apellidos }}</td>
                                     <td id="informacion" data-titulo="Fecha pedido:">{{ $fechaConFormato }}</td>
-                                    <td id="informacion" data-titulo="Fecha prevista:">{{ $pedido[0]->first()->options->get('expectedDate') }}</td>
+                                    <td id="informacion" data-titulo="Fecha prevista:">{{ $fechaConFormato2 }}</td>
                                     <td id="informacion" data-titulo="Estado del pedido:">Validado</td>
                                     <td id="botones-pedidos">
                                         <a class="btn btn-primary"

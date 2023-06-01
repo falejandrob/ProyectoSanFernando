@@ -26,7 +26,7 @@ class CartController extends Controller
     public function confirm(Request $request)
     {
         $fecha = strtotime($request->expectedDate);
-        $fechaConFormato = date('d-m-Y', $fecha);
+        $fechaConFormato = date('d/m/Y', $fecha);
         foreach (Cart::content() as $item) {
             $producto = Producto::findOrFail($item->id);
             $observacion = $request->input('observacion-' . $item->rowId, null);
@@ -103,8 +103,8 @@ class CartController extends Controller
         $idPedido = $pedido->id;
         $datePedido = $pedido->fechaPedido;
         $expectedDateTime = $pedido->fechaPrevistaPedido;
-        $expectedDate = Carbon::parse($expectedDateTime)->format('d-m-Y');
-        $expectedTime = Carbon::parse($expectedDateTime)->format('H:i:s');
+        $expectedDate = Carbon::parse($expectedDateTime)->format('d/m/Y');
+        $expectedTime = Carbon::parse($expectedDateTime)->format('H:i');
         $justification = $pedido->justificacion;
 
         $itemsPedido = LineaPedido::where('idPedido', $idPedido)->get();

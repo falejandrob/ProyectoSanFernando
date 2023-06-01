@@ -289,6 +289,17 @@
                 width: 100%;
             }
 
+            .detalles-botones{
+                display: flex;
+                flex-wrap: wrap;
+            }
+
+            .detalles-botones a, .detalles-botones button{
+                width: 45%;
+                font-size: 14px;
+                margin:6px;
+            }
+
 
             .lista-productos {
                 width: 100%;
@@ -533,6 +544,11 @@
                 flex-direction: row;
             }
 
+            .btn-detalles{
+                display: flex;
+                justify-content: space-between;
+            }
+
             .cajon1{
                 width: 35%;
             }
@@ -544,17 +560,6 @@
             .info-personal{
                 display: flex;
                 flex-direction: row;
-            }
-
-            #cajon1{
-                width: 35%;
-                padding: 25px;
-                padding-top: 50px;
-            }
-
-            #cajon2{
-                width: 65%;
-                padding: 25px;
             }
 
             .lista-productos {
@@ -572,6 +577,11 @@
 
             .carrito {
                 width: 45%;
+            }
+
+            .btn-detalles{
+                display: flex;
+                justify-content: space-between;
             }
 
             .carrito span {
@@ -646,15 +656,9 @@
                 flex-direction: row;
             }
 
-            #cajon1{
-                width: 35%;
-                padding: 25px;
-                padding-top: 50px;
-            }
-
-            #cajon2{
-                width: 65%;
-                padding: 25px;
+            .btn-detalles{
+                display: flex;
+                justify-content: space-between;
             }
 
             #titulo{
@@ -760,7 +764,7 @@
                     </div>
                     <div style="display: flex; flex-direction: column">
                         <span id="titulo" style="font-family: 'Titan One', cursive; color:#C60000 ">EconoMando</span>
-                        <span style="font-size: 15px">Pedidos San Fernando</span>
+                        <span style="font-size: 15px; font-weight: bold; color:#4A4A4A">Pedidos San Fernando</span>
                     </div>
                 </a>
             @else
@@ -770,7 +774,7 @@
                     </div>
                     <div style="display: flex; flex-direction: column">
                         <span id="titulo" style="font-family: 'Titan One', cursive; color:#C60000 ">EconoMando</span>
-                        <span style="font-size: 15px">Pedidos San Fernando</span>
+                        <span style="font-size: 15px; font-weight: bold; color:#4A4A4A">Pedidos San Fernando</span>
                     </div>
                 </a>
             @endif
@@ -912,8 +916,8 @@
         <div class="" style="background: #EBE0AB80; width: 100%;">
             <!-- Facebook -->
             <a class="btn btn-link btn-floating btn-lg text-dark m-1"
-               href="https://sites.google.com/educarex.es/hytiessanfernando/noticias"
-               style="font-size: 14px; text-decoration: none;">Contacto</a>
+               href="https://sites.google.com/educarex.es/hytiessanfernando/contacto?authuser=0"
+               style="font-size: 14px; text-decoration: none;" target="_blank">Contacto</a>
 
             <!-- Twitter -->
             <a

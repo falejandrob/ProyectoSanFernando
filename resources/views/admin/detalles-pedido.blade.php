@@ -13,25 +13,25 @@
 
         <br>
 
-        <div style="display: flex; justify-content: space-between">
+        <div class="btn-detalles">
             <div>
                 <h2>Detalles</h2>
             </div>
-            <div>
-                <a class="btn btn-success" href="{{ route('seleccionarProveedores', $idPedido)}}">
+            <div class="detalles-botones">
+                <a class="btn btn-success" href="{{ route('seleccionarProveedores', $idPedido)}}" style="font-size: 16px;padding: 8px">
                     Proveedores
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-people-fill" viewBox="0 0 16 16">
                         <path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H7Zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm-5.784 6A2.238 2.238 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.325 6.325 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1h4.216ZM4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z"/>
                     </svg>
                 </a>
-                <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#imprimir{{$idPedido}}">
+                <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#imprimir{{$idPedido}}" style="font-size: 16px; padding: 8px">
                     Imprimir
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-printer-fill" viewBox="0 0 16 16">
                         <path d="M5 1a2 2 0 0 0-2 2v1h10V3a2 2 0 0 0-2-2H5zm6 8H5a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1z"/>
                         <path d="M0 7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2h-1v-2a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v2H2a2 2 0 0 1-2-2V7zm2.5 1a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z"/>
                     </svg>
                 </button>
-                <a class="btn btn-danger" href="{{ route('eliminarPedido', $idPedido) }}" style="font-size: 16px">
+                <a class="btn btn-danger" href="{{ route('eliminarPedido', $idPedido) }}" style="font-size: 16px; padding: 8px">
                     Eliminar
                     <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="24" height="24" viewBox="0 0 24 24"
                          style="fill:#FFFFFF;">
@@ -42,10 +42,10 @@
         </div>
         <hr>
         @php
-            $fechaConFormatoPedido = \Carbon\Carbon::parse($pedido->first()->options->get('fechaPedido'))->format('d-m-Y');
+            $fechaConFormatoPedido = \Carbon\Carbon::parse($pedido->first()->options->get('fechaPedido'))->format('d/m/Y');
             $horaConFormatoPedido = \Carbon\Carbon::parse($pedido->first()->options->get('fechaPedido'))->format('H:i');
 
-            $fechaConFormatoPrevista = \Carbon\Carbon::parse($pedido->first()->options->get('expectedDate'))->format('d-m-Y');
+            $fechaConFormatoPrevista = \Carbon\Carbon::parse($pedido->first()->options->get('expectedDate'))->format('d/m/Y');
             $horaConFormatoPrevista = \Carbon\Carbon::parse($pedido->first()->options->get('expectedTime'))->format('H:i');
         @endphp
         <p id="detalles">Profesor que realiza el pedido: {{$profesor}}</p>
