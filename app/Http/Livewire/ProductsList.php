@@ -20,6 +20,7 @@ class ProductsList extends Component
     public $searchFilter;
     public $categorias;
     public $orden = 'asc';
+    public $porPagina = 10;
 
     protected $listeners = ['producto_update' =>'render'];
 
@@ -33,7 +34,6 @@ class ProductsList extends Component
 
     public function render()
     {
-        $productosPorPagina = 10; // Número de productos a mostrar por página
         $maxPaginasMostradas = 3;
         $query = Producto::query()
             ->when($this->categoryFilter, function ($query) {
@@ -46,14 +46,13 @@ class ProductsList extends Component
                 $query->where('nombre', 'like', '%' . $this->searchFilter . '%');
             });
 
-        $productos = $query->orderBy('nombre', $this->orden)->paginate($productosPorPagina);
+        $productos = $query->orderBy('nombre', $this->orden)->paginate($this->porPagina);
 
         return view('livewire.productos-listar', compact('productos','maxPaginasMostradas'));
     }
 
     public function ordenarAlfabeticamente()
     {
-        $productosPorPagina = 10;
         $maxPaginasMostradas = 3;
         $query = Producto::query()
             ->when($this->categoryFilter, function ($query) {
@@ -67,7 +66,7 @@ class ProductsList extends Component
             });
 
         $this->orden = $this->orden === 'asc' ? 'desc' : 'asc';
-        $productos = $query->orderBy('nombre', $this->orden)->paginate($productosPorPagina);
+        $productos = $query->orderBy('nombre', $this->orden)->paginate($this->porPagina);
 
         return view('livewire.productos-listar', compact('productos','maxPaginasMostradas'));
     }

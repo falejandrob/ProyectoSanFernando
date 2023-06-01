@@ -7,14 +7,15 @@
                 </div>
                 <br>
             @endif
-                <div class="btn-volver" style="margin: 10px 0px 30px 0px">
-                    <a class="btn btn-secondary" href="{{ route('home') }}">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-return-left" viewBox="0 0 16 16">
-                            <path fill-rule="evenodd" d="M14.5 1.5a.5.5 0 0 1 .5.5v4.8a2.5 2.5 0 0 1-2.5 2.5H2.707l3.347 3.346a.5.5 0 0 1-.708.708l-4.2-4.2a.5.5 0 0 1 0-.708l4-4a.5.5 0 1 1 .708.708L2.707 8.3H12.5A1.5 1.5 0 0 0 14 6.8V2a.5.5 0 0 1 .5-.5z"/>
-                        </svg>
-                        Volver
-                    </a>
-                </div>
+            <div class="btn-volver" style="margin: 10px 0px 30px 0px">
+                <a class="btn btn-secondary" href="{{ route('home') }}">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-return-left" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M14.5 1.5a.5.5 0 0 1 .5.5v4.8a2.5 2.5 0 0 1-2.5 2.5H2.707l3.347 3.346a.5.5 0 0 1-.708.708l-4.2-4.2a.5.5 0 0 1 0-.708l4-4a.5.5 0 1 1 .708.708L2.707 8.3H12.5A1.5 1.5 0 0 0 14 6.8V2a.5.5 0 0 1 .5-.5z"/>
+                    </svg>
+                    Volver
+                </a>
+            </div>
+
             <div class="col-md-1" style="display: flex">
                 <label for="idCatgeroia" class="form-label" style="margin-right:5px">Categorías</label>
                 <div class="col-xs-10">
@@ -31,9 +32,21 @@
                 <label for="validado" class="form-check-label">Sin validar</label>
                 <input wire:model="validateFilter" type="checkbox" class="form-check-input" id="validado">
             </div>
-
         </div>
+        <br>
+        <div class="mb-3 d-flex justify-content-start align-items-center">
+            <label class="form-label">Número de productos por página</label>
+            <select class="form-select" wire:model="porPagina" style="width: 100px; margin-left: 10px;">
+                <option value="10">10</option>
+                <option value="15">15</option>
+                <option value="20">20</option>
+                <option value="25">25</option>
+                <option value="30">30</option>
+            </select>
+        </div>
+
         <h1 style="text-align: center; padding: 15px">PRODUCTOS</h1>
+
         <div
             class="inp-busqueda" style="margin: auto; border: 2px solid #F6C366; border-radius: 50px; height: 40px;
              display: flex; justify-content: space-around; align-items: center;">
@@ -41,6 +54,7 @@
                    style="width: 65%; height: 25px; font-size: 150%; text-align: center; outline: none; border: 2px solid white; background: white"/>
             <img src="https://cdn-icons-png.flaticon.com/512/3917/3917132.png" style="height: 25px;"/>
         </div>
+
         <br>
         @if($productos && $productos->count() > 0)
             <div class="">
