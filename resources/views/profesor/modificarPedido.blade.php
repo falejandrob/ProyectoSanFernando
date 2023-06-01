@@ -12,7 +12,7 @@
         @if($closestDate !== null)
             @if($fechaActual->between($closestDate->fechaMinima,$closestDate->fechaMaxima))
                 <div class="carrito" style="background: #FAFAFA; border-left: #D6D6D6 1px solid; padding: 25px">
-                    @livewire('cart-list')
+                    @livewire('cart-modify')
                 </div>
             @endif
         @endif

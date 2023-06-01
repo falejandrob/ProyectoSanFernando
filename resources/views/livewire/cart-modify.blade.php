@@ -1,5 +1,5 @@
 <div style="width: 100%; margin: auto">
-    <form action="{{route('cart.confirm')}}" method="post">
+    <form action="{{route('cart.modify', ["id" => Cart::content()->first()->options->id])}}" method="post">
         @csrf
         @method("POST")
         <div>
@@ -103,22 +103,26 @@
                 <div class="mb-3" style="width: 40%">
                     <br><div class="mensaje-emergente" style="margin-top: 2%">
                         <label style="margin-bottom: 2px">Fecha prevista de pedido</label>
-                        <img src="duda.png" alt="" style="width: 22px; height: 22px">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-question-lg" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M4.475 5.458c-.284 0-.514-.237-.47-.517C4.28 3.24 5.576 2 7.825 2c2.25 0 3.767 1.36 3.767 3.215 0 1.344-.665 2.288-1.79 2.973-1.1.659-1.414 1.118-1.414 2.01v.03a.5.5 0 0 1-.5.5h-.77a.5.5 0 0 1-.5-.495l-.003-.2c-.043-1.221.477-2.001 1.645-2.712 1.03-.632 1.397-1.135 1.397-2.028 0-.979-.758-1.698-1.926-1.698-1.009 0-1.71.529-1.938 1.402-.066.254-.278.461-.54.461h-.777ZM7.496 14c.622 0 1.095-.474 1.095-1.09 0-.618-.473-1.092-1.095-1.092-.606 0-1.087.474-1.087 1.091S6.89 14 7.496 14Z"/>
+                        </svg>
                         <div class="contenido" style="background: lightblue; font-size: 16px">Introduce la fecha para la que necesite el pedido
                         </div>
                     </div>
                     <input type="date" class="form-control" id="expectedDate" name="expectedDate" style="margin-top: 1%"
-                           pattern="\d{4}-\d{2}-\d{2}" value="{{ $expectedDate }}" required>
+                           pattern="\d{4}-\d{2}-\d{2}" value="{{ Cart::content()->first()->options->expectedDate }}" required>
                 </div>
                 <div class="mb-3" style="width: 40%">
                     <br><div class="mensaje-emergente" style="margin-top: 2%">
                         <label style="margin-bottom: 2px">Hora prevista de pedido</label>
-                        <img src="duda.png" alt="" style="width: 22px; height: 22px">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-question-lg" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M4.475 5.458c-.284 0-.514-.237-.47-.517C4.28 3.24 5.576 2 7.825 2c2.25 0 3.767 1.36 3.767 3.215 0 1.344-.665 2.288-1.79 2.973-1.1.659-1.414 1.118-1.414 2.01v.03a.5.5 0 0 1-.5.5h-.77a.5.5 0 0 1-.5-.495l-.003-.2c-.043-1.221.477-2.001 1.645-2.712 1.03-.632 1.397-1.135 1.397-2.028 0-.979-.758-1.698-1.926-1.698-1.009 0-1.71.529-1.938 1.402-.066.254-.278.461-.54.461h-.777ZM7.496 14c.622 0 1.095-.474 1.095-1.09 0-.618-.473-1.092-1.095-1.092-.606 0-1.087.474-1.087 1.091S6.89 14 7.496 14Z"/>
+                        </svg>
                         <div class="contenido" style="background: lightblue; font-size: 16px">Introduce la hora para la que necesite el pedido
                         </div>
                     </div>
                     <input type="time" class="form-control" id="expectedTime" name="expectedTime"
-                           value="{{ $expectedTime }}" required>
+                           value="{{ Cart::content()->first()->options->expectedTime }}" required>
                 </div>
             </div>
             <div style="width: 100%; text-align: center; padding: 10px">
@@ -127,7 +131,7 @@
                             class="btn" data-bs-toggle="modal"
                             @if($presupuesto == null or $total == "0") data-bs-target="#presupuesto"
                             type="button" @else type="submit" @endif >
-                        Hacer pedido
+                        Modificar pedido
                     </button>
                 @endif
             </div>

@@ -31,6 +31,7 @@ Route::get('/detallesPedido/{id}/{profesor}',[\App\Http\Controllers\HomeControll
 Route::get('/eliminarPedido/{id}',[\App\Http\Controllers\CartController::class, 'eliminarPedido'])->name('eliminarPedido');
 Route::get('/eliminarPedidoProfesor/{id}',[\App\Http\Controllers\CartController::class, 'eliminarPedidoProfesor'])->name('eliminarPedidoProfesor');
 Route::get('/repetirPedido/{id}',[\App\Http\Controllers\CartController::class, 'repetirPedido'])->name('repetirPedido');
+Route::get('/modificarPedido/{id}',[\App\Http\Controllers\CartController::class, 'modificarPedido'])->name('modificarPedido');
 Route::get('/validarPedido/{id}/{nombre}/{apellido}/{email}',[\App\Http\Controllers\HomeController::class, 'validarPedido'])->name('validarPedido');
 Route::get('/desvalidarPedido/{id}/{nombre}/{apellido}/{email}',[\App\Http\Controllers\HomeController::class, 'desvalidarPedido'])->name('desvalidarPedido');
 
@@ -70,6 +71,7 @@ Route::post('/proveedor/update/{id}',[\App\Http\Controllers\ProveedorController:
 Route::post('/cart/store',[\App\Http\Controllers\CartController::class,'store'])->name('cart.store');
 Route::post('/cart/remove',[\App\Http\Controllers\CartController::class,'remove'])->name('cart.remove');
 Route::post('/cart/confirm',[\App\Http\Controllers\CartController::class,'confirm'])->name('cart.confirm');
+Route::post('/cart/modify/{id}',[\App\Http\Controllers\CartController::class,'modify'])->name('cart.modify');
 
 //Ruta pedidos
 Route::get('/totalPedidos', [\App\Http\Controllers\HomeController::class, 'totalPedidos'])->name('totalPedidos');
