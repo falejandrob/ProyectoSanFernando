@@ -426,10 +426,13 @@ class HomeController extends Controller
         $proveedores = Proveedore::all();
         $productos = getCart($id);
         $pdfNameP = 'Pedido_' .  auth()->user()->nombre . '-' . auth()->user()->apellidos . '.pdf';
+        $fechaConFormato = \Carbon\Carbon::parse($productos->first()->options->expectedDate)->format('d/m/Y');
+        $horaConFormato = \Carbon\Carbon::parse($productos->first()->options->expectedTime)->format('H:i');
+
 
         $dateTimeJustification = [
-            'expectedDate' => $productos->first()->options->expectedDate,
-            'expectedTime' => $productos->first()->options->expectedTime,
+            'expectedDate' => $fechaConFormato,
+            'expectedTime' => $horaConFormato,
             'justification' => $productos->first()->options->justification,
         ];
 
@@ -448,10 +451,12 @@ class HomeController extends Controller
         $User = User::findOrFail(Pedido::findOrFail($id)->idUser);
         $productos = getCart($id);
         $pdfName = 'Pedido_' . $productos->first()->options->expectedDate . '-' . $productos->first()->options->expectedTime . '_' . auth()->user()->nombre . '-' . auth()->user()->apellidos . '.pdf';
+        $fechaConFormato = \Carbon\Carbon::parse($productos->first()->options->expectedDate)->format('d/m/Y');
+        $horaConFormato = \Carbon\Carbon::parse($productos->first()->options->expectedTime)->format('H:i');
 
         $dateTimeJustification = [
-            'expectedDate' => $productos->first()->options->expectedDate,
-            'expectedTime' => $productos->first()->options->expectedTime,
+            'expectedDate' => $fechaConFormato,
+            'expectedTime' => $horaConFormato,
             'justification' => $productos->first()->options->justification,
         ];
 

@@ -50,12 +50,13 @@
                     @if($eliminado == 0)
                         @php
                             $validado = \App\Models\Pedido::findOrFail($id)->validado;
-                            $fechaConFormato = \Carbon\Carbon::parse($pedido->first()->options->get('fechaPedido'))->format('d-m-Y');
+                            $fechaConFormato = \Carbon\Carbon::parse($pedido->first()->options->get('fechaPedido'))->format('d/m/Y');
+                            $fechaConFormato2 = \Carbon\Carbon::parse($pedido->first()->options->get('expectedDate'))->format('d/m/Y');
                         @endphp
                         @if($validado == 0)
                             <tr class="" style="background: #ffffff">
                                 <td id="informacion" data-titulo="Fecha pedido:" >{{ $fechaConFormato }}</td>
-                                <td id="informacion" data-titulo="Fecha prevista:">{{ $pedido->first()->options->get('expectedDate') }}</td>
+                                <td id="informacion" data-titulo="Fecha prevista:">{{ $fechaConFormato2 }}</td>
                                 <td id="informacion" data-titulo="Justificación:"><a style="text-decoration: none; color: black;" href="{{ route('detallesPedido', [$id, ""]) }}">{{ $pedido->first()->options->get('justification') }}</a></td>
                                 <td id="informacion" data-titulo="Estado del pedido:">En proceso</td>
                                 <td id="botones">
