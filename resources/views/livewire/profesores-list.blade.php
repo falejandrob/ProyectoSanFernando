@@ -51,6 +51,7 @@
                                 <button wire:click="destroyProfesor({{$profesor->id}})" class="btn btn-danger">
                                     Eliminar
                                 </button>
+
                             </td>
                         </tr>
                 @endforeach
