@@ -4,7 +4,7 @@
     <div class="container" style="text-align: center; padding-top: 30px">
         <h1>AUTORES</h1>
         <div style="margin-top: 3%">
-            <p id="departamento" >Realizado por el Departamento de Informática y alumnos de 2º del Ciclo Formativo de Grado Superior de Desarrollo de Aplicaciones Multiplataforma del IES Castelar, Badajoz.</p>
+            <p id="departamento" >Realizado por el Departamento de Informática y Comunicaciones y alumnos de 2º del Ciclo Formativo de Grado Superior de Desarrollo de Aplicaciones Multiplataforma del IES Castelar, Badajoz.</p>
         </div>
         <div class="card-deck" style="">
             <div class="card card-datos">
