@@ -22,7 +22,6 @@
             <div>
                 <h2>Detalles</h2>
             </div>
-<<<<<<< HEAD
             @if($validado == 0 or $validado == 2)
                 <div>
                     <a class="btn btn-success" href="{{ route('modificarPedido', $idPedido) }}" style="font-size: 16px"> 
@@ -58,80 +57,6 @@
                     </a>
                 </div>
             @endif
-=======
-            <div class="detalles-botones">
-                <a class="btn btn-primary" href="{{ route('repetirPedido', $idPedido) }}" style="">
-                    Repetir pedido
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
-                         class="bi bi-repeat" viewBox="0 0 16 16">
-                        <path
-                            d="M11 5.466V4H5a4 4 0 0 0-3.584 5.777.5.5 0 1 1-.896.446A5 5 0 0 1 5 3h6V1.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384l-2.36 1.966a.25.25 0 0 1-.41-.192Zm3.81.086a.5.5 0 0 1 .67.225A5 5 0 0 1 11 13H5v1.466a.25.25 0 0 1-.41.192l-2.36-1.966a.25.25 0 0 1 0-.384l2.36-1.966a.25.25 0 0 1 .41.192V12h6a4 4 0 0 0 3.585-5.777.5.5 0 0 1 .225-.67Z"/>
-                    </svg>
-                </a>
-                @php
-                    $validado = \App\Models\Pedido::findOrFail($idPedido)->validado;
-                @endphp
-                @if($validado == 0 or $validado == 2)
-                    <a class="btn btn-success disabled" href="{{route('sendMail',[$idPedido])}}"
-                       style="">
-                        Enviar por correo
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
-                             class="bi bi-envelope-fill" viewBox="0 0 16 16">
-                            <path
-                                d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414.05 3.555ZM0 4.697v7.104l5.803-3.558L0 4.697ZM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586l-1.239-.757Zm3.436-.586L16 11.801V4.697l-5.803 3.546Z"/>
-                        </svg>
-                    </a>
-                    <a class="btn btn-warning disabled" href="{{route('downloadPdf',[$idPedido])}}" target="_blank"
-                       style="">
-                        Imprimir
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
-                             class="bi bi-printer-fill" viewBox="0 0 16 16">
-                            <path
-                                d="M5 1a2 2 0 0 0-2 2v1h10V3a2 2 0 0 0-2-2H5zm6 8H5a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1z"/>
-                            <path
-                                d="M0 7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2h-1v-2a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v2H2a2 2 0 0 1-2-2V7zm2.5 1a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z"/>
-                        </svg>
-                    </a>
-                    <a class="btn btn-danger" href="{{ route('eliminarPedidoProfesor', $idPedido) }}"
-                       style="">
-                        Eliminar pedido
-                        <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="24" height="24"
-                             viewBox="0 0 24 24"
-                             style="fill:#FFFFFF;">
-                            <path
-                                d="M 10 2 L 9 3 L 4 3 L 4 5 L 5 5 L 5 20 C 5 20.522222 5.1913289 21.05461 5.5683594 21.431641 C 5.9453899 21.808671 6.4777778 22 7 22 L 17 22 C 17.522222 22 18.05461 21.808671 18.431641 21.431641 C 18.808671 21.05461 19 20.522222 19 20 L 19 5 L 20 5 L 20 3 L 15 3 L 14 2 L 10 2 z M 7 5 L 17 5 L 17 20 L 7 20 L 7 5 z M 9 7 L 9 18 L 11 18 L 11 7 L 9 7 z M 13 7 L 13 18 L 15 18 L 15 7 L 13 7 z"></path>
-                        </svg>
-                    </a>
-                @else
-                    <a class="btn btn-success" href="{{route('sendMail',[$idPedido])}}" style="">
-                        Enviar por correo
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
-                             class="bi bi-envelope-fill" viewBox="0 0 16 16">
-                            <path
-                                d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414.05 3.555ZM0 4.697v7.104l5.803-3.558L0 4.697ZM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586l-1.239-.757Zm3.436-.586L16 11.801V4.697l-5.803 3.546Z"/>
-                        </svg>
-                    </a>
-                    <a class="btn btn-warning" href="{{route('downloadPdf',[$idPedido])}}" target="_blank"
-                       style="">
-                        Imprimir
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
-                             class="bi bi-printer-fill" viewBox="0 0 16 16">
-                            <path
-                                d="M5 1a2 2 0 0 0-2 2v1h10V3a2 2 0 0 0-2-2H5zm6 8H5a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1z"/>
-                            <path
-                                d="M0 7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2h-1v-2a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v2H2a2 2 0 0 1-2-2V7zm2.5 1a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z"/>
-                        </svg>
-                    </a>
-                    <a class="btn btn-danger disabled" href="{{ route('eliminarPedidoProfesor', $idPedido) }}" style="">
-                        Eliminar pedido
-                        <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="24" height="24" viewBox="0 0 24 24"
-                             style="fill:#FFFFFF;">
-                            <path d="M 10 2 L 9 3 L 4 3 L 4 5 L 5 5 L 5 20 C 5 20.522222 5.1913289 21.05461 5.5683594 21.431641 C 5.9453899 21.808671 6.4777778 22 7 22 L 17 22 C 17.522222 22 18.05461 21.808671 18.431641 21.431641 C 18.808671 21.05461 19 20.522222 19 20 L 19 5 L 20 5 L 20 3 L 15 3 L 14 2 L 10 2 z M 7 5 L 17 5 L 17 20 L 7 20 L 7 5 z M 9 7 L 9 18 L 11 18 L 11 7 L 9 7 z M 13 7 L 13 18 L 15 18 L 15 7 L 13 7 z"></path>
-                        </svg>
-                    </a>
-                @endif
-            </div>
->>>>>>> 027ee65f68a85e8e75aa7baa0aae81e3f2506ab0
         </div>
         <hr>
         @php
@@ -149,11 +74,6 @@
 
         <h2 style="text-align: center">Productos</h2>
         <hr>
-<<<<<<< HEAD
-
-=======
-        <!---->
->>>>>>> 027ee65f68a85e8e75aa7baa0aae81e3f2506ab0
         @if(count($pedido) == 0)
             <h3>El pedido no tiene ningun producto</h3>
         @else
