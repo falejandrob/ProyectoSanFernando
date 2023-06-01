@@ -24,6 +24,7 @@
                 <table class="table mb-0 tabla-scroll ">
                     <thead>
                         <tr style="text-align: center">
+                            <th scope="col">Id</th>
                             <th scope="col">Profesor</th>
                             <th scope="col">Fecha pedido</th>
                             <th scope="col">Fecha prevista</th>
@@ -46,6 +47,11 @@
                             @endphp
                             @if ($validado == 0 || $validado == 2)
                                 <tr class="" style="text-align: center;background:#FED2D2">
+                                    <td id="informacion" data-titulo="Id:" >
+                                        <a style="text-decoration: none; color: black" href="{{ route('detallesPedidoAdmin', [$id, $profesores->where("id","=",$pedido[1])->first()->nombre . " ". $profesores->where("id","=",$pedido[1])->first()->apellidos]) }}">
+                                        {{ $pedido[0]->first()->options->get('identificador')}}
+                                        </a>
+                                    </td>
                                     <td id="informacion" data-titulo="Profesor:">{{ $profesores->where("id","=",$pedido[1])->first()->nombre . " ". $profesores->where("id","=",$pedido[1])->first()->apellidos }}</td>
                                     <td id="informacion" data-titulo="Fecha pedido:">{{ $fechaConFormato }}</td>
                                     <td id="informacion" data-titulo="Fecha prevista:">{{ $fechaConFormato2 }}</td>
@@ -62,6 +68,10 @@
                                     <td id="botones-pedidos">
                                         <button type="button" class="btn btn-success" data-toggle="modal" data-target="#validateModal{{$id}}">
                                             Validar
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check2-square" viewBox="0 0 16 16">
+                                                <path d="M3 14.5A1.5 1.5 0 0 1 1.5 13V3A1.5 1.5 0 0 1 3 1.5h8a.5.5 0 0 1 0 1H3a.5.5 0 0 0-.5.5v10a.5.5 0 0 0 .5.5h10a.5.5 0 0 0 .5-.5V8a.5.5 0 0 1 1 0v5a1.5 1.5 0 0 1-1.5 1.5H3z"/>
+                                                <path d="m8.354 10.354 7-7a.5.5 0 0 0-.708-.708L8 9.293 5.354 6.646a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0z"/>
+                                            </svg>
                                         </button>
                                     </td>
                                     <td id="botones-pedidos">
@@ -75,6 +85,11 @@
                                 </tr>
                             @else
                                 <tr class="" style="text-align: center; background: #BDDECA ">
+                                    <td id="informacion" data-titulo="Id:" >
+                                        <a style="text-decoration: none; color: black" href="{{ route('detallesPedidoAdmin', [$id, $profesores->where("id","=",$pedido[1])->first()->nombre . " ". $profesores->where("id","=",$pedido[1])->first()->apellidos]) }}">
+                                            {{ $pedido[0]->first()->options->get('identificador')}}
+                                        </a>
+                                    </td>
                                     <td id="informacion" data-titulo="Profesor:">{{ $profesores->where("id","=",$pedido[1])->first()->nombre . " ". $profesores->where("id","=",$pedido[1])->first()->apellidos }}</td>
                                     <td id="informacion" data-titulo="Fecha pedido:">{{ $fechaConFormato }}</td>
                                     <td id="informacion" data-titulo="Fecha prevista:">{{ $fechaConFormato2 }}</td>
@@ -91,6 +106,9 @@
                                     <td id="botones-pedidos">
                                         <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#validateModal{{$id}}">
                                             Corregir
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
+                                                <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
+                                            </svg>
                                         </button>
                                     </td>
                                     <td id="botones-pedidos">

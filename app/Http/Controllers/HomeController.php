@@ -493,6 +493,7 @@ function getAllCartsTeachers()
         $expectedDate = Carbon::parse($expectedDateTime)->format('d-m-Y');
         $expectedTime = Carbon::parse($expectedDateTime)->format('H:i:s');
         $justification = $pedido->justificacion;
+        $identificador = $pedido->identificador;
 
         $itemsPedido = LineaPedido::where('idPedido', $idPedido)->get();
 
@@ -504,6 +505,7 @@ function getAllCartsTeachers()
             $observacion = $itemPedido->observaciones;
 
             $cartItem = CartItem::fromAttributes($productId, $productName, 0.0, 0.0, [
+                'identificador' => $identificador,
                 'categoria' => Categoria::findOrFail($product->idCategoria)->nombre,
                 'expectedDate' => $expectedDate,
                 'expectedTime' => $expectedTime,
@@ -544,6 +546,7 @@ function getAllCarts($identifier)
         $expectedDate = Carbon::parse($expectedDateTime)->format('d-m-Y');
         $expectedTime = Carbon::parse($expectedDateTime)->format('H:i:s');
         $justification = $pedido->justificacion;
+        $identificador = $pedido->identificador;
 
         $itemsPedido = LineaPedido::where('idPedido', $idPedido)->get();
 
@@ -556,6 +559,7 @@ function getAllCarts($identifier)
 
             $carItem = CartItem::fromAttributes($productId, $productName, 0.0, 0.0, [
                 'categoria' => Categoria::findOrFail($product->idCategoria)->nombre,
+                'identificador' => $identificador,
                 'expectedDate' => $expectedDate,
                 'expectedTime' => $expectedTime,
                 'justification' => $justification,
