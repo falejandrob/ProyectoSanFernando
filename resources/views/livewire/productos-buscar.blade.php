@@ -1,13 +1,31 @@
 <div>
+    <div class="btn-volver" style="margin: 20px 0px 20px 5%">
+        <a class="btn btn-secondary" href="{{ route('home') }}">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-return-left" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M14.5 1.5a.5.5 0 0 1 .5.5v4.8a2.5 2.5 0 0 1-2.5 2.5H2.707l3.347 3.346a.5.5 0 0 1-.708.708l-4.2-4.2a.5.5 0 0 1 0-.708l4-4a.5.5 0 1 1 .708.708L2.707 8.3H12.5A1.5 1.5 0 0 0 14 6.8V2a.5.5 0 0 1 .5-.5z"/>
+            </svg>
+            Volver
+        </a>
+    </div>
     @if($closestDate !== null)
         @if($fechaActual->between($closestDate->fechaMinima,$closestDate->fechaMaxima))
             @php
                 $fechaConFormatoMax = \Carbon\Carbon::parse($closestDate->fechaMaxima)->format('d-m-Y');
                 $horaConFormatoMax = \Carbon\Carbon::parse($closestDate->fechaMaxima)->format('H:i');
             @endphp
-            <div class="alert alert-danger" style="text-align: center; font-size: 100%; width: 70%; margin: auto;">
+        <div>
+            <!--<div class="btn-volver" style="margin: 20px 0px 20px 5%">
+                <a class="btn btn-secondary" href="{{ route('home') }}">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-return-left" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M14.5 1.5a.5.5 0 0 1 .5.5v4.8a2.5 2.5 0 0 1-2.5 2.5H2.707l3.347 3.346a.5.5 0 0 1-.708.708l-4.2-4.2a.5.5 0 0 1 0-.708l4-4a.5.5 0 1 1 .708.708L2.707 8.3H12.5A1.5 1.5 0 0 0 14 6.8V2a.5.5 0 0 1 .5-.5z"/>
+                    </svg>
+                    Volver
+                </a>
+            </div>-->
+            <div class="alert alert-danger" style="text-align: center; font-size: 120%; width: 70%; margin: auto;">
                 Puede realizar pedidos hasta el día {{$fechaConFormatoMax}} a las {{$horaConFormatoMax}}h
-            </div><br>
+            </div>
+        </div><br>
             <div class="inp-busqueda"
                 style="width: 60%; margin: auto; border: 2px solid #F6C366; border-radius: 50px; height: 50px; display: flex; justify-content: space-around; align-items: center;">
                 <input wire:model="searchTerm" type="text"
@@ -192,8 +210,8 @@
                                 <button wire:click.prevent="addToCart({{$producto->id}})"
                                         style="width: 30%; font-size: 120%; background: #F6C366; box-sizing: border-box;"
                                         type="submit"
-                                        class="btn">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor"
+                                        class="btn"><span style="margin-right: 3px">Añadir</span>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor"
                                          class="bi bi-cart" viewBox="0 0 16 16">
                                         <path
                                             d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
@@ -230,7 +248,7 @@
                 </div>
             @elseif(!$alerta)
                 <div class="alert alert-success" style="text-align: center; font-size: 120%">
-                    ¡Dinos que producto quieres!
+                    Introduce en la barra de búsqueda el nombre del producto que necesites
                 </div>
             @else
                 <div class="alert alert-danger" style="text-align: center; font-size: 120%">

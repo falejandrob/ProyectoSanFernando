@@ -22,7 +22,6 @@ class UserFactory extends Factory
         $correo = strtolower($nombre . "." . $apellidos . "@" . $this->faker->freeEmailDomain());
 
         return [
-            'nick' => strtolower($this->faker->randomLetter . $this->faker->randomNumber(0, 9) . $this->faker->randomNumber(0, 9)),
             'name' => $nombre,
             'apellidos' => $apellidos,
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi',

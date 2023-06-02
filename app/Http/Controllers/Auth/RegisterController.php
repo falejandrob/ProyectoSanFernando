@@ -49,13 +49,28 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
-        return Validator::make($data, [
-            'nick' => ['required', 'string', 'max:255'],
+
+
+        $messages = array(
+            'nombre.required' => 'El campo nombre es obligatorio.',
+            'apellidos.required' => 'El campo apellidos es obligatorio.',
+            'email.required' => 'El campo email es obligatorio.',
+            'email.email' => 'El formato del correo electrónico es inválido.',
+            'email.max' => 'El email no debe exceder los 255 caracteres.',
+            'email.unique' => 'El email ingresado ya está en uso.',
+            'email.regex' => 'El email debe tener el dominio @educarex.es.',
+            'password.required' => 'El campo contraseña es obligatorio.',
+            'password.min' => 'La contraseña debe tener al menos 8 caracteres.',
+            'password.confirmed' => 'La confirmación de la contraseña no coincide.',
+        );
+        $validator = Validator::make($data, [
             'nombre' => ['required', 'string', 'max:255'],
             'apellidos' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users', 'regex:/^[a-zA-Z0-9._%+-]+@educarex\.es$/i'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
-        ]);
+        ], $messages);
+
+        return $validator;
     }
 
     /**
@@ -67,7 +82,6 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
         return User::create([
-            'nick' => $data['nick'],
             'nombre' => $data['nombre'],
             'apellidos' => $data['apellidos'],
             'password' => Hash::make($data['password']),

@@ -2,17 +2,16 @@
 
 namespace App\Http\Livewire;
 
+use Livewire\Component;
 use App\Models\Categoria;
 use App\Models\FechaMaximaPedido;
 use App\Models\Presupuesto;
 use Carbon\Carbon;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Support\Facades\Auth;
-use Livewire\Component;
 
-class CartList extends Component
+class CartModify extends Component
 {
-    //Global variables
     protected $listeners = ['cart_update' => 'render'];
     public $cart;
     public $rowId;
@@ -32,12 +31,12 @@ class CartList extends Component
         if ($presupuesto != null) {
             $presupuestoTotal = Presupuesto::where('idUser', Auth::id())->where('anio', $anio_actual)->get();
             $total = $presupuestoTotal[0]->getAttribute('presupuestoTotal');
-            return view('livewire.cart-list', ['cart' => $this->cart, 'categorias' => $categorias, "expectedDate" => $expectedDate, "expectedTime" => $expectedTime,
+            return view('livewire.cart-modify', ['cart' => $this->cart, 'categorias' => $categorias, "expectedDate" => $expectedDate, "expectedTime" => $expectedTime,
                 "presupuesto" => $presupuesto, 'closestDate' => $closestDate, 'total' => $total]);
         }
-        return view('livewire.cart-list', ['cart' => $this->cart, 'categorias' => $categorias, "expectedDate" => $expectedDate, "expectedTime" => $expectedTime,
+        
+        return view('livewire.cart-modify', ['cart' => $this->cart, 'categorias' => $categorias, "expectedDate" => $expectedDate, "expectedTime" => $expectedTime,
             "presupuesto" => $presupuesto, 'closestDate' => $closestDate]);
-
     }
 
     /**

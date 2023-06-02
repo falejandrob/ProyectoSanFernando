@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>SanCenando</title>
+    <title>EconoMando</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         html,
@@ -143,7 +143,7 @@
 
 <body>
 <div class="todo">
-    <img src="logoSanCenando.png" alt="logo" />
+    <img src="logo economando.png" alt="logo" />
     @if (Route::has('login'))
         <div class="div-padre">
             @auth

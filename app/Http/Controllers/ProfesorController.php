@@ -11,11 +11,23 @@ use Illuminate\Support\Facades\Hash;
 
 class ProfesorController extends Controller
 {
+
+    /**
+     * Return the view to show all the Teachers
+     *
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function listarProfesores() {
         return view('profesor.listar');
     }
     //
 
+    /**
+     * Return the modificarProfesor view
+     *
+     * @param $id
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function modificarProfesor($id){
         $profesor = User::find($id);
         $anio_actual = Carbon::now()->year;
@@ -30,14 +42,17 @@ class ProfesorController extends Controller
         return view("profesor.modificar", ["profesor" => $profesor, "presupuesto" => $presupuesto]);
     }
 
+    /**
+     * Modify an existing User
+     *
+     * @param Request $request
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
+     */
     public function update(Request $request, $id){
         $profesor = User::find($id);
 
-        if($request->file('foto') != null) {
-            $request->foto = $request->file('foto')->get();
-        } else {
-            $request->foto = null;
-        }
 
         if($request->rol == "admin") {
             $profesor->roles()->detach();
@@ -58,10 +73,23 @@ class ProfesorController extends Controller
         return redirect()->action([ProfesorController::class, 'listarProfesores']);
     }
 
+    /**
+     * Return the view to change to password to a User
+     *
+     * @param $id
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function cambiarPassword($id) {
         return view("profesor.cambiarPassword", ["profesor" => User::find($id)]);
     }
 
+    /**
+     * Change the password to a User
+     *
+     * @param Request $request
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function pass(Request $request, $id){
         $user1 = User::find($id);
         $user1->password = Hash::make($request->password);
@@ -75,6 +103,8 @@ class ProfesorController extends Controller
     }
 
     /**
+     * Check if the teacher have a budget and update it, if not, set it
+     *
      * @param $id
      * @param int $anio_actual
      * @param $profesor
@@ -88,7 +118,6 @@ class ProfesorController extends Controller
 
         if ($presupuesto == null) {
             $presupuesto = new Presupuesto();
-            //dd($request);
             $presupuesto->idUser = $profesor->id;
             $presupuesto->anio = $anio_actual;
             $presupuesto->presupuestoTotal = $request->presupuesto;

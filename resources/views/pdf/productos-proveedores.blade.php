@@ -95,6 +95,7 @@
             <th>I</th>
             <th>R</th>
             <th>Observación</th>
+            <th>Proveedor</th>
         </tr>
         </thead>
         <tbody>
@@ -140,6 +141,7 @@
                     <td style="background: #E7E7E7"></td>
                     <td style="background: #E7E7E7"></td>
                     <td style="background: #E7E7E7"></td>
+                    <td style="background: #E7E7E7"></td>
                 </tr>
                 @foreach($categoryMap[$categoria] as $producto)
                     <tr style="text-align: center" class="hover">
@@ -148,6 +150,20 @@
                         <td></td>
                         <td></td>
                         <td>{{ $producto->options->observacion }}</td>
+                        <td>
+                        @if($lineasConProveedor->count() > 0)
+                           @foreach($lineas as $linea)
+                                    @foreach($lineasConProveedor as $lineaProv)
+                                        @foreach($proveedores as $proveedor)
+                                            @if($lineaProv->lineaPedido == $linea->id and $linea->idProducto == $producto->id
+                                            and $lineaProv->proveedor == $proveedor->id)
+                                                {{ $proveedor->nombre }}
+                                            @endif
+                                        @endforeach
+                                    @endforeach
+                                @endforeach
+                        @endif
+                        </td>
                     </tr>
                 @endforeach
             @endif

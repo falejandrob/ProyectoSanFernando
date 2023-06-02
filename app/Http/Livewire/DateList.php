@@ -13,13 +13,7 @@ class DateList extends Component
 
     use WithPagination;
 
-    protected $paginationTheme = 'bootstrap';
-
     protected $listeners = ['date_update' =>'render'];
-
-    public function updatingSearchFilter(){
-        $this->resetPage();
-    }
 
     public function render()
     {
@@ -34,6 +28,13 @@ class DateList extends Component
         return view('livewire.date-list', compact('dates','maxPaginasMostradas'));
     }
 
+
+    /**
+     * Destroy a specific date
+     *
+     * @param $id
+     * @return void
+     */
     public function destroyDate($id)
     {
         FechaMaximaPedido::find($id)->delete();

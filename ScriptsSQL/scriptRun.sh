@@ -106,7 +106,7 @@ run_command "rm -rf database/migrations/2023_05_16_183103_create_sessions_table.
 
 # Limpiar la cache de storage
 show_message "Limpiando la cache de storage..."
-run_command "rm -rf storage/framework/cache/*" "No se pudo limpiar la cache de storage."
+run_command "rm -rf storage/framework/cache/data/*" "No se pudo limpiar la cache de storage."
 
 # Establecer permisos
 show_message "Estableciendo permisos..."

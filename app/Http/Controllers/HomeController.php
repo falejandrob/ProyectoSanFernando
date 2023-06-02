@@ -10,6 +10,7 @@ use App\Models\Presupuesto;
 use App\Models\Producto;
 use App\Models\User;
 use App\Models\Proveedore;
+use App\Models\ProductoProveedor;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Dompdf\Dompdf;
@@ -41,6 +42,19 @@ class HomeController extends Controller
      */
     public function index()
     {
+        $anio_actual = Carbon::now()->year;
+        $presupuesto = Presupuesto::where('idUser', Auth::id())->where('anio', $anio_actual)->first();
+
+        if (auth()->user()->hasRole('profesor')) {
+            return view('profesor.principal', ["presupuesto" => $presupuesto]);
+        }
+
+        if (auth()->user()->hasRole('admin') or auth()->user()->hasRole('gestor')) {
+            return view('admin.home');
+        }
+    }
+
+    public function realizarPedido(){
         $fechaActual = Carbon::now();
         $closestDate = FechaMaximaPedido::closestToDate()->first();
         $expectedDate = date("Y-m-d");
@@ -50,15 +64,17 @@ class HomeController extends Controller
         $anio_actual = Carbon::now()->year;
         $presupuesto = Presupuesto::where('idUser', Auth::id())->where('anio', $anio_actual)->first();
 
-        if (auth()->user()->hasRole('profesor')) {
-            return view('home', ["productos" => $productos, "presupuesto" => $presupuesto, "expectedDate" => $expectedDate, "expectedTime" => $expectedTime, 'closestDate' => $closestDate, 'fechaActual' => $fechaActual]);
-        }
-
-        if (auth()->user()->hasRole('admin')) {
-            return view('admin.home');
-        }
+        return view("home", ["productos" => $productos, "presupuesto" => $presupuesto, "expectedDate" => $expectedDate, "expectedTime" => $expectedTime, 'closestDate' => $closestDate, 'fechaActual' => $fechaActual]);
     }
 
+    /**
+     * Shows all the orders of a specific User
+     *
+     * @param $idUser
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @throws \Psr\Container\ContainerExceptionInterface
+     * @throws \Psr\Container\NotFoundExceptionInterface
+     */
     public function misPedidos($idUser)
     {
         $pedidos = getAllCarts(Auth::id());
@@ -88,7 +104,13 @@ class HomeController extends Controller
         return view("profesor.misPedidos", ["pedidos" => $pedidos, "presupuesto" => $presupuesto]);
     }
 
-    public function validarPedido($id){
+    /**
+     * Validate an order from a User
+     *
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function validarPedido($id,$nombre, $apellido,$email){
         $pedidos = getAllCartsTeachers();
         $profesores = User::all();
 
@@ -96,22 +118,47 @@ class HomeController extends Controller
         $pedido->validado = 1;
         $pedido->save();
 
+        Mail::send([], [], function($message) use ($nombre, $apellido,$email) {
+            $message->to($email, $nombre.' '.$apellido)
+                ->subject('Estado de su pedido')
+                ->text('Hola buenas, Sr/Sra '.$nombre.' '.$apellido.', el estado de su pedido se ha actualizado. Un saludo');
+        });
+
+
         session()->flash('success', 'El pedido se ha validado correctamente.');
         return redirect()->action([HomeController::class, 'totalPedidos']);
     }
 
-    public function desvalidarPedido($id){
+    /**
+     * Invalidate an order from a User
+     *
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function desvalidarPedido($id,$nombre, $apellido,$email){
         $pedidos = getAllCartsTeachers();
         $profesores = User::all();
 
         $pedido = Pedido::findOrFail($id);
-        $pedido->validado = 0;
+        $pedido->validado = 2;
         $pedido->save();
 
-        session()->flash('success', 'El pedido se ha desvalidado correctamente.');
+        Mail::send([], [], function($message) use ($nombre, $apellido,$email) {
+            $message->to($email, $nombre.' '.$apellido)
+                ->subject('Estado de su pedido')
+                ->text('Hola buenas, Sr/Sra '.$nombre.' '.$apellido.', el estado de su pedido se ha actualizado. Un saludo');
+        });
+
+        session()->flash('success', 'El pedido se ha invalidado correctamente.');
         return redirect()->action([HomeController::class, 'totalPedidos']);
     }
 
+    /**
+     * Show the details from a specific order
+     *
+     * @param $idPedido
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|void
+     */
     public function detallesPedido($idPedido)
     {
         $pedido = getCart($idPedido);
@@ -124,6 +171,13 @@ class HomeController extends Controller
 
     }
 
+    /**
+     * Show the details from a specific order for an Admin User
+     *
+     * @param $idPedido
+     * @param $profesor
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|void
+     */
     public function detallesPedidoAdmin($idPedido, $profesor)
     {
         $pedido = getCart($idPedido);
@@ -135,37 +189,115 @@ class HomeController extends Controller
         }
     }
 
+    /**
+     * Select a provider
+     *
+     * @param $idPedido
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|void
+     */
     public function seleccionarProveedores($idPedido)
     {
-        $productosConProveedor = [];
-
-        $pedido = getCart($idPedido);
-        $anio_actual = Carbon::now()->year;
-        $presupuesto = Presupuesto::where('idUser', Auth::id())->where('anio', $anio_actual)->first();
+        $productosConProveedor = ProductoProveedor::where('pedido', $idPedido)->get();
+        $lineasPedido = LineaPedido::where('idPedido', $idPedido)->get();
         $proveedores = Proveedore::all();
         $categorias = Categoria::all();
 
-        if (auth()->user()->hasRole('admin')) {
-            return view("admin.seleccionarProveedores", ["pedido" => $pedido, "idPedido" => $idPedido, "proveedores" => $proveedores, "categorias" => $categorias, "productosConProveedor" => $productosConProveedor]);
+        if (auth()->user()->hasRole('admin') or auth()->user()->hasRole('gestor')) {
+            return view("admin.seleccionarProveedores", ["lineasPedido" => $lineasPedido, "idPedido" => $idPedido, "proveedores" => $proveedores, "categorias" => $categorias, "productosConProveedor" => $productosConProveedor]);
         }
     }
 
+    /**
+     * Delete a relation between provider and product of LineaPedido
+     *
+     * @param $idRelacion
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\RedirectResponse|void
+     */
+    public function quitarRelacion($idRelacion)
+    {
+        if(ProductoProveedor::find($idRelacion) != null) {
+            $idPedido = ProductoProveedor::find($idRelacion)->pedido;
+
+            ProductoProveedor::destroy($idRelacion);
+
+            $productosConProveedor = ProductoProveedor::where('pedido', $idPedido)->get();
+            $lineasPedido = LineaPedido::where('idPedido', $idPedido)->get();
+            $proveedores = Proveedore::all();
+            $categorias = Categoria::all();
+
+            if (auth()->user()->hasRole('admin') or auth()->user()->hasRole('gestor')) {
+                session()->flash('success', 'La relacion se ha eliminado correctamente.');
+                return view("admin.seleccionarProveedores", ["lineasPedido" => $lineasPedido, "idPedido" => $idPedido, "proveedores" => $proveedores, "categorias" => $categorias, "productosConProveedor" => $productosConProveedor]);
+            }
+        } else {
+            return redirect()->action([HomeController::class, 'totalPedidos']);
+        }
+    }
+
+    /**
+     * Set the provider of a specific product for LineaPedido
+     *
+     * @param Request $request
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|void
+     */
     public function establecerProveedor(Request $request)
     {
-        $productosConProveedor = $request->input('productos');
+        $productosSeleccionados = $request->input('productos');
         $proveedorSeleccionado = $request->input('proveedor');
 
-        $pedido = getCart($request->id);
-        $anio_actual = Carbon::now()->year;
-        $presupuesto = Presupuesto::where('idUser', Auth::id())->where('anio', $anio_actual)->first();
+        $lineasPedido = LineaPedido::where('idPedido', $request->id)->get();
         $proveedores = Proveedore::all();
         $categorias = Categoria::all();
 
-        if (auth()->user()->hasRole('admin')) {
-            return view("admin.seleccionarProveedores", ["pedido" => $pedido, "idPedido" => $request->id, "proveedores" => $proveedores, "categorias" => $categorias, "productosConProveedor" => $productosConProveedor]);
+        if($productosSeleccionados == null || $proveedorSeleccionado == null) {
+            $productosConProveedor = ProductoProveedor::where('pedido', $request->id)->get();
+            return view("admin.seleccionarProveedores", ["lineasPedido" => $lineasPedido, "idPedido" => $request->id, "proveedores" => $proveedores, "categorias" => $categorias, "productosConProveedor" => $productosConProveedor]);
+        }
+
+        foreach ($productosSeleccionados as $item) {
+            if(! $this->relacionExiste($request->id, $item)) {
+                $nuevo = ProductoProveedor::create([
+                    'pedido' => $request->id,
+                    'lineaPedido' => $item,
+                    'proveedor' => $proveedorSeleccionado,
+                ]);
+
+                $nuevo->save();
+                session()->flash('success', 'El proveedor se ha guardado correctamente.');
+            }
+        }
+
+        $productosConProveedor = ProductoProveedor::where('pedido', $request->id)->get();
+
+        if (auth()->user()->hasRole('admin') or auth()->user()->hasRole('gestor')) {
+            return view("admin.seleccionarProveedores", ["lineasPedido" => $lineasPedido, "idPedido" => $request->id, "proveedores" => $proveedores, "categorias" => $categorias, "productosConProveedor" => $productosConProveedor]);
         }
     }
 
+    /**
+     * Check if there is an existing relation between a provider and a product from LineaPedido
+     *
+     * @param $idPedido
+     * @param $lineaPedido
+     * @return bool
+     */
+    function relacionExiste($idPedido, $lineaPedido) {
+        $productosConProveedor = ProductoProveedor::where('pedido', $idPedido)->get();
+
+        foreach($productosConProveedor as $item) {
+            if($item->pedido == $idPedido && $item->lineaPedido == $lineaPedido) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * get the all the orders from all teachers
+     *
+     * @return view
+     */
 
     public function totalPedidos()
     {
@@ -179,39 +311,80 @@ class HomeController extends Controller
             return $diferencia;
         })->reverse();
 
-        /*$perPage = 1;
-        $currentPage = request()->get('page', 1);
-
-        $paginatedData = new LengthAwarePaginator(
-            $pedidos->forPage($currentPage, $perPage),
-            $pedidos->count(),
-            $perPage,
-            $currentPage,
-            ['path' => request()->url()]
-        );*/
-
-
         $profesores = User::all();
-
 
         return view("admin.pedidos",["pedidos" => $pedidos, "profesores" => $profesores]);
     }
 
-    /**
-     * @param Request $request
-     * @return \Illuminate\Http\RedirectResponse
-     */
+    public function papeleraPedidos()
+    {
+        $pedidos = Pedido::where('eliminado', '1')->get();
+        $profesores = User::all();
+
+        return view("admin.papeleraPedidos",["pedidos" => $pedidos, "profesores" => $profesores]);
+    }
+
+    public function restaurarPedido($idPedido)
+    {
+        $pedido = Pedido::find($idPedido);
+        $pedido->eliminado = '0';
+        $pedido->save();
+
+        $pedidos = Pedido::where('eliminado', '1')->get();
+        $profesores = User::all();
+
+        session()->flash('success', 'El pedido se ha restaurado correctamente.');
+        return view("admin.papeleraPedidos",["pedidos" => $pedidos, "profesores" => $profesores]);
+    }
+
+    public function papeleraPedidosProfesor($idProfesor)
+    {
+        $pedidos = Pedido::where('eliminado', '1')
+            ->where('idUser', $idProfesor)
+            ->get();
+
+        $anio_actual = Carbon::now()->year;
+        $presupuesto = Presupuesto::where('idUser', $idProfesor)->where('anio', $anio_actual)->first();
+
+        return view("profesor.papeleraPedidos",["pedidos" => $pedidos, "presupuesto" => $presupuesto]);
+    }
+
+    public function restaurarPedidoProfesor($idPedido)
+    {
+        $pedido = Pedido::find($idPedido);
+        $idProfesor = $pedido->idUser;
+        $pedido->eliminado = '0';
+        $pedido->save();
+
+        $pedidos = Pedido::where('eliminado', '1')
+            ->where('idUser', $idProfesor)
+            ->get();
+
+        $anio_actual = Carbon::now()->year;
+        $presupuesto = Presupuesto::where('idUser', $idProfesor)->where('anio', $anio_actual)->first();
+
+        session()->flash('success', 'El pedido se ha restaurado correctamente.');
+        return view("profesor.papeleraPedidos",["pedidos" => $pedidos, "presupuesto" => $presupuesto]);
+    }
+
     public function addJustificacion(Request $request)
     {
         $justificacion = Session::get("justificacion");
         $justificacion = $justificacion . "\n" . $request->justificacion;
         Session::put("justificacion", $justificacion);
 
-
         return redirect()->action([HomeController::class, 'index']);
     }
 
+    function downloadProvPdf($id){
+        list($pdfName, $pdf) = $this->getPDFProv($id);
+
+        return $pdf->stream($pdfName);
+    }
+
     /**
+     * get a pdf stream
+     *
      * @param $id
      * @return mixed
      */
@@ -223,6 +396,8 @@ class HomeController extends Controller
     }
 
     /**
+     * send a Mail with the pdf
+     *
      * @param $id
      * @return \Illuminate\Http\RedirectResponse
      */
@@ -230,10 +405,10 @@ class HomeController extends Controller
     {
         list($pdfName, $pdf) = $this->getPDF($id);
 
-        Mail::send('correo.enviar', [], function($message) use ($pdf, $pdfName){
+        Mail::send('correo.pedido', [], function($message) use ($pdf, $pdfName){
 
             $message->to(Auth::user()->email, Auth::user()->nombre.' '.Auth::user()->apellidos)
-                ->subject('Send mail from laravel')
+                ->subject('Su pedido Sr/Sra '.' '.Auth::user()->nombre.' '.Auth::user()->apellidos)
                 ->attachData($pdf->output(), $pdfName);
 
         });
@@ -242,7 +417,32 @@ class HomeController extends Controller
         return redirect()->route('misPedidos', [Auth::id()]);
     }
 
+    public function getPDFProv($id): array
+    {
+        $User = User::findOrFail(Pedido::findOrFail($id)->idUser);
+        $lineasConProveedor = ProductoProveedor::where('pedido', $id)->get();
+        $lineas = LineaPedido::all();
+
+        $proveedores = Proveedore::all();
+        $productos = getCart($id);
+        $pdfNameP = 'Pedido_' .  auth()->user()->nombre . '-' . auth()->user()->apellidos . '.pdf';
+        $fechaConFormato = \Carbon\Carbon::parse($productos->first()->options->expectedDate)->format('d/m/Y');
+        $horaConFormato = \Carbon\Carbon::parse($productos->first()->options->expectedTime)->format('H:i');
+
+
+        $dateTimeJustification = [
+            'expectedDate' => $fechaConFormato,
+            'expectedTime' => $horaConFormato,
+            'justification' => $productos->first()->options->justification,
+        ];
+
+        $pdfD = Pdf::loadView('pdf.productos-proveedores', compact('proveedores', 'productos', 'lineas', 'lineasConProveedor', 'dateTimeJustification', 'User'));
+        return array($pdfNameP, $pdfD);
+    }
+
     /**
+     * Get the pdf view
+     *
      * @param $id
      * @return array
      */
@@ -251,10 +451,12 @@ class HomeController extends Controller
         $User = User::findOrFail(Pedido::findOrFail($id)->idUser);
         $productos = getCart($id);
         $pdfName = 'Pedido_' . $productos->first()->options->expectedDate . '-' . $productos->first()->options->expectedTime . '_' . auth()->user()->nombre . '-' . auth()->user()->apellidos . '.pdf';
+        $fechaConFormato = \Carbon\Carbon::parse($productos->first()->options->expectedDate)->format('d/m/Y');
+        $horaConFormato = \Carbon\Carbon::parse($productos->first()->options->expectedTime)->format('H:i');
 
         $dateTimeJustification = [
-            'expectedDate' => $productos->first()->options->expectedDate,
-            'expectedTime' => $productos->first()->options->expectedTime,
+            'expectedDate' => $fechaConFormato,
+            'expectedTime' => $horaConFormato,
             'justification' => $productos->first()->options->justification,
         ];
 
@@ -262,10 +464,16 @@ class HomeController extends Controller
         return array($pdfName, $pdf);
     }
 
+    public function autores(){
+        $anio_actual = Carbon::now()->year;
+        $presupuesto = Presupuesto::where('idUser', Auth::id())->where('anio', $anio_actual)->first();
+        return view('autores', ['presupuesto'=>$presupuesto]);
+    }
 
 }
 
 /**
+ *  Get all teacher cart from the databases
  *
  * @return array
  */
@@ -274,7 +482,7 @@ function getAllCartsTeachers()
 
 
     $allShopingCarts = [];
-    $pedidos = Pedido::all();
+    $pedidos = Pedido::where('estaPedido', true)->get();
 
     foreach ($pedidos as $pedido) {
         $cartCollection = collect();
@@ -285,6 +493,7 @@ function getAllCartsTeachers()
         $expectedDate = Carbon::parse($expectedDateTime)->format('d-m-Y');
         $expectedTime = Carbon::parse($expectedDateTime)->format('H:i:s');
         $justification = $pedido->justificacion;
+        $identificador = $pedido->identificador;
 
         $itemsPedido = LineaPedido::where('idPedido', $idPedido)->get();
 
@@ -296,6 +505,7 @@ function getAllCartsTeachers()
             $observacion = $itemPedido->observaciones;
 
             $cartItem = CartItem::fromAttributes($productId, $productName, 0.0, 0.0, [
+                'identificador' => $identificador,
                 'categoria' => Categoria::findOrFail($product->idCategoria)->nombre,
                 'expectedDate' => $expectedDate,
                 'expectedTime' => $expectedTime,
@@ -336,6 +546,7 @@ function getAllCarts($identifier)
         $expectedDate = Carbon::parse($expectedDateTime)->format('d-m-Y');
         $expectedTime = Carbon::parse($expectedDateTime)->format('H:i:s');
         $justification = $pedido->justificacion;
+        $identificador = $pedido->identificador;
 
         $itemsPedido = LineaPedido::where('idPedido', $idPedido)->get();
 
@@ -348,6 +559,7 @@ function getAllCarts($identifier)
 
             $carItem = CartItem::fromAttributes($productId, $productName, 0.0, 0.0, [
                 'categoria' => Categoria::findOrFail($product->idCategoria)->nombre,
+                'identificador' => $identificador,
                 'expectedDate' => $expectedDate,
                 'expectedTime' => $expectedTime,
                 'justification' => $justification,
@@ -406,6 +618,8 @@ function getCart($identifier)
     }
 
     return $allShopingCarts;
+
+
 }
 
 

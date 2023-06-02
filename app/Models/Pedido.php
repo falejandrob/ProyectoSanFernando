@@ -16,11 +16,13 @@ class Pedido extends Model
      */
     protected $fillable = [
         'idUser',
+        'identificador',
         'fechaPedido',
         'fechaPrevistaPedido',
         'justificacion',
         'validado',
-        'estaPedido'
+        'estaPedido',
+        'eliminado'
     ];
 
     /**

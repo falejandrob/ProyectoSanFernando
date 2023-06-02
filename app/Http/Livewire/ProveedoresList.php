@@ -18,6 +18,12 @@ class ProveedoresList extends Component
         return view('livewire.proveedores-list', ["proveedores" => $proveedores]);
     }
 
+    /**
+     * Destroy a supplier from the database
+     *
+     * @param $id
+     * @return void
+     */
     public function destroyProveedor($id)
     {
         Proveedore::find($id)->delete();

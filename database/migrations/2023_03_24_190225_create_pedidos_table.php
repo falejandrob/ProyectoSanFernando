@@ -13,13 +13,15 @@ return new class extends Migration
     {
         Schema::create('pedidos', function (Blueprint $table) {
             $table->id();
+            $table->string('identificador');
             $table->unsignedBigInteger('idUser');
             $table->foreign('idUser')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
             $table->dateTime('fechaPedido');
             $table->dateTime('fechaPrevistaPedido');
-            $table->string('justificacion');
+            $table->longText('justificacion');
             $table->integer('validado')->default(0);
             $table->string('estaPedido')->nullable();
+            $table->string('eliminado')->default(0);
             $table->timestamps();
         });
     }

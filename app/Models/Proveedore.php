@@ -10,6 +10,8 @@ class Proveedore extends Model
     use HasFactory;
 
     protected $fillable = [
-        'nombre'
+        'nombre',
+        'telefono',
+        'poblacion'
     ];
 }

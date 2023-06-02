@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 class FechaController
 {
 
+
     public function index()
     {
         $expectedDate = date("Y-m-d");
@@ -19,6 +20,12 @@ class FechaController
         return view("admin.add-date", compact('expectedDate', 'expectedTime'));
     }
 
+    /**
+     * Stores the term when you can make an order
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function store(Request $request)
     {
 
@@ -34,14 +41,21 @@ class FechaController
         //dd($finalDate);
         $fecha = FechaMaximaPedido::create([
             'fechaMinima' => $finalFechaMin,
-            'fechaMaxima' => $finalFechaMax,
-            'fechaVencida' => 0
+            'fechaMaxima' => $finalFechaMax
         ]);
 
         $fecha->save();
         session()->flash('success', 'El plazo se ha guardado correctamente.');
         return redirect()->action([FechaController::class, 'listDates']);
     }
+
+    /**
+     * Update the term when you can make an order
+     *
+     * @param Request $request
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
 
     public function update(Request $request, $id)
     {
@@ -57,12 +71,17 @@ class FechaController
         $fecha = FechaMaximaPedido::find($id);
         $fecha->fechaMinima = $finalFechaMin;
         $fecha->fechaMaxima = $finalFechaMax;
-        $fecha->fechaVencida = 0;
         $fecha->save();
         session()->flash('success', 'El plazo se ha modificado correctamente.');
         return redirect()->action([FechaController::class, 'listDates']);
     }
 
+    /**
+     * Update an existing term to make an order
+     *
+     * @param $id
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function updateDate($id){
 
         $date = FechaMaximaPedido::find($id);
@@ -75,6 +94,7 @@ class FechaController
 
         return view("admin.update-date", compact('date', 'fechaMaxima', 'fechaMinima', 'horaMaxima', 'horaMinima'));
     }
+
 
 
     public function listDates()
