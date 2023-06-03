@@ -45,7 +45,7 @@
             </select>
         </div>
 
-        <h1 style="text-align: center; padding: 15px">PRODUCTOS</h1>
+        <h1 id="tabla-productos" style="text-align: center; padding: 15px">PRODUCTOS</h1>
 
         <div
             class="inp-busqueda" style="margin: auto; border: 2px solid #F6C366; border-radius: 50px; height: 40px;
@@ -130,21 +130,21 @@
                     {{-- Botón de ir a la primera página --}}
                     @if ($productos->currentPage() > 1)
                         <li class="page-item">
-                            <a wire:click="gotoPage(1)" class="page-link">&laquo;&laquo;</a>
+                            <a wire:click="gotoPage(1)" class="page-link" href="#tabla-productos">&laquo;&laquo;</a>
                         </li>
                     @else
                         <li class="page-item">
-                            <a wire:click="gotoPage(1)" class="page-link disabled">&laquo;&laquo;</a>
+                            <a wire:click="gotoPage(1)" class="page-link disabled" href="#tabla-productos">&laquo;&laquo;</a>
                         </li>
                     @endif
                     {{-- Botón de ir a la página anterior --}}
                     @if ($productos->currentPage() > 1)
                         <li class="page-item">
-                            <a wire:click="previousPage" class="page-link">&laquo;</a>
+                            <a wire:click="previousPage" class="page-link" href="#tabla-productos">&laquo;</a>
                         </li>
                     @else
                         <li class="page-item">
-                            <a wire:click="previousPage" class="page-link disabled">&laquo;</a>
+                            <a wire:click="previousPage" class="page-link disabled" href="#tabla-productos">&laquo;</a>
                         </li>
                     @endif
                     {{-- Botones de las páginas --}}
@@ -154,27 +154,27 @@
                     @endphp
                     @for ($i = $startPage; $i <= $endPage; $i++)
                         <li class="page-item"><a wire:click="gotoPage({{ $i }})"
-                                                 class="page-link{{ $i == $productos->currentPage() ? ' active' : '' }}">{{ $i }}</a>
+                                                 class="page-link{{ $i == $productos->currentPage() ? ' active' : '' }}" href="#tabla-productos">{{ $i }}</a>
                         </li>
                     @endfor
                     {{-- Botón de ir a la página siguiente --}}
                     @if ($productos->hasMorePages())
                         <li class="page-item">
-                            <a wire:click="nextPage" class="page-link">&raquo;</a>
+                            <a wire:click="nextPage" class="page-link" href="#tabla-productos">&raquo;</a>
                         </li>
                     @else
                         <li class="page-item">
-                            <a wire:click="nextPage" class="page-link disabled">&raquo;</a>
+                            <a wire:click="nextPage" class="page-link disabled" href="#tabla-productos">&raquo;</a>
                         </li>
                     @endif
                     {{-- Botón de ir a la última página --}}
                     @if ($productos->hasMorePages())
                         <li class="page-item">
-                            <a wire:click="gotoPage({{ $productos->lastPage() }})" class="page-link">&raquo;&raquo;</a>
+                            <a wire:click="gotoPage({{ $productos->lastPage() }})" class="page-link" href="#tabla-productos">&raquo;&raquo;</a>
                         </li>
                     @else
                         <li class="page-item">
-                            <a wire:click="gotoPage({{ $productos->lastPage() }})" class="page-link disabled">&raquo;&raquo;</a>
+                            <a wire:click="gotoPage({{ $productos->lastPage() }})" class="page-link disabled" href="#tabla-productos">&raquo;&raquo;</a>
                         </li>
                     @endif
                 </ul>

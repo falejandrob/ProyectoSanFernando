@@ -8,7 +8,7 @@
             </div>
             <br>
         @endif
-        
+
         <div class="btn-volver" style="margin: 0px 0px 20px 0px">
             <a class="btn btn-secondary" href="{{ route('home') }}">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-return-left" viewBox="0 0 16 16">
@@ -22,7 +22,7 @@
 
         <br>
         @if (!empty($pedidos) && count($pedidos) > 0 )
-            <div class="table-wrapper-scroll-y my-custom-scrollbar">
+            <div class="table-wrapper-scroll-y my-custom-scrollbar" style="height: 600px">
                 <table class="table mb-0 tabla-scroll ">
                     <thead>
                         <tr style="text-align: center">
@@ -34,9 +34,13 @@
                     </thead>
                 <tbody>
                 @foreach($pedidos as $pedido)
+                    @php
+                        $fechaConFormato = \Carbon\Carbon::parse(explode(" ", $pedido->fechaPedido)[0])->format('d/m/Y');
+                        $fechaConFormato2 = \Carbon\Carbon::parse(explode(" ", $pedido->fechaPrevistaPedido)[0] )->format('d/m/Y');
+                    @endphp
                         <tr class="" style="text-align: center;">
-                            <td id="informacion" data-titulo="Fecha pedido:">{{ explode(" ", $pedido->fechaPedido)[0] }}</td>
-                            <td id="informacion" data-titulo="Fecha prevista:">{{ explode(" ", $pedido->fechaPrevistaPedido)[0] }}</td>
+                            <td id="informacion" data-titulo="Fecha pedido:">{{ $fechaConFormato }}</td>
+                            <td id="informacion" data-titulo="Fecha prevista:">{{ $fechaConFormato2 }}</td>
                             <td id="informacion" data-titulo="Justificacion:">{{ $pedido->justificacion }}</td>
                             <td id="informacion" data-titulo="Restaurar:">
                                 <a type="button" class="btn btn-success" href="{{ route('restaurarPedidoProfesor', $pedido->id) }}">
