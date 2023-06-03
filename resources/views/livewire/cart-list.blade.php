@@ -100,24 +100,22 @@
         <br><br>
         @if(Cart::content()->count() != 0)
             <div class="d-flex justify-content-around align-items-center" style="flex-wrap: wrap; text-align: center">
-                <div class="mb-3" style="width: 40%">
-                    <br><div class="mensaje-emergente" style="margin-top: 2%">
-                        <label style="margin-bottom: 2px">Fecha prevista de pedido</label>
-                        <img src="duda.png" alt="" style="width: 22px; height: 22px">
+                <div class="mb-3 fecha-hora">
+                    <br><div class="mensaje-emergente">
+                        <label style="margin-bottom: 2px">Fecha prevista de pedido<img src="duda.png" alt="" style="width: 22px; height: 22px"></label>
                         <div class="contenido" style="background: lightblue; font-size: 16px">Introduce la fecha para la que necesite el pedido
                         </div>
                     </div>
-                    <input type="date" class="form-control" id="expectedDate" name="expectedDate" style="margin-top: 1%"
+                    <input type="date" class="form-control" id="expectedDate" name="expectedDate" style="margin-top: 4%"
                            pattern="\d{4}-\d{2}-\d{2}" value="{{ $expectedDate }}" required>
                 </div>
-                <div class="mb-3" style="width: 40%">
-                    <br><div class="mensaje-emergente" style="margin-top: 2%">
-                        <label style="margin-bottom: 2px">Hora prevista de pedido</label>
-                        <img src="duda.png" alt="" style="width: 22px; height: 22px">
+                <div class="mb-3 fecha-hora">
+                    <br><div class="mensaje-emergente">
+                        <label style="margin-bottom: 2px">Hora prevista de pedido<img src="duda.png" alt="" style="width: 22px; height: 22px"></label>
                         <div class="contenido" style="background: lightblue; font-size: 16px">Introduce la hora para la que necesite el pedido
                         </div>
                     </div>
-                    <input type="time" class="form-control" id="expectedTime" name="expectedTime"
+                    <input type="time" class="form-control" id="expectedTime" name="expectedTime" style="margin-top: 4%"
                            value="{{ $expectedTime }}" required>
                 </div>
             </div>

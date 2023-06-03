@@ -28,13 +28,14 @@
         <h1 style="text-align: center">Mis pedidos</h1>
         <br>
 
-        <div class="table-responsive table-wrapper-scroll-y my-custom-scrollbar" style="height: 500px">
+        <div class="table-responsive table-wrapper-scroll-y my-custom-scrollbar" style="height: 700px">
             <table class="table mb-0 tabla-scroll " style="text-align: center;">
                 <thead>
                 <tr>
+                    <th scope="col">Id</th>
                     <th scope="col">Fecha pedido</th>
                     <th scope="col">Fecha prevista</th>
-                    <th scope="col">Justificación</th>
+                    <!--<th scope="col">Justificación</th>-->
                     <th scope="col">Estado</th>
                     <th scope="col">Detalles</th>
                     <th scope="col">Enviar por correo</th>
@@ -55,9 +56,13 @@
                         @endphp
                         @if($validado == 0)
                             <tr class="" style="background: #ffffff">
+                                <td id="informacion" data-titulo="Id:" >
+                                    <a style="text-decoration: none; color: black" href="{{ route('detallesPedido', [$id, ""]) }}">
+                                        {{ $pedido->first()->options->get('identificador')}}
+                                    </a>
+                                </td>
                                 <td id="informacion" data-titulo="Fecha pedido:" >{{ $fechaConFormato }}</td>
                                 <td id="informacion" data-titulo="Fecha prevista:">{{ $fechaConFormato2 }}</td>
-                                <td id="informacion" data-titulo="Justificación:"><a style="text-decoration: none; color: black;" href="{{ route('detallesPedido', [$id, ""]) }}">{{ $pedido->first()->options->get('justification') }}</a></td>
                                 <td id="informacion" data-titulo="Estado del pedido:">En proceso</td>
                                 <td id="botones">
                                     <a class="btn btn-primary" href="{{ route('detallesPedido', [$id, ""]) }}">
@@ -95,13 +100,13 @@
                             </tr>
                         @elseif($validado == 2)
                             <tr class="" style="background: #FED2D2">
-                                <td id="informacion" data-titulo="Fecha pedido:" >{{ $fechaConFormato }}</td>
-                                <td id="informacion" data-titulo="Fecha prevista:" >{{ $pedido->first()->options->get('expectedDate') }}</td>
-                                <td id="informacion" data-titulo="Justificación:" >
+                                <td id="informacion" data-titulo="Id:" >
                                     <a style="text-decoration: none; color: black" href="{{ route('detallesPedido', [$id, ""]) }}">
-                                        {{ $pedido->first()->options->get('justification') }}
+                                        {{ $pedido->first()->options->get('identificador')}}
                                     </a>
                                 </td>
+                                <td id="informacion" data-titulo="Fecha pedido:" >{{ $fechaConFormato }}</td>
+                                <td id="informacion" data-titulo="Fecha prevista:" >{{ $pedido->first()->options->get('expectedDate') }}</td>
                                 <td id="informacion" data-titulo="Estado del pedido:">Denegado</td>
                                 <td id="botones">
                                     <a class="btn btn-primary" href="{{ route('detallesPedido', [$id, ""]) }}">
@@ -139,13 +144,13 @@
                             </tr>
                         @else
                             <tr class="" style="background: #BDDECA">
-                                <td id="informacion" data-titulo="Fecha pedido:">{{ $fechaConFormato }}</td>
-                                <td id="informacion" data-titulo="Fecha prevista:">{{ $pedido->first()->options->get('expectedDate') }}</td>
-                                <td id="informacion" data-titulo="Justificación:">
+                                <td id="informacion" data-titulo="Id:" >
                                     <a style="text-decoration: none; color: black" href="{{ route('detallesPedido', [$id, ""]) }}">
-                                        {{ $pedido->first()->options->get('justification') }}
+                                        {{ $pedido->first()->options->get('identificador')}}
                                     </a>
                                 </td>
+                                <td id="informacion" data-titulo="Fecha pedido:">{{ $fechaConFormato }}</td>
+                                <td id="informacion" data-titulo="Fecha prevista:">{{ $pedido->first()->options->get('expectedDate') }}</td>
                                 <td id="informacion" data-titulo="Estado del pedido:">Validado</td>
                                 <td id="botones">
                                     <a class="btn btn-primary" href="{{ route('detallesPedido', [$id, ""]) }}">

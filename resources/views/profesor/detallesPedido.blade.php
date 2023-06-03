@@ -24,10 +24,10 @@
             </div>
             @if($validado == 0 or $validado == 2)
                 <div>
-                    <a class="btn btn-success" href="{{ route('modificarPedido', $idPedido) }}" style="font-size: 16px"> 
+                    <a class="btn btn-success detalles" href="{{ route('modificarPedido', $idPedido) }}" style="font-size: 16px">
                         Modificar pedido
                     </a>
-                    <a class="btn btn-danger" href="{{ route('eliminarPedidoProfesor', $idPedido) }}" style="font-size: 16px">
+                    <a class="btn btn-danger detalles" href="{{ route('eliminarPedidoProfesor', $idPedido) }}" style="font-size: 16px">
                         Eliminar pedido
                         <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="24" height="24" viewBox="0 0 24 24"
                             style="fill:#FFFFFF;">
@@ -37,18 +37,18 @@
                 </div>
             @else
                 <div>
-                    <a class="btn btn-primary" href="{{ route('repetirPedido', $idPedido) }}" style="font-size: 16px"> Repetir pedido
+                    <a class="btn btn-primary detalles" href="{{ route('repetirPedido', $idPedido) }}" style="font-size: 16px"> Repetir pedido
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-repeat" viewBox="0 0 16 16">
                             <path d="M11 5.466V4H5a4 4 0 0 0-3.584 5.777.5.5 0 1 1-.896.446A5 5 0 0 1 5 3h6V1.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384l-2.36 1.966a.25.25 0 0 1-.41-.192Zm3.81.086a.5.5 0 0 1 .67.225A5 5 0 0 1 11 13H5v1.466a.25.25 0 0 1-.41.192l-2.36-1.966a.25.25 0 0 1 0-.384l2.36-1.966a.25.25 0 0 1 .41.192V12h6a4 4 0 0 0 3.585-5.777.5.5 0 0 1 .225-.67Z"/>
                         </svg>
                     </a>
-                    <a class="btn btn-success" href="{{route('sendMail',[$idPedido])}}" style="font-size: 16px">
+                    <a class="btn btn-success detalles" href="{{route('sendMail',[$idPedido])}}" style="font-size: 16px">
                         Enviar por correo
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-envelope-fill" viewBox="0 0 16 16">
                             <path d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414.05 3.555ZM0 4.697v7.104l5.803-3.558L0 4.697ZM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586l-1.239-.757Zm3.436-.586L16 11.801V4.697l-5.803 3.546Z"/>
                         </svg>
                     </a>
-                    <a class="btn btn-warning" href="{{route('downloadPdf',[$idPedido])}}" target="_blank" style="font-size: 16px">
+                    <a class="btn btn-warning detalles" href="{{route('downloadPdf',[$idPedido])}}" target="_blank" style="font-size: 16px">
                         Imprimir
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-printer-fill" viewBox="0 0 16 16">
                             <path d="M5 1a2 2 0 0 0-2 2v1h10V3a2 2 0 0 0-2-2H5zm6 8H5a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1z"/>

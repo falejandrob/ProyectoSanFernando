@@ -20,7 +20,7 @@ class PresupuestoFactory extends Factory
     {
         return [
             'idUser' => $this->faker->randomElement(DB::table('users')->pluck('id')),
-            'anio' => Carbon::now()->year + rand(-2, 2),
+            'anio' => Carbon::now()->year,
             'presupuestoTotal' => $this->faker->numberBetween(3500, 4000),
         ];
     }
