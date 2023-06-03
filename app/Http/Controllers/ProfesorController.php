@@ -59,6 +59,11 @@ class ProfesorController extends Controller
             $profesor->assignRole('admin');
         }
 
+        if($request->rol == "gestor") {
+            $profesor->roles()->detach();
+            $profesor->assignRole('gestor');
+        }
+
         if($request->rol == "profesor") {
             $profesor->roles()->detach();
             $profesor->assignRole('profesor');
@@ -99,6 +104,7 @@ class ProfesorController extends Controller
         $user1->remember_token = $token;
 
         $user1->save();
+        session()->flash('success', 'Se ha modificado la contraseña correctamente.');
         return redirect()->action([ProfesorController::class, 'listarProfesores']);
     }
 
