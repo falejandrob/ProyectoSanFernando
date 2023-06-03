@@ -839,6 +839,18 @@
                                             proveedor</a></li>
                                 </ul>
                             </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle active" href="#" role="button"
+                                   data-toggle="dropdown"
+                                   data-bs-toggle="dropdown" aria-expanded="false">
+                                    Informes
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="{{ route('informes') }}">Informes generales</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('informesProfesor') }}">Informes según profesor</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('informesMes') }}">Informes según mes</a></li>
+                                </ul>
+                            </li>
                         </ul>
                     </div>
                 @endif

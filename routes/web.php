@@ -86,3 +86,10 @@ Route::get('/addJustificacion',[\App\Http\Controllers\HomeController::class, 'ad
 Route::get('/perfil/{id}',[\App\Http\Controllers\PerfilController::class, 'perfil'])->name('perfil');
 Route::post('/perfil/cambiarDatos/{id}',[\App\Http\Controllers\PerfilController::class, 'cambiarDatos'])->name('perfil.cambiarDatos');
 Route::post('/perfil/cambiarPass/{id}',[\App\Http\Controllers\PerfilController::class, 'cambiarPass'])->name('perfil.cambiarPass');
+
+// Informes
+Route::get('/informes',[\App\Http\Controllers\InformesController::class, 'informes'])->name('informes');
+Route::get('/informesProfesor',[\App\Http\Controllers\InformesController::class, 'informesProfesor'])->name('informesProfesor');
+Route::post('/informesProfesorResultado',[\App\Http\Controllers\InformesController::class, 'informesProfesorResultado'])->name('informesProfesorResultado');
+Route::get('/informesMes',[\App\Http\Controllers\InformesController::class, 'informesMes'])->name('informesMes');
+Route::post('/informesMesResultado',[\App\Http\Controllers\InformesController::class, 'informesMesResultado'])->name('informesMesResultado');
