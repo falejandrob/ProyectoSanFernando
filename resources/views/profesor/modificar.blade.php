@@ -50,7 +50,35 @@
                                         </label>
                                     </div>
                                     <div class="form-check" style="margin: 5px">
+                                        <input class="form-check-input" type="radio" name="rol" id="rol" value="gestor">
+                                        <label class="form-check-label" for="gestor">
+                                            gestor
+                                        </label>
+                                    </div>
+                                    <div class="form-check" style="margin: 5px">
                                         <input class="form-check-input" type="radio" name="rol" id="rol" value="profesor" checked>
+                                        <label class="form-check-label" for="profesor">
+                                            profesor
+                                        </label>
+                                    </div>
+                                </div>
+                            @endif
+                            @if($profesor->hasRole('gestor'))
+                                <div class="d-flex">
+                                    <div class="form-check" style="margin: 5px">
+                                        <input class="form-check-input" type="radio" name="rol" id="rol" value="admin">
+                                        <label class="form-check-label" for="admin">
+                                            admin
+                                        </label>
+                                    </div>
+                                    <div class="form-check" style="margin: 5px">
+                                        <input class="form-check-input" type="radio" name="rol" id="rol" value="gestor" checked>
+                                        <label class="form-check-label" for="gestor">
+                                            gestor
+                                        </label>
+                                    </div>
+                                    <div class="form-check" style="margin: 5px">
+                                        <input class="form-check-input" type="radio" name="rol" id="rol" value="profesor">
                                         <label class="form-check-label" for="profesor">
                                             profesor
                                         </label>
@@ -63,6 +91,12 @@
                                         <input class="form-check-input" type="radio" name="rol" id="rol" value="admin" checked>
                                         <label class="form-check-label" for="admin">
                                             admin
+                                        </label>
+                                    </div>
+                                    <div class="form-check" style="margin: 5px">
+                                        <input class="form-check-input" type="radio" name="rol" id="rol" value="gestor">
+                                        <label class="form-check-label" for="gestor">
+                                            gestor
                                         </label>
                                     </div>
                                     <div class="form-check" style="margin: 5px">
