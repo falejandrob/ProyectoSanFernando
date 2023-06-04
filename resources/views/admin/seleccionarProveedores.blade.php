@@ -8,7 +8,8 @@
             </div>
         @endif
     </div>
-    <div class="btn-volver" style="margin: 25px">
+
+    <div class="btn-volver" style="margin: 3% 0% 3% 5%">
         <a class="btn btn-secondary" href="{{ route('totalPedidos') }}">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                  class="bi bi-arrow-return-left" viewBox="0 0 16 16">
