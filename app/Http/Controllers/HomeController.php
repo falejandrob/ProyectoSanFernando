@@ -45,6 +45,7 @@ class HomeController extends Controller
         $anio_actual = Carbon::now()->year;
         $presupuesto = Presupuesto::where('idUser', Auth::id())->where('anio', $anio_actual)->first();
 
+        //dd(Auth::getSession());
         if (auth()->user()->hasRole('profesor')) {
             return view('profesor.principal', ["presupuesto" => $presupuesto]);
         }
@@ -125,7 +126,7 @@ class HomeController extends Controller
             $message->to($email, $nombre . ' ' . $apellido)
                 ->subject('Actualización del estado de su pedido')
                 ->html('<p>Estimado/a ' . $nombre . ' ' . $apellido . ',</p><p>Le informamos que el estado de su pedido con el identificador ' . $orderIdentify . ' ha sido actualizado. Nos complace confirmar que su pedido ha sido validado correctamente.</p><p>Si tiene alguna pregunta o inquietud, no dude en contactarnos.</p><p>Agradecemos su preferencia.</p>');
-            
+
         });
 
         session()->flash('success', 'El pedido se ha validado correctamente.');
