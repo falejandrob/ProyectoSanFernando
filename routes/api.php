@@ -50,5 +50,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::post('/login',[ApiLoginController::class, 'login']);
 Route::post('/loginToken',[ApiLoginController::class, 'loginToken']);
+Route::post('/register', [ApiLoginController::class, 'register']);
+
 
 
