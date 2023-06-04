@@ -94,4 +94,9 @@ class ProductsList extends Component
         $producto->validado = 0;
         $producto->save();
     }
+
+    public function modifyProduct($id)
+    {
+        return redirect()->route('modificarProducto', ['id' => $id]);
+    }
 }

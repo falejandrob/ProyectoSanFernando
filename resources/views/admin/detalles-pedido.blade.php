@@ -60,7 +60,7 @@
         @if(count($pedido) == 0)
             <h3>El pedido no tiene ningun producto</h3>
         @else
-            <div class="table-responsive table-wrapper-scroll-y my-custom-scrollbar">
+            <div class="table-responsive table-wrapper-scroll-y my-custom-scrollbar" style="height: 600px">
                 <table class="table mb-0 tabla-scroll" style="text-align: center; font-size: 120%">
                     <thead>
                     <tr>
@@ -88,6 +88,7 @@
             </div>
         @endif
     </div>
+    <br>
 @endsection
 
 <div class="modal fade" id="imprimir{{$idPedido}}" tabindex="-1" role="dialog" aria-labelledby="validateModalLabel" aria-hidden="true">

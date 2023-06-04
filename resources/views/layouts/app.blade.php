@@ -275,10 +275,21 @@
                 margin-bottom: 1em;
             }
 
+            .detalles{
+                margin-bottom: 3%;
+            }
+
+            .fecha-hora{
+                width: 45%
+            }
+
             .datos-personales{
                 display: flex;
                 flex-direction: column;
+            }
 
+            .mensaje-emergente{
+                margin-top: 10%;
             }
 
             .cajon1{
@@ -464,12 +475,61 @@
         }
 
         @media (min-width: 768px) and (max-width: 992px) {
+            .table thead {
+                display: none;
+            }
+
+            .table td[data-titulo] {
+                display: flex;
+            }
+
+            .table td[data-titulo]::before {
+                content: attr(data-titulo);
+                width: 38%;
+                color: #1B1B1B;
+                font-weight: bold;
+            }
+
+            #botones {
+                width: 50%;
+                padding: 1%;
+                font-size: 10px;
+            }
+
+            #botones-pedidos {
+                width: 50%;
+                padding: 2%;
+                font-size: 10px;
+            }
+
+            .table tr {
+                display: flex;
+                flex-wrap: wrap;
+                border: 1px solid grey;
+                padding: 1em;
+                margin-bottom: 1em;
+            }
+
+            .table tr td {
+                border: none;
+                width: 50%;
+                font-size: 14px;
+            }
+
+            #informacion {
+                width: 100%;
+            }
+
             .cart-item {
                 width: 90%;
             }
 
             .lista-productos {
                 width: 90%;
+            }
+
+            .mensaje-emergente{
+                margin-top: 5%;
             }
 
             .inp-busqueda {
@@ -537,6 +597,10 @@
         @media (min-width: 1024px) {
             .adm {
                 margin-left: 3%;
+            }
+
+            .mensaje-emergente{
+                margin-top: 5%;
             }
 
             .datos-personales{
@@ -649,6 +713,10 @@
             .adm {
                 margin-right: 10%;
                 justify-content: center;
+            }
+
+            .mensaje-emergente{
+                margin-top: 5%;
             }
 
             .info-personal{
@@ -837,6 +905,18 @@
                                             proveedores</a></li>
                                     <li><a class="dropdown-item" href="{{ route('aniadirProveedor') }}">Añadir
                                             proveedor</a></li>
+                                </ul>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle active" href="#" role="button"
+                                   data-toggle="dropdown"
+                                   data-bs-toggle="dropdown" aria-expanded="false">
+                                    Informes
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="{{ route('informes') }}">Informes generales</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('informesProfesor') }}">Informes según profesor</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('informesMes') }}">Informes según mes</a></li>
                                 </ul>
                             </li>
                         </ul>

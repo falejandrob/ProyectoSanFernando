@@ -15,8 +15,7 @@
             </a>
         </div>
         <h1 style="text-align: center; padding: 15px">PROFESORES</h1>
-        <div class="table-wrapper-scroll-y my-custom-scrollbar full-screen-div" style="height: 550px">
-            <table class="table mb-0 tabla-scroll " style="width:90%; margin:auto; text-align: center;">
+            <table class="table mb-0  " style="width:90%; margin:auto; text-align: center;">
             <thead>
             <tr>
                 <th>Nombre</th>
@@ -57,7 +56,6 @@
                 @endforeach
             </tbody>
         </table>
-        </div>
     </div>
 
     <br>

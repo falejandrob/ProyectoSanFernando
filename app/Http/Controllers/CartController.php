@@ -14,7 +14,9 @@ use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\HtmlString;
 
 class CartController extends Controller
 {
@@ -26,33 +28,89 @@ class CartController extends Controller
      */
     public function confirm(Request $request)
     {
-        $fecha = strtotime($request->expectedDate);
-        $fechaConFormato = date('d/m/Y', $fecha);
-        foreach (Cart::content() as $item) {
-            $producto = Producto::findOrFail($item->id);
-            $observacion = $request->input('observacion-' . $item->rowId, null);
-            Cart::update($item->rowId, ['options' => [
-                'categoria' => Categoria::findOrFail($producto->idCategoria)->nombre,
-                'expectedDate' => $fechaConFormato,
-                'expectedTime' => $request->expectedTime,
-                'justification' => $request->justification,
-                'fechaPedido' => Carbon::now()->format('d-m-Y'),
-                'observacion' => $observacion
-            ]]);
-        }
-        Session::forget("justificacion");
-        $dateTimeJustification = [
-            'expectedDate' => Carbon::parse($request->expectedDate)->format('d/m/Y'),
-            'expectedTime' => $request->expectedTime,
-            'justification' => $request->justification,
-        ];
-        $productos = Cart::content();
+        $fechaConFormato = date('d/m/Y', strtotime($request->expectedDate));
+        $pedido = $this->buildOrderDetails($request, $fechaConFormato);
+
+        $this->sendOrder($pedido, $request->expectedTime, $fechaConFormato);
 
         store(Auth::id());
         Cart::destroy();
         session()->flash('success', 'El pedido se ha realizado correctamente.');
         return redirect()->route('misPedidos', [Auth::id()]);
     }
+
+    private function buildOrderDetails(Request $request, string $fechaConFormato)
+    {
+        $pedido = [];
+
+        foreach (Cart::content() as $item) {
+            $producto = Producto::findOrFail($item->id);
+            $pedido[] = [
+                'id' => $producto->id,
+                'nombre' => $producto->nombre,
+                'categoria' => Categoria::findOrFail($producto->idCategoria)->nombre,
+                'expectedDate' => $fechaConFormato,
+                'expectedTime' => $request->expectedTime,
+                'justification' => $request->justification,
+                'fechaPedido' => Carbon::now()->format('d-m-Y'),
+                'observacion' => $request->input('observacion-' . $item->rowId, null)
+            ];
+
+            Cart::update($item->rowId, ['options' => $pedido[count($pedido) - 1]]);
+        }
+
+        return $pedido;
+    }
+
+    private function sendOrder(array $pedido, string $horaEsperada, string $fechaEsperada)
+    {
+        $email = Auth::user()->email;
+        $nombre = Auth::user()->nombre;
+        $apellido = Auth::user()->apellido;
+
+        Mail::send([], [], function ($message) use ($nombre, $apellido, $email, $pedido, $fechaEsperada, $horaEsperada) {
+            $message->to($email, "$nombre $apellido")
+                ->subject('Confirmación de pedido')
+                ->html($this->formatOrderHTML($pedido, $fechaEsperada, $horaEsperada));
+        });
+    }
+
+    private function formatOrderHTML(array $pedido, string $fechaEsperada, string $horaEsperada)
+    {
+        $nombre = Auth::user()->nombre;
+        $apellido = Auth::user()->apellido;
+
+        $formattedPedido = "<div style='font-family: Arial, sans-serif;'>
+                            <h2>Estimado/a $nombre $apellido,</h2>
+                            <p>Agradecemos tu preferencia. Tu pedido se ha procesado correctamente. A continuación, encontrarás el resumen:</p>
+                            <hr>
+                            <h3>Detalles del Pedido:</h3>
+                            <p><strong>Fecha esperada de entrega:</strong> $fechaEsperada</p>
+                            <p><strong>Hora esperada de entrega:</strong> $horaEsperada</p><br>";
+
+        foreach ($pedido as $item) {
+            $observacion = $item['observacion'] ? $item['observacion'] : 'N/A';
+            $formattedPedido .= "<div style='margin-bottom:20px;'>
+                                <p><strong>Producto:</strong> {$item['nombre']}</p>
+                                <p><strong>Categoría:</strong> {$item['categoria']}</p>
+                                <p><strong>Observaciones:</strong> $observacion</p>
+                             </div><hr>";
+        }
+
+        $formattedPedido .= "<p>Si tienes alguna pregunta o si necesitas asistencia con tu pedido, por favor, no dudes en responder a este correo electrónico.</p>
+                         <p>Valoramos tu confianza en nuestros servicios.</p>
+                         <p style='margin-bottom: 50px;'>Saludos cordiales,</p>
+                         <p><strong>El Equipo de EconoMando</strong></p>
+                         <hr>
+                         <p style='font-size:0.8em;color:#777;'>Este es un correo electrónico automático, por favor no responder directamente a este mensaje.</p>
+                        </div>";
+
+        return $formattedPedido;
+    }
+
+
+
+
 
     /**
      * Delete an order

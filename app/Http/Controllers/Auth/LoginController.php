@@ -13,6 +13,9 @@ use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use function App\Http\Controllers\generarCodigo;
+use function App\Http\Controllers\obtenerCodigo;
 
 class LoginController extends Controller
 {
@@ -71,6 +74,7 @@ class LoginController extends Controller
         $this->incrementLoginAttempts($request);
 
 
+
         return $this->sendFailedLoginResponse($request);
     }
 
@@ -100,6 +104,7 @@ class LoginController extends Controller
         $pedido = new Pedido();
 
         $pedido->idUser = $identifier;
+        $pedido->identificador = $this->generarCodigo();
         $pedido->fechaPedido = Carbon::now();
         $pedido->fechaPrevistaPedido = Carbon::parse(Cart::content()->first()->options->expectedDate . Cart::content()->first()->options->expectedTime);
         if (Cart::content()->first()->options->justification==null){
@@ -166,6 +171,74 @@ class LoginController extends Controller
 
             $pedido->delete();
         }
+
+    }
+
+
+    function obtenerCodigo(){
+
+        $codigo = "";
+
+        $maxCodigo = DB::table('pedidos')
+            ->where('idUser', '=', Auth::id())
+            ->max('identificador');
+
+        $c = substr($maxCodigo, 4, 4);
+
+        if ($c == "" or $c == "9999") {
+            $codigo = "0001";
+        } else {
+            $indice = intval($c) + 1;
+
+            if ($indice >= 10 and $indice < 100) {
+                $codigo = "00" . $indice;
+            } elseif ($indice >= 100 and $indice < 1000) {
+                $codigo =  "0" . $indice;
+                dd($codigo);
+            } elseif ($indice >= 1000 and $indice < 10000) {
+                $codigo =  $indice;
+            }
+            else {
+                $codigo = "000" . $indice;
+            }
+        }
+
+        return $codigo;
+
+    }
+
+
+    function generarCodigo(){
+
+        $cod = $this->obtenerCodigo();
+
+        $nombre = auth()->user()->nombre;
+        $apellidos = auth()->user()->apellidos;
+
+        $subInicial1 = substr($nombre, 0, 1);
+        $subInicial2 = substr($apellidos, 0, 1);
+
+        $lengthApellidos = strlen($apellidos);
+
+        $apellido2 = "";
+        $pos = 0;
+
+        for ($i = 0; $i < $lengthApellidos; $i++) {
+            if($apellidos[$i] == " "){
+                $pos = 1;
+            }
+            if($pos == 1){
+                $apellido2 = $apellido2 . $apellidos[$i];
+            }
+        }
+
+        $subInicial3 = substr($apellido2, 1, 1);
+
+        $anio = date('Y');
+
+        $codigo = $anio . $cod . strtoupper($subInicial1) . strtoupper($subInicial2) . strtoupper($subInicial3);
+
+        return $codigo;
 
     }
 }

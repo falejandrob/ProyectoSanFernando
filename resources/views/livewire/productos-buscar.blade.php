@@ -22,7 +22,7 @@
                     Volver
                 </a>
             </div>-->
-            <div class="alert alert-danger" style="text-align: center; font-size: 120%; width: 70%; margin: auto;">
+            <div class="alert alert-warning" style="text-align: center; font-size: 120%; width: 70%; margin: auto;">
                 Puede realizar pedidos hasta el día {{$fechaConFormatoMax}} a las {{$horaConFormatoMax}}h
             </div>
         </div><br>

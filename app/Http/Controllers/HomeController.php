@@ -45,6 +45,7 @@ class HomeController extends Controller
         $anio_actual = Carbon::now()->year;
         $presupuesto = Presupuesto::where('idUser', Auth::id())->where('anio', $anio_actual)->first();
 
+        //dd(Auth::getSession());
         if (auth()->user()->hasRole('profesor')) {
             return view('profesor.principal', ["presupuesto" => $presupuesto]);
         }
@@ -110,20 +111,23 @@ class HomeController extends Controller
      * @param $id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function validarPedido($id,$nombre, $apellido,$email){
+    public function validarPedido($id, $nombre, $apellido, $email)
+    {
         $pedidos = getAllCartsTeachers();
         $profesores = User::all();
 
         $pedido = Pedido::findOrFail($id);
         $pedido->validado = 1;
         $pedido->save();
+        $orderIdentify = $pedido->identificador;
 
-        Mail::send([], [], function($message) use ($nombre, $apellido,$email) {
-            $message->to($email, $nombre.' '.$apellido)
-                ->subject('Estado de su pedido')
-                ->text('Hola buenas, Sr/Sra '.$nombre.' '.$apellido.', el estado de su pedido se ha actualizado. Un saludo');
+        Mail::send([], [], function ($message) use ($nombre, $apellido, $email, $orderIdentify) {
+
+            $message->to($email, $nombre . ' ' . $apellido)
+                ->subject('Actualización del estado de su pedido')
+                ->html('<p>Estimado/a ' . $nombre . ' ' . $apellido . ',</p><p>Le informamos que el estado de su pedido con el identificador ' . $orderIdentify . ' ha sido actualizado. Nos complace confirmar que su pedido ha sido validado correctamente.</p><p>Si tiene alguna pregunta o inquietud, no dude en contactarnos.</p><p>Agradecemos su preferencia.</p>');
+
         });
-
 
         session()->flash('success', 'El pedido se ha validado correctamente.');
         return redirect()->action([HomeController::class, 'totalPedidos']);
@@ -135,23 +139,28 @@ class HomeController extends Controller
      * @param $id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function desvalidarPedido($id,$nombre, $apellido,$email){
+    public function desvalidarPedido($id, $nombre, $apellido, $email)
+    {
         $pedidos = getAllCartsTeachers();
         $profesores = User::all();
 
         $pedido = Pedido::findOrFail($id);
         $pedido->validado = 2;
         $pedido->save();
+        $orderIdentify = $pedido->identificador;
 
-        Mail::send([], [], function($message) use ($nombre, $apellido,$email) {
-            $message->to($email, $nombre.' '.$apellido)
-                ->subject('Estado de su pedido')
-                ->text('Hola buenas, Sr/Sra '.$nombre.' '.$apellido.', el estado de su pedido se ha actualizado. Un saludo');
+        Mail::send([], [], function ($message) use ($nombre, $apellido, $email, $orderIdentify) {
+
+            $message->to($email, $nombre . ' ' . $apellido)
+                ->subject('Actualización del estado de su pedido')
+                ->html('<p>Estimado/a ' . $nombre . ' ' . $apellido . ',</p><p>Le informamos que el estado de su pedido con el identificador ' . $orderIdentify . ' ha sido actualizado. Lamentamos informarle que su pedido ha sido invalidado.</p><p>Si tiene alguna pregunta o inquietud, no dude en contactarnos.</p><p>Agradecemos su comprensión.</p>');
+
         });
 
         session()->flash('success', 'El pedido se ha invalidado correctamente.');
         return redirect()->action([HomeController::class, 'totalPedidos']);
     }
+
 
     /**
      * Show the details from a specific order
