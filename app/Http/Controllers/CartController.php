@@ -303,6 +303,7 @@ function mod($identifier, $idPedido)
     $pedido = Pedido::find($idPedido);
 
     $pedido->fechaPedido = Carbon::now();
+    $pedido->validado = 0;
     $pedido->fechaPrevistaPedido = Carbon::parse(Cart::content()->first()->options->expectedDate . Cart::content()->first()->options->expectedTime);
     $pedido->justificacion = Cart::content()->first()->options->justification;
     $pedido->estaPedido = true;
