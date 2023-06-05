@@ -26,6 +26,7 @@
                 <table class="table mb-0 tabla-scroll ">
                     <thead>
                         <tr style="text-align: center">
+                            <th scope="col">Id</th>
                             <th scope="col">Fecha pedido</th>
                             <th scope="col">Fecha prevista</th>
                             <th scope="col">Justificación</th>
@@ -39,6 +40,11 @@
                         $fechaConFormato2 = \Carbon\Carbon::parse(explode(" ", $pedido->fechaPrevistaPedido)[0] )->format('d/m/Y');
                     @endphp
                         <tr class="" style="text-align: center;">
+                            <td id="informacion" data-titulo="Id:">
+                                <a style="text-decoration: none; color: black">
+                                    {{ $pedido->identificador}}
+                                </a>
+                            </td>
                             <td id="informacion" data-titulo="Fecha pedido:">{{ $fechaConFormato }}</td>
                             <td id="informacion" data-titulo="Fecha prevista:">{{ $fechaConFormato2 }}</td>
                             <td id="informacion" data-titulo="Justificacion:">{{ $pedido->justificacion }}</td>
