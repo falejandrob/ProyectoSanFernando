@@ -275,6 +275,10 @@
                 margin-bottom: 1em;
             }
 
+            .btn-salir{
+                display: none;
+            }
+
             .detalles{
                 margin-bottom: 3%;
             }
@@ -488,6 +492,10 @@
                 width: 38%;
                 color: #1B1B1B;
                 font-weight: bold;
+            }
+
+            .btn-salir{
+                display: none;
             }
 
             #botones {
@@ -965,7 +973,7 @@
                                 </li>
                             @endif
                             <li>
-                                <a class="dropdown-item" href="{{ route('logout') }}"
+                                <a class="dropdown-item btn-salir" href="{{ route('logout') }}"
                                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                     Salir
                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"

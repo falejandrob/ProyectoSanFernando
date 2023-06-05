@@ -26,7 +26,6 @@
                 <input type="hidden" name="id" value="{{ $idPedido }}" id="id">
                 @csrf
                 @php($categoriasMostradas = [])
-                <p id="title-categories" style="margin-top: 25px; font-weight: bold; text-align: center">Productos</p>
             @foreach ($lineasPedido as $linea)
                     @foreach($categorias as $categoria)
                         @if(App\Models\Producto::find($linea->idProducto)->idCategoria == $categoria->id && !in_array($categoria->id, $categoriasMostradas))
@@ -46,8 +45,11 @@
                                     </svg>
                                 </a>
                                 <span>{{ App\Models\Producto::find($linea->idProducto)->nombre }}</span>
-                                <span
-                                    class="badge bg-dark">{{ App\Models\Proveedore::find($item->proveedor)->nombre }}</span>
+                                @for ($i = 0; $i < count($proveedores); $i++)
+                                    @if($proveedores[$i]->id == $item->proveedor)
+                                        <span class="badge" style="background: {{ $colores[$i] }}">{{ App\Models\Proveedore::find($item->proveedor)->nombre }}</span>
+                                    @endif
+                                @endfor
                             </div>
                             @php($esta = true)
                         @endif
@@ -62,14 +64,13 @@
             @endforeach
         </div>
         <div style="width: 50%;">
-            <p id="title-categories" style="margin-top: 25px; font-weight: bold; text-align: center">Proveedores</p>
-        @foreach ($proveedores as $proveedor)
-                <div class="proveedores" style="margin-left:20px;">
-                    <input style="width: 20px; height: 20px; cursor: pointer;" type="radio" name="proveedor"
-                           value="{{ $proveedor->id }}">
-                    {{ $proveedor->nombre }}
+            @for ($i = 0; $i < count($proveedores); $i++)
+                <div class="proveedores" style="margin-left:20px; display: flex; align-items: center;">
+                    <input style="width: 20px; height: 20px; cursor: pointer;" type="radio" name="proveedor" value="{{ $proveedores[$i]->id }}">
+                    <div style="background: {{ $colores[$i] }}; width: 20px; height: 20px; margin: 10px;"></div>
+                    {{ $proveedores[$i]->nombre }}
                 </div>
-            @endforeach
+            @endfor
         </div>
     </div>
 

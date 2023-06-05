@@ -28,6 +28,8 @@
                 <h3 style="color: rgb(167, 167, 167);">Profesor</h3>
             @elseif($user->hasRole('admin'))
                 <h3 style="color: rgb(167, 167, 167);">Admin</h3>
+            @elseif($user->hasRole('gestor'))
+                <h3 style="color: rgb(167, 167, 167);">Gestor</h3>
             @endif
         </div>
 
