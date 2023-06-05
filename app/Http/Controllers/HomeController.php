@@ -193,7 +193,7 @@ class HomeController extends Controller
         $anio_actual = Carbon::now()->year;
         $presupuesto = Presupuesto::where('idUser', Auth::id())->where('anio', $anio_actual)->first();
 
-        if (auth()->user()->hasRole('admin')) {
+        if (auth()->user()->hasRole('admin') or auth()->user()->hasRole('gestor')) {
             return view("admin.detalles-pedido", ["pedido" => $pedido, "idPedido" => $idPedido, "profesor" => $profesor]);
         }
     }
