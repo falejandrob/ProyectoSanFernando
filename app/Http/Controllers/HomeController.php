@@ -193,7 +193,7 @@ class HomeController extends Controller
         $anio_actual = Carbon::now()->year;
         $presupuesto = Presupuesto::where('idUser', Auth::id())->where('anio', $anio_actual)->first();
 
-        if (auth()->user()->hasRole('admin')) {
+        if (auth()->user()->hasRole('admin') or auth()->user()->hasRole('gestor')) {
             return view("admin.detalles-pedido", ["pedido" => $pedido, "idPedido" => $idPedido, "profesor" => $profesor]);
         }
     }
@@ -339,11 +339,22 @@ class HomeController extends Controller
         $pedido->eliminado = '0';
         $pedido->save();
 
-        $pedidos = Pedido::where('eliminado', '1')->get();
+        /*$pedidos = Pedido::where('eliminado', '1')->get();*/
+
+        $pedidos = getAllCartsTeachers();
+        $pedidos = new Collection($pedidos);
+
+        $pedidos = $pedidos->sortByDesc(function ($pedido) {
+            $pedido = new Collection($pedido);
+            $fechaEsperada = strtotime($pedido->first()->first()->options->expectedDate);
+            $diferencia = abs(time() - $fechaEsperada);
+            return $diferencia;
+        })->reverse();
+
         $profesores = User::all();
 
         session()->flash('success', 'El pedido se ha restaurado correctamente.');
-        return view("admin.papeleraPedidos",["pedidos" => $pedidos, "profesores" => $profesores]);
+        return view("admin.pedidos",["pedidos" => $pedidos, "profesores" => $profesores]);
     }
 
     public function papeleraPedidosProfesor($idProfesor)
@@ -365,15 +376,21 @@ class HomeController extends Controller
         $pedido->eliminado = '0';
         $pedido->save();
 
-        $pedidos = Pedido::where('eliminado', '1')
+        /*$pedidos = Pedido::where('eliminado', '1')
             ->where('idUser', $idProfesor)
-            ->get();
+            ->get();*/
+
+        $pedidos = getAllCarts(Auth::id());
+
+        $pedidos = $pedidos->sortByDesc(function ($pedido) {
+            return strtotime($pedido->first()->options->fechaPedido);
+        });
 
         $anio_actual = Carbon::now()->year;
         $presupuesto = Presupuesto::where('idUser', $idProfesor)->where('anio', $anio_actual)->first();
 
         session()->flash('success', 'El pedido se ha restaurado correctamente.');
-        return view("profesor.papeleraPedidos",["pedidos" => $pedidos, "presupuesto" => $presupuesto]);
+        return view("profesor.misPedidos",["pedidos" => $pedidos, "presupuesto" => $presupuesto]);
     }
 
     public function addJustificacion(Request $request)

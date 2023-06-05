@@ -20,7 +20,7 @@
 
         <br>
         @if (!empty($pedidos) && count($pedidos) > 0 )
-            <div class="table-wrapper-scroll-y my-custom-scrollbar">
+            <div class="table-wrapper-scroll-y my-custom-scrollbar" style="height: 1300px">
                 <table class="table mb-0 tabla-scroll ">
                     <thead>
                         <tr style="text-align: center">
