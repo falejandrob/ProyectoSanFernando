@@ -209,10 +209,11 @@ class HomeController extends Controller
         $productosConProveedor = ProductoProveedor::where('pedido', $idPedido)->get();
         $lineasPedido = LineaPedido::where('idPedido', $idPedido)->get();
         $proveedores = Proveedore::all();
+        $colores = ["red", "blue", "green", "yellow", "pink", "purple", "orange", "brown", "cyan", "magenta", "darkred", "darkblue", "#9E00DE", "#4DDE00", "#CCCF00", "darkcyan", "darkorange", "olive", "lightmagenta", "lightpurple", "black"];
         $categorias = Categoria::all();
 
         if (auth()->user()->hasRole('admin') or auth()->user()->hasRole('gestor')) {
-            return view("admin.seleccionarProveedores", ["lineasPedido" => $lineasPedido, "idPedido" => $idPedido, "proveedores" => $proveedores, "categorias" => $categorias, "productosConProveedor" => $productosConProveedor]);
+            return view("admin.seleccionarProveedores", ["colores" => $colores, "lineasPedido" => $lineasPedido, "idPedido" => $idPedido, "proveedores" => $proveedores, "categorias" => $categorias, "productosConProveedor" => $productosConProveedor]);
         }
     }
 
@@ -233,10 +234,11 @@ class HomeController extends Controller
             $lineasPedido = LineaPedido::where('idPedido', $idPedido)->get();
             $proveedores = Proveedore::all();
             $categorias = Categoria::all();
+            $colores = ["red", "blue", "green", "yellow", "pink", "purple", "orange", "brown", "cyan", "magenta", "darkred", "darkblue", "darkgreen", "#9E00DE", "#4DDE00", "#CCCF00", "darkorange", "olive", "lightmagenta", "lightpurple", "black"];
 
             if (auth()->user()->hasRole('admin') or auth()->user()->hasRole('gestor')) {
                 session()->flash('success', 'La relacion se ha eliminado correctamente.');
-                return view("admin.seleccionarProveedores", ["lineasPedido" => $lineasPedido, "idPedido" => $idPedido, "proveedores" => $proveedores, "categorias" => $categorias, "productosConProveedor" => $productosConProveedor]);
+                return view("admin.seleccionarProveedores", ["colores" => $colores, "lineasPedido" => $lineasPedido, "idPedido" => $idPedido, "proveedores" => $proveedores, "categorias" => $categorias, "productosConProveedor" => $productosConProveedor]);
             }
         } else {
             return redirect()->action([HomeController::class, 'totalPedidos']);
@@ -257,10 +259,11 @@ class HomeController extends Controller
         $lineasPedido = LineaPedido::where('idPedido', $request->id)->get();
         $proveedores = Proveedore::all();
         $categorias = Categoria::all();
+        $colores = ["red", "blue", "green", "yellow", "pink", "purple", "orange", "brown", "cyan", "magenta", "darkred", "darkblue", "darkgreen", "#9E00DE", "#4DDE00", "#CCCF00", "darkorange", "olive", "lightmagenta", "lightpurple", "black"];
 
         if($productosSeleccionados == null || $proveedorSeleccionado == null) {
             $productosConProveedor = ProductoProveedor::where('pedido', $request->id)->get();
-            return view("admin.seleccionarProveedores", ["lineasPedido" => $lineasPedido, "idPedido" => $request->id, "proveedores" => $proveedores, "categorias" => $categorias, "productosConProveedor" => $productosConProveedor]);
+            return view("admin.seleccionarProveedores", ["colores" => $colores, "lineasPedido" => $lineasPedido, "idPedido" => $request->id, "proveedores" => $proveedores, "categorias" => $categorias, "productosConProveedor" => $productosConProveedor]);
         }
 
         foreach ($productosSeleccionados as $item) {
@@ -279,7 +282,7 @@ class HomeController extends Controller
         $productosConProveedor = ProductoProveedor::where('pedido', $request->id)->get();
 
         if (auth()->user()->hasRole('admin') or auth()->user()->hasRole('gestor')) {
-            return view("admin.seleccionarProveedores", ["lineasPedido" => $lineasPedido, "idPedido" => $request->id, "proveedores" => $proveedores, "categorias" => $categorias, "productosConProveedor" => $productosConProveedor]);
+            return view("admin.seleccionarProveedores", ["colores" => $colores, "lineasPedido" => $lineasPedido, "idPedido" => $request->id, "proveedores" => $proveedores, "categorias" => $categorias, "productosConProveedor" => $productosConProveedor]);
         }
     }
 
