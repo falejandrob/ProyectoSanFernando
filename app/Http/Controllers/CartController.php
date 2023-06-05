@@ -278,12 +278,20 @@ class CartController extends Controller
  */
 function store($identifier)
 {
+
+    $expectedDate = Cart::content()->first()->options->expectedDate;
+    $expectedTime = Cart::content()->first()->options->expectedTime;
+
+    $fechaPrevista = Carbon::createFromFormat('d/m/Y H:i', $expectedDate.' '.$expectedTime);
+
+    $fechaPrevista->format('Y-m-d H:i:s');
+
     $pedido = new Pedido();
 
     $pedido->idUser = $identifier;
     $pedido->identificador = generarCodigo();
     $pedido->fechaPedido = Carbon::now();
-    $pedido->fechaPrevistaPedido = Carbon::parse(Cart::content()->first()->options->expectedDate . Cart::content()->first()->options->expectedTime);
+    $pedido->fechaPrevistaPedido = $fechaPrevista;
     $pedido->justificacion = Cart::content()->first()->options->justification;
     $pedido->estaPedido = true;
     $pedido->save();
