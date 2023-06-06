@@ -9,7 +9,7 @@
                 Volver
             </a>
         </div>
-        
+
         <h1 style="text-align: center;">INFORMES SEGÚN PROFESOR</h1>
 
         <br>
@@ -19,7 +19,7 @@
             <div class="form-group form-fecha" style=" margin: auto; display: flex;">
                 <select class="form-select" name="user">
                     @foreach($profesores as $profesor)
-                        <option value="{{ $profesor->id }}">{{ $profesor->nombre }}</option>
+                        <option value="{{ $profesor->id }}">{{ $profesor->nombre . " " . $profesor->apellidos}}</option>
                     @endforeach
                 </select>
                 <br>
@@ -29,7 +29,7 @@
                 <br>
             </div>
         </form>
-        
+
         <br>
         @if($user != "")
             @if(count($labelsProductos) != 0)
