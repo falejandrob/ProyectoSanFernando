@@ -209,7 +209,7 @@ class HomeController extends Controller
         $productosConProveedor = ProductoProveedor::where('pedido', $idPedido)->get();
         $lineasPedido = LineaPedido::where('idPedido', $idPedido)->get();
         $proveedores = Proveedore::all();
-        $colores = ["red", "blue", "green", "yellow", "pink", "purple", "orange", "brown", "cyan", "magenta", "darkred", "darkblue", "#9E00DE", "#4DDE00", "#CCCF00", "darkcyan", "darkorange", "olive", "lightmagenta", "lightpurple", "black"];
+        $colores = ["red", "blue", "green", "#E5D05B", "pink", "purple", "orange", "brown", "cyan", "magenta", "darkred", "darkblue", "#9E00DE", "#4DDE00", "#CCCF00", "darkcyan", "darkorange", "olive", "lightmagenta", "lightpurple", "black"];
         $categorias = Categoria::all();
 
         if (auth()->user()->hasRole('admin') or auth()->user()->hasRole('gestor')) {
@@ -234,7 +234,7 @@ class HomeController extends Controller
             $lineasPedido = LineaPedido::where('idPedido', $idPedido)->get();
             $proveedores = Proveedore::all();
             $categorias = Categoria::all();
-            $colores = ["red", "blue", "green", "yellow", "pink", "purple", "orange", "brown", "cyan", "magenta", "darkred", "darkblue", "darkgreen", "#9E00DE", "#4DDE00", "#CCCF00", "darkorange", "olive", "lightmagenta", "lightpurple", "black"];
+            $colores = ["red", "blue", "green", "#E5D05B", "pink", "purple", "orange", "brown", "cyan", "magenta", "darkred", "darkblue", "darkgreen", "#9E00DE", "#4DDE00", "#CCCF00", "darkorange", "olive", "lightmagenta", "lightpurple", "black"];
 
             if (auth()->user()->hasRole('admin') or auth()->user()->hasRole('gestor')) {
                 session()->flash('success', 'La relacion se ha eliminado correctamente.');
@@ -259,7 +259,7 @@ class HomeController extends Controller
         $lineasPedido = LineaPedido::where('idPedido', $request->id)->get();
         $proveedores = Proveedore::all();
         $categorias = Categoria::all();
-        $colores = ["red", "blue", "green", "yellow", "pink", "purple", "orange", "brown", "cyan", "magenta", "darkred", "darkblue", "darkgreen", "#9E00DE", "#4DDE00", "#CCCF00", "darkorange", "olive", "lightmagenta", "lightpurple", "black"];
+        $colores = ["red", "blue", "green", "#E5D05B", "pink", "purple", "orange", "brown", "cyan", "magenta", "darkred", "darkblue", "darkgreen", "#9E00DE", "#4DDE00", "#CCCF00", "darkorange", "olive", "lightmagenta", "lightpurple", "black"];
 
         if($productosSeleccionados == null || $proveedorSeleccionado == null) {
             $productosConProveedor = ProductoProveedor::where('pedido', $request->id)->get();
@@ -448,16 +448,14 @@ class HomeController extends Controller
 
     public function getPDFProv($id): array
     {
-        $User = User::findOrFail(Pedido::findOrFail($id)->idUser);
+        $user = User::findOrFail(Pedido::findOrFail($id)->idUser);
         $lineasConProveedor = ProductoProveedor::where('pedido', $id)->get();
         $lineas = LineaPedido::all();
-
         $proveedores = Proveedore::all();
         $productos = getCart($id);
         $pdfNameP = 'Pedido_' .  auth()->user()->nombre . '-' . auth()->user()->apellidos . '.pdf';
         $fechaConFormato = \Carbon\Carbon::parse($productos->first()->options->expectedDate)->format('d/m/Y');
         $horaConFormato = \Carbon\Carbon::parse($productos->first()->options->expectedTime)->format('H:i');
-
 
         $dateTimeJustification = [
             'expectedDate' => $fechaConFormato,
@@ -465,9 +463,50 @@ class HomeController extends Controller
             'justification' => $productos->first()->options->justification,
         ];
 
-        $pdfD = Pdf::loadView('pdf.productos-proveedores', compact('proveedores', 'productos', 'lineas', 'lineasConProveedor', 'dateTimeJustification', 'User'));
+        $proveedoresMap = [];
+        foreach ($proveedores as $proveedor) {
+            $proveedoresMap[$proveedor->id] = ['nombre' => $proveedor->nombre, 'productos' => []];
+        }
+
+        $categoryOrder = ['Vegetales', 'Carne y Embutidos', 'Pescados y mariscos', 'Varios'];
+        $categoryMap = [];
+        foreach ($productos as $producto) {
+            $categoria = $producto->options->categoria;
+
+            if ($categoria === 'Hortalizas' || $categoria === 'Frutas, Frutos Secos') {
+                $categoria = 'Vegetales';
+            } elseif ($categoria === 'Carnes, Aves, Embutidos') {
+                $categoria = 'Carne y Embutidos';
+            } elseif ($categoria === 'Pescados, Mariscos') {
+                $categoria = 'Pescados y mariscos';
+            } else {
+                $categoria = 'Varios';
+            }
+
+            if (!isset($categoryMap[$categoria])) {
+                $categoryMap[$categoria] = [];
+            }
+
+            $lineaProv = $lineasConProveedor->first(function ($lineaProv) use ($lineas, $producto) {
+                return $lineas->first(function ($linea) use ($lineaProv, $producto) {
+                        return $lineaProv->lineaPedido == $linea->id && $linea->idProducto == $producto->id;
+                    }) !== null;
+            });
+
+            if ($lineaProv) {
+                $producto->options->proveedor = $proveedoresMap[$lineaProv->proveedor]['nombre'];
+                $proveedoresMap[$lineaProv->proveedor]['productos'][] = $producto;
+            }
+
+            $categoryMap[$categoria][] = $producto;
+        }
+
+        $pdfD = Pdf::loadView('pdf.productos-proveedores', compact('categoryOrder', 'categoryMap', 'proveedoresMap', 'dateTimeJustification', 'user'));
+
         return array($pdfNameP, $pdfD);
     }
+
+
 
     /**
      * Get the pdf view
@@ -477,9 +516,9 @@ class HomeController extends Controller
      */
     public function getPDF($id): array
     {
-        $User = User::findOrFail(Pedido::findOrFail($id)->idUser);
+        $user = User::findOrFail(Pedido::findOrFail($id)->idUser);
         $productos = getCart($id);
-        $pdfName = 'Pedido_' . $productos->first()->options->expectedDate . '-' . $productos->first()->options->expectedTime . '_' . auth()->user()->nombre . '-' . auth()->user()->apellidos . '.pdf';
+        $pdfName = $productos->first()->options->get('identificador'). '.pdf';
         $fechaConFormato = \Carbon\Carbon::parse($productos->first()->options->expectedDate)->format('d/m/Y');
         $horaConFormato = \Carbon\Carbon::parse($productos->first()->options->expectedTime)->format('H:i');
 
@@ -489,7 +528,20 @@ class HomeController extends Controller
             'justification' => $productos->first()->options->justification,
         ];
 
-        $pdf = Pdf::loadView('pdf.productos', compact('productos', 'dateTimeJustification', 'User'));
+        $categorias = ['Hortalizas' => 'Vegetales', 'Frutas, Frutos Secos' => 'Vegetales',
+            'Carnes, Aves, Embutidos' => 'Carne y Embutidos',
+            'Pescados, Mariscos' => 'Pescados y mariscos'];
+
+        $categoryOrder = ['Vegetales', 'Carne y Embutidos', 'Pescados y mariscos', 'Varios'];
+        $categoryMap = array_fill_keys($categoryOrder, []);
+
+        foreach($productos as $producto) {
+            $categoria = $producto->options->categoria;
+            $categoria = $categorias[$categoria] ?? 'Varios';
+            $categoryMap[$categoria][] = $producto;
+        }
+
+        $pdf = Pdf::loadView('pdf.productos', compact('productos', 'dateTimeJustification', 'user','categoryMap', 'categoryOrder'));
         return array($pdfName, $pdf);
     }
 
@@ -623,6 +675,7 @@ function getCart($identifier)
     $expectedDate = Carbon::parse($expectedDateTime)->format('d-m-Y');
     $expectedTime = Carbon::parse($expectedDateTime)->format('H:i:s');
     $justification = $pedido->justificacion;
+    $identificador = $pedido->identificador;
 
     $itemsPedido = LineaPedido::where('idPedido', $idPedido)->get();
 
@@ -635,6 +688,7 @@ function getCart($identifier)
        // dd($itemPedido);
         $carItem = CartItem::fromAttributes($productId, $productName, 0.0, 0.0, [
             'categoria' => Categoria::findOrFail($product->idCategoria)->nombre,
+            'identificador' => $identificador,
             'expectedDate' => $expectedDate,
             'expectedTime' => $expectedTime,
             'justification' => $justification,
