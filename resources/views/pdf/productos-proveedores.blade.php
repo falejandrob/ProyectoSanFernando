@@ -54,6 +54,7 @@
     </style>
 </head>
 <body>
+
 <!---->
 <div id ="header">
     <table>
@@ -121,6 +122,7 @@
         @endforeach
         </tbody>
     </table>
+    <div style="page-break-after: always;"></div>
     <h2>Productos por Proveedor</h2>
     <table>
         <thead>
