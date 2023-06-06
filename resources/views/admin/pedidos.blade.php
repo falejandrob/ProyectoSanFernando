@@ -22,6 +22,10 @@
 
         <br>
         @if (!empty($pedidos) && count($pedidos) > 0 )
+            @php
+                $fechaConFormato = "";
+                $fechaConFormato2 = "";
+            @endphp
             <div class="table-wrapper-scroll-y my-custom-scrollbar" style="height: 1300px">
                 <table class="table mb-0 tabla-scroll ">
                     <thead>
@@ -206,6 +210,11 @@
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
+                                <div class="modal-body">
+                                    <p>Id: {{$pedido[0]->first()->options->get('identificador')}}</p>
+                                    <p>Fecha pedido: {{$fechaConFormato}}</p>
+                                    <p>Fecha prevista: {{$fechaConFormato2}}</p>
+                                </div>
                                 <div class="modal-footer">
                                     <a class="btn btn-success"
                                        href="{{ route('validarPedido', [$id, $profesores->where("id","=",$pedido[1])->first()->nombre, $profesores->where("id","=",$pedido[1])->first()->apellidos, $profesores->where("id","=",$pedido[1])->first()->email])}}">
@@ -229,6 +238,11 @@
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
+                                </div>
+                                <div class="modal-body">
+                                    <p>Id: {{$pedido[0]->first()->options->get('identificador')}}</p>
+                                    <p>Fecha pedido: {{$fechaConFormato}}</p>
+                                    <p>Fecha prevista: {{$fechaConFormato2}}</p>
                                 </div>
                                 <div class="modal-footer">
                                     <a class="btn btn-success"

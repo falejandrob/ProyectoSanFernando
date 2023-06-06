@@ -25,7 +25,7 @@
                     </a>
                 </div>
             </div>
-            @if (!empty($pedidos) && count($pedidos) > 0 )
+        @if(!empty($pedidos) && count($pedidos) > 0)
         <h1 style="text-align: center">Mis pedidos</h1>
         <br>
 
