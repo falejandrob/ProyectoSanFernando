@@ -453,7 +453,7 @@ class HomeController extends Controller
         $lineas = LineaPedido::all();
         $proveedores = Proveedore::all();
         $productos = getCart($id);
-        $pdfNameP = 'Pedido_' .  auth()->user()->nombre . '-' . auth()->user()->apellidos . '.pdf';
+        $pdfNameP = $productos->first()->options->get('identificador'). '.pdf';;
         $fechaConFormato = \Carbon\Carbon::parse($productos->first()->options->expectedDate)->format('d/m/Y');
         $horaConFormato = \Carbon\Carbon::parse($productos->first()->options->expectedTime)->format('H:i');
 
