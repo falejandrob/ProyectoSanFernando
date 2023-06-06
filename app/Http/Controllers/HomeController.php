@@ -456,6 +456,7 @@ class HomeController extends Controller
         $pdfNameP = $productos->first()->options->get('identificador'). '.pdf';;
         $fechaConFormato = \Carbon\Carbon::parse($productos->first()->options->expectedDate)->format('d/m/Y');
         $horaConFormato = \Carbon\Carbon::parse($productos->first()->options->expectedTime)->format('H:i');
+        $dompdf = new Dompdf();
 
         $dateTimeJustification = [
             'expectedDate' => $fechaConFormato,
@@ -501,7 +502,7 @@ class HomeController extends Controller
             $categoryMap[$categoria][] = $producto;
         }
 
-        $pdfD = Pdf::loadView('pdf.productos-proveedores', compact('categoryOrder', 'categoryMap', 'proveedoresMap', 'dateTimeJustification', 'user'));
+        $pdfD = Pdf::loadView('pdf.productos-proveedores', compact('categoryOrder', 'categoryMap', 'proveedoresMap', 'dateTimeJustification', 'user', 'dompdf'));
 
         return array($pdfNameP, $pdfD);
     }
