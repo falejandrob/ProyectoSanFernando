@@ -42,7 +42,7 @@
             </div>
             <div class="card card-datos" >
                 <div class="d-flex justify-content-center" style="margin-top: 2%">
-                    <img class="card-img-top" src="usuario.png" alt="Card image cap" style="width: 200px; height: 200px;">
+                    <img class="card-img-top" src="FotoNahia.jpg" alt="Card image cap" style="width: 200px; height: 200px;">
                 </div>
                 <div class="card-body">
                     <h5 class="card-title">Nahia Fernández Santos</h5>

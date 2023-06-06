@@ -10,6 +10,7 @@ use App\Models\Presupuesto;
 use App\Models\Producto;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
+use Exception;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -68,11 +69,14 @@ class CartController extends Controller
         $nombre = Auth::user()->nombre;
         $apellido = Auth::user()->apellido;
 
-        Mail::send([], [], function ($message) use ($nombre, $apellido, $email, $pedido, $fechaEsperada, $horaEsperada) {
-            $message->to($email, "$nombre $apellido")
-                ->subject('Confirmación de pedido')
-                ->html($this->formatOrderHTML($pedido, $fechaEsperada, $horaEsperada));
-        });
+        try{
+            Mail::send([], [], function ($message) use ($nombre, $apellido, $email, $pedido, $fechaEsperada, $horaEsperada) {
+                $message->to($email, "$nombre $apellido")
+                    ->subject('Confirmación de pedido')
+                    ->html($this->formatOrderHTML($pedido, $fechaEsperada, $horaEsperada));
+            });
+        } catch(Exception $e) {
+        }
     }
 
     private function formatOrderHTML(array $pedido, string $fechaEsperada, string $horaEsperada)

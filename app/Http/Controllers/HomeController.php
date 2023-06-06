@@ -210,7 +210,13 @@ class HomeController extends Controller
         $lineasPedido = LineaPedido::where('idPedido', $idPedido)->get();
         $proveedores = Proveedore::all();
         $colores = ["red", "blue", "green", "#E5D05B", "pink", "purple", "orange", "brown", "cyan", "magenta", "darkred", "darkblue", "#9E00DE", "#4DDE00", "#CCCF00", "darkcyan", "darkorange", "olive", "lightmagenta", "lightpurple", "black"];
-        $categorias = Categoria::all();
+        $categorias = [];
+
+        foreach($lineasPedido as $linea) {
+            if(!in_array(Producto::find($linea->idProducto)->idCategoria, $categorias)) {
+                array_push($categorias, Producto::find($linea->idProducto)->idCategoria);
+            }
+        }
 
         if (auth()->user()->hasRole('admin') or auth()->user()->hasRole('gestor')) {
             return view("admin.seleccionarProveedores", ["colores" => $colores, "lineasPedido" => $lineasPedido, "idPedido" => $idPedido, "proveedores" => $proveedores, "categorias" => $categorias, "productosConProveedor" => $productosConProveedor]);
@@ -233,7 +239,14 @@ class HomeController extends Controller
             $productosConProveedor = ProductoProveedor::where('pedido', $idPedido)->get();
             $lineasPedido = LineaPedido::where('idPedido', $idPedido)->get();
             $proveedores = Proveedore::all();
-            $categorias = Categoria::all();
+            $categorias = [];
+
+            foreach($lineasPedido as $linea) {
+                if(!in_array(Producto::find($linea->idProducto)->idCategoria, $categorias)) {
+                    array_push($categorias, Producto::find($linea->idProducto)->idCategoria);
+                }
+            }
+
             $colores = ["red", "blue", "green", "#E5D05B", "pink", "purple", "orange", "brown", "cyan", "magenta", "darkred", "darkblue", "darkgreen", "#9E00DE", "#4DDE00", "#CCCF00", "darkorange", "olive", "lightmagenta", "lightpurple", "black"];
 
             if (auth()->user()->hasRole('admin') or auth()->user()->hasRole('gestor')) {
@@ -258,7 +271,14 @@ class HomeController extends Controller
 
         $lineasPedido = LineaPedido::where('idPedido', $request->id)->get();
         $proveedores = Proveedore::all();
-        $categorias = Categoria::all();
+        $categorias = [];
+
+        foreach($lineasPedido as $linea) {
+            if(!in_array(Producto::find($linea->idProducto)->idCategoria, $categorias)) {
+                array_push($categorias, Producto::find($linea->idProducto)->idCategoria);
+            }
+        }
+        
         $colores = ["red", "blue", "green", "#E5D05B", "pink", "purple", "orange", "brown", "cyan", "magenta", "darkred", "darkblue", "darkgreen", "#9E00DE", "#4DDE00", "#CCCF00", "darkorange", "olive", "lightmagenta", "lightpurple", "black"];
 
         if($productosSeleccionados == null || $proveedorSeleccionado == null) {
