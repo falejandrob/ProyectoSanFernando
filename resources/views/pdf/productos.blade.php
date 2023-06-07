@@ -79,7 +79,7 @@
 
 <div id="info">
     <br>
-    <span>PROFESOR/A QUE REALIZA EL PEDIDO: <strong>{{$User->nombre}} {{$User->apellidos}}</strong></span><br>
+    <span>PROFESOR/A QUE REALIZA EL PEDIDO: <strong>{{$user->nombre}} {{$user->apellidos}}</strong></span><br>
     <span>FECHA DEL PEDIDO: <strong>{{ now()->format('d/m/Y') }}</strong></span><br>
     <span>FECHA PARA LA QUE SE SOLICITA EL PEDIDO: <strong>{{$dateTimeJustification['expectedDate']}}</strong></span><br>
     <span>HORA PARA LA QUE SE SOLICITA EL PEDIDO: <strong>{{$dateTimeJustification['expectedTime']}}</strong></span><br>
@@ -98,42 +98,8 @@
         </tr>
         </thead>
         <tbody>
-        @php
-            $categoryMap = [];
-        @endphp
-
-        @foreach($productos as $producto)
-            @php
-                $categoria = $producto->options->categoria;
-
-                // Map the categories to the desired categories
-                if ($categoria === 'Hortalizas' || $categoria === 'Frutas, Frutos Secos') {
-                    $categoria = 'Vegetales';
-                } elseif ($categoria === 'Carnes, Aves, Embutidos') {
-                    $categoria = 'Carne y Embutidos';
-                } elseif ($categoria === 'Pescados, Mariscos') {
-                    $categoria = 'Pescados y mariscos';
-                } else {
-                    $categoria = 'Varios';
-                }
-            @endphp
-
-            @if (!isset($categoryMap[$categoria]))
-                @php
-                    $categoryMap[$categoria] = [];
-                @endphp
-            @endif
-            @php
-                $categoryMap[$categoria][] = $producto;
-            @endphp
-        @endforeach
-
-        @php
-            $categoryOrder = ['Vegetales', 'Carne y Embutidos', 'Pescados y mariscos', 'Varios'];
-        @endphp
-
         @foreach($categoryOrder as $categoria)
-            @if(isset($categoryMap[$categoria]))
+            @if(isset($categoryMap[$categoria]) && count($categoryMap[$categoria]) > 0)
                 <tr style="text-align: center" class="hover">
                     <td style="background: #E7E7E7"><strong>{{ $categoria }}</strong></td>
                     <td style="background: #E7E7E7"></td>
@@ -152,8 +118,6 @@
                 @endforeach
             @endif
         @endforeach
-
-
         </tbody>
     </table>
 

@@ -54,6 +54,7 @@
     </style>
 </head>
 <body>
+
 <!---->
 <div id ="header">
     <table>
@@ -79,7 +80,7 @@
 
 <div id="info">
     <br>
-    <span>PROFESOR/A QUE REALIZA EL PEDIDO: <strong>{{$User->nombre}} {{$User->apellidos}}</strong></span><br>
+    <span>PROFESOR/A QUE REALIZA EL PEDIDO: <strong>{{$user->nombre}} {{$user->apellidos}}</strong></span><br>
     <span>FECHA DEL PEDIDO: <strong>{{ now()->format('d/m/Y') }}</strong></span><br>
     <span>FECHA PARA LA QUE SE SOLICITA EL PEDIDO: <strong>{{$dateTimeJustification['expectedDate']}}</strong></span><br>
     <span>HORA PARA LA QUE SE SOLICITA EL PEDIDO: <strong>{{$dateTimeJustification['expectedTime']}}</strong></span><br>
@@ -87,6 +88,7 @@
 </div>
 
 <div id="container">
+    <h2>Productos por Categoría</h2>
     <table>
         <thead>
         <tr>
@@ -95,49 +97,13 @@
             <th>I</th>
             <th>R</th>
             <th>Observación</th>
-            <th>Proveedor</th>
         </tr>
         </thead>
         <tbody>
-        @php
-            $categoryMap = [];
-        @endphp
-
-        @foreach($productos as $producto)
-            @php
-                $categoria = $producto->options->categoria;
-
-                // Map the categories to the desired categories
-                if ($categoria === 'Hortalizas' || $categoria === 'Frutas, Frutos Secos') {
-                    $categoria = 'Vegetales';
-                } elseif ($categoria === 'Carnes, Aves, Embutidos') {
-                    $categoria = 'Carne y Embutidos';
-                } elseif ($categoria === 'Pescados, Mariscos') {
-                    $categoria = 'Pescados y mariscos';
-                } else {
-                    $categoria = 'Varios';
-                }
-            @endphp
-
-            @if (!isset($categoryMap[$categoria]))
-                @php
-                    $categoryMap[$categoria] = [];
-                @endphp
-            @endif
-            @php
-                $categoryMap[$categoria][] = $producto;
-            @endphp
-        @endforeach
-
-        @php
-            $categoryOrder = ['Vegetales', 'Carne y Embutidos', 'Pescados y mariscos', 'Varios'];
-        @endphp
-
         @foreach($categoryOrder as $categoria)
             @if(isset($categoryMap[$categoria]))
                 <tr style="text-align: center" class="hover">
                     <td style="background: #E7E7E7"><strong>{{ $categoria }}</strong></td>
-                    <td style="background: #E7E7E7"></td>
                     <td style="background: #E7E7E7"></td>
                     <td style="background: #E7E7E7"></td>
                     <td style="background: #E7E7E7"></td>
@@ -150,29 +116,41 @@
                         <td></td>
                         <td></td>
                         <td>{{ $producto->options->observacion }}</td>
-                        <td>
-                        @if($lineasConProveedor->count() > 0)
-                           @foreach($lineas as $linea)
-                                    @foreach($lineasConProveedor as $lineaProv)
-                                        @foreach($proveedores as $proveedor)
-                                            @if($lineaProv->lineaPedido == $linea->id and $linea->idProducto == $producto->id
-                                            and $lineaProv->proveedor == $proveedor->id)
-                                                {{ $proveedor->nombre }}
-                                            @endif
-                                        @endforeach
-                                    @endforeach
-                                @endforeach
-                        @endif
-                        </td>
                     </tr>
                 @endforeach
             @endif
         @endforeach
-
-
         </tbody>
     </table>
-
+    <div style="page-break-after: always;"></div>
+    <h2>Productos por Proveedor</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>Artículo</th>
+            <th>Cantidad</th>
+            <th>Observación</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach($proveedoresMap as $proveedor)
+            @if(count($proveedor['productos']) > 0)
+                <tr style="text-align: center" class="hover">
+                    <td style="background: #E7E7E7"><strong>{{ $proveedor['nombre'] }}</strong></td>
+                    <td style="background: #E7E7E7"></td>
+                    <td style="background: #E7E7E7"></td>
+                </tr>
+                @foreach($proveedor['productos'] as $producto)
+                    <tr style="text-align: center" class="hover">
+                        <td>{{ $producto->name }}</td>
+                        <td>{{ $producto->qty }} ud</td>
+                        <td>{{ $producto->options->observacion }}</td>
+                    </tr>
+                @endforeach
+            @endif
+        @endforeach
+        </tbody>
+    </table>
 </div>
 <script type="text/php">
         if ( isset($pdf) ) {

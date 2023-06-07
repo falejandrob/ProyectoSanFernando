@@ -25,11 +25,11 @@
                     </a>
                 </div>
             </div>
-            @if (!empty($pedidos) && count($pedidos) > 0 )
+        @if(!empty($pedidos) && count($pedidos) > 0)
         <h1 style="text-align: center">Mis pedidos</h1>
         <br>
 
-        <div class="table-responsive table-wrapper-scroll-y my-custom-scrollbar" style="height: 700px">
+        <div class="table-responsive table-wrapper-scroll-y my-custom-scrollbar" style="height: 800px">
             <table class="table mb-0 tabla-scroll " style="text-align: center;">
                 <thead>
                 <tr>

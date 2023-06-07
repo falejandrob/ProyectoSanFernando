@@ -8,7 +8,8 @@
             </div>
         @endif
     </div>
-    <div class="btn-volver" style="margin: 25px">
+
+    <div class="btn-volver" style="margin: 3% 0% 3% 5%">
         <a class="btn btn-secondary" href="{{ route('totalPedidos') }}">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                  class="bi bi-arrow-return-left" viewBox="0 0 16 16">
@@ -24,51 +25,86 @@
             <form action="{{ route('establecerProveedor') }}" method="POST">
                 <input type="hidden" name="id" value="{{ $idPedido }}" id="id">
                 @csrf
-                @php($categoriasMostradas = [])
-                <p id="title-categories" style="margin-top: 25px; font-weight: bold; text-align: center">Productos</p>
-            @foreach ($lineasPedido as $linea)
-                    @foreach($categorias as $categoria)
-                        @if(App\Models\Producto::find($linea->idProducto)->idCategoria == $categoria->id && !in_array($categoria->id, $categoriasMostradas))
-                            <p id="title-categories" style="margin-top: 25px; font-weight: bold; text-align: center">{{ $categoria->nombre }}</p>
-                            @php(array_push($categoriasMostradas, $categoria->id))
-                        @endif
-                    @endforeach
+                @foreach($categorias as $categoria)
+                    <p id="title-categories" style="margin-top: 25px; font-weight: bold; text-align: center">{{ App\Models\Categoria::find($categoria)->nombre }}</p>
                     @php($esta = false)
-                    @foreach ($productosConProveedor as $item)
-                        @if ($item->lineaPedido == $linea->id)
-                            <div class="proveedores" style="margin: 8px; margin-left: 20px;">
-                                <a class="btn btn-danger" href="{{ route('quitarRelacion', $item->id) }}">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor"
-                                         class="bi bi-x-lg" viewBox="0 0 16 16">
-                                        <path
-                                            d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
-                                    </svg>
-                                </a>
-                                <span>{{ App\Models\Producto::find($linea->idProducto)->nombre }}</span>
-                                <span
-                                    class="badge bg-dark">{{ App\Models\Proveedore::find($item->proveedor)->nombre }}</span>
-                            </div>
-                            @php($esta = true)
+                    @foreach ($lineasPedido as $linea)
+                        @if(App\Models\Producto::find($linea->idProducto)->idCategoria == $categoria)
+                            @foreach ($productosConProveedor as $item)
+                                @if ($item->lineaPedido == $linea->id)
+                                    <div class="proveedores" style="margin: 8px; margin-left: 20px;">
+                                        <a class="btn btn-danger" href="{{ route('quitarRelacion', $item->id) }}">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor"
+                                                class="bi bi-x-lg" viewBox="0 0 16 16">
+                                                <path
+                                                    d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
+                                            </svg>
+                                        </a>
+                                        <span>{{ App\Models\Producto::find($linea->idProducto)->nombre }}</span>
+                                        @for ($i = 0; $i < count($proveedores); $i++)
+                                            @if($proveedores[$i]->id == $item->proveedor)
+                                                <span class="badge" style="background: {{ $colores[$i] }}">{{ App\Models\Proveedore::find($item->proveedor)->nombre }}</span>
+                                            @endif
+                                        @endfor
+                                    </div>
+                                    @php($esta = true)
+                                @endif
+                            @endforeach
+                            @if(!$esta)
+                                <div class="proveedores" style="margin: 8px; margin-left: 20px;">
+                                    <input style="width: 20px; height: 20px; cursor: pointer;" type="checkbox"
+                                        name="productos[]" value="{{ $linea->id }}">
+                                    <span>{{ App\Models\Producto::find($linea->idProducto)->nombre }}</span>
+                                </div>
+                            @endif
                         @endif
                     @endforeach
-                    @if(!$esta)
-                        <div class="proveedores" style="margin: 8px; margin-left: 20px;">
-                            <input style="width: 20px; height: 20px; cursor: pointer;" type="checkbox"
-                                   name="productos[]" value="{{ $linea->id }}">
-                            <span>{{ App\Models\Producto::find($linea->idProducto)->nombre }}</span>
-                        </div>
-            @endif
-            @endforeach
+                @endforeach
+                {{-- @foreach ($lineasPedido as $linea)
+                        @foreach($categorias as $categoria)
+                            @if(App\Models\Producto::find($linea->idProducto)->idCategoria == $categoria->id && !in_array($categoria->id, $categoriasMostradas))
+                                <p id="title-categories" style="margin-top: 25px; font-weight: bold; text-align: center">{{ $categoria->nombre }} - {{ $categoria->id }}</p>
+                                @php(array_push($categoriasMostradas, $categoria->id))
+                            @endif
+                        @endforeach
+                        @php($esta = false)
+                        @foreach ($productosConProveedor as $item)
+                            @if ($item->lineaPedido == $linea->id)
+                                <div class="proveedores" style="margin: 8px; margin-left: 20px;">
+                                    <a class="btn btn-danger" href="{{ route('quitarRelacion', $item->id) }}">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor"
+                                            class="bi bi-x-lg" viewBox="0 0 16 16">
+                                            <path
+                                                d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
+                                        </svg>
+                                    </a>
+                                    <span>{{ App\Models\Producto::find($linea->idProducto)->nombre }}</span>
+                                    @for ($i = 0; $i < count($proveedores); $i++)
+                                        @if($proveedores[$i]->id == $item->proveedor)
+                                            <span class="badge" style="background: {{ $colores[$i] }}">{{ App\Models\Proveedore::find($item->proveedor)->nombre }}</span>
+                                        @endif
+                                    @endfor
+                                </div>
+                                @php($esta = true)
+                            @endif
+                        @endforeach
+                        @if(!$esta)
+                            <div class="proveedores" style="margin: 8px; margin-left: 20px;">
+                                <input style="width: 20px; height: 20px; cursor: pointer;" type="checkbox"
+                                    name="productos[]" value="{{ $linea->id }}">
+                                <span>{{ App\Models\Producto::find($linea->idProducto)->nombre }} - {{ App\Models\Producto::find($linea->idProducto)->idCategoria }}</span>
+                            </div>
+                @endif
+                @endforeach --}}
         </div>
         <div style="width: 50%;">
-            <p id="title-categories" style="margin-top: 25px; font-weight: bold; text-align: center">Proveedores</p>
-        @foreach ($proveedores as $proveedor)
-                <div class="proveedores" style="margin-left:20px;">
-                    <input style="width: 20px; height: 20px; cursor: pointer;" type="radio" name="proveedor"
-                           value="{{ $proveedor->id }}">
-                    {{ $proveedor->nombre }}
+            @for ($i = 0; $i < count($proveedores); $i++)
+                <div class="proveedores" style="margin-left:20px; display: flex; align-items: center;">
+                    <input style="width: 20px; height: 20px; cursor: pointer;" type="radio" name="proveedor" value="{{ $proveedores[$i]->id }}">
+                    <div style="background: {{ $colores[$i] }}; width: 20px; height: 20px; margin: 10px;"></div>
+                    {{ $proveedores[$i]->nombre }}
                 </div>
-            @endforeach
+            @endfor
         </div>
     </div>
 

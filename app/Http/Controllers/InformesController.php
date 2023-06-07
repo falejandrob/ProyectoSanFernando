@@ -26,7 +26,7 @@ class InformesController extends Controller
                     break;
                 }
             }
-        
+
             if ($indice !== -1) {
                 $dataProductos[$indice] += $linea->cantidad;
             } else {
@@ -47,7 +47,7 @@ class InformesController extends Controller
                     break;
                 }
             }
-        
+
             if ($indice !== -1) {
                 $dataCategorias[$indice] += $linea->cantidad;
             } else {
@@ -74,7 +74,9 @@ class InformesController extends Controller
 
     public function informesProfesorResultado(Request $request)
     {
-        $user = User::find($request->user)->nombre;
+        $nombre = User::find($request->user)->nombre;
+        $apellidos = User::find($request->user)->apellidos;
+        $user = $nombre . " " . $apellidos;
         $profesores = User::all();
 
         // Productos más pedidos según profesor
@@ -97,7 +99,7 @@ class InformesController extends Controller
                     break;
                 }
             }
-        
+
             if ($indice !== -1) {
                 $dataProductos[$indice] += $linea->cantidad;
             } else {
@@ -118,7 +120,7 @@ class InformesController extends Controller
                     break;
                 }
             }
-        
+
             if ($indice !== -1) {
                 $dataCategorias[$indice] += $linea->cantidad;
             } else {
@@ -204,7 +206,7 @@ class InformesController extends Controller
                     break;
                 }
             }
-        
+
             if ($indice !== -1) {
                 $dataProductos[$indice] += $linea->cantidad;
             } else {
@@ -225,7 +227,7 @@ class InformesController extends Controller
                     break;
                 }
             }
-        
+
             if ($indice !== -1) {
                 $dataCategorias[$indice] += $linea->cantidad;
             } else {
