@@ -72,7 +72,7 @@ class ProductoController extends Controller
             ]);
 
             $product->save();
-            return redirect()->action([HomeController::class, 'index']);
+            return redirect()->action([HomeController::class, 'realizarPedido']);
         }
 
 
