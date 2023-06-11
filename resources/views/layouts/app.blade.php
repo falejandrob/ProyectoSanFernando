@@ -14,14 +14,16 @@
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 
     <style>
-        *{
+        * {
             font-family: "DejaVu Sans Condensed";
         }
+
         html, body {
             height: 100%;
             margin: 0;
             padding: 0;
         }
+
         .full-screen-div {
             position: absolute;
             top: 0;
@@ -275,44 +277,44 @@
                 margin-bottom: 1em;
             }
 
-            .btn-salir{
+            .btn-salir {
                 display: none;
             }
 
-            .detalles{
+            .detalles {
                 margin-bottom: 3%;
             }
 
-            .fecha-hora{
+            .fecha-hora {
                 width: 45%
             }
 
-            .datos-personales{
+            .datos-personales {
                 display: flex;
                 flex-direction: column;
             }
 
-            .mensaje-emergente{
+            .mensaje-emergente {
                 margin-top: 10%;
             }
 
-            .cajon1{
+            .cajon1 {
                 width: 100%;
             }
 
-            .cajon2{
+            .cajon2 {
                 width: 100%;
             }
 
-            .detalles-botones{
+            .detalles-botones {
                 display: flex;
                 flex-wrap: wrap;
             }
 
-            .detalles-botones a, .detalles-botones button{
+            .detalles-botones a, .detalles-botones button {
                 width: 45%;
                 font-size: 14px;
-                margin:6px;
+                margin: 6px;
             }
 
 
@@ -365,14 +367,15 @@
                 font-weight: bold;
             }
 
-            .card-deck{
+            .card-deck {
                 display: flex;
                 width: 100%;
                 flex-direction: column;
             }
 
-            .card-datos{
-                width: 95%; margin:10px;
+            .card-datos {
+                width: 95%;
+                margin: 10px;
             }
 
             .adm {
@@ -472,7 +475,7 @@
                 width: 90%;
             }
 
-            #departamento{
+            #departamento {
                 font-size: 16px;
             }
 
@@ -494,7 +497,7 @@
                 font-weight: bold;
             }
 
-            .btn-salir{
+            .btn-salir {
                 display: none;
             }
 
@@ -536,7 +539,7 @@
                 width: 90%;
             }
 
-            .mensaje-emergente{
+            .mensaje-emergente {
                 margin-top: 5%;
             }
 
@@ -584,21 +587,21 @@
                 font-size: 20px;
             }
 
-            #departamento{
+            #departamento {
                 font-size: 16px;
             }
 
-            .card-deck{
+            .card-deck {
                 display: flex;
                 width: 100%;
                 flex-direction: column;
             }
 
-            .card-datos{
+            .card-datos {
                 width: 55%;
-                margin:auto;
-                margin-top:10px;
-                margin-bottom:10px;
+                margin: auto;
+                margin-top: 10px;
+                margin-bottom: 10px;
             }
         }
 
@@ -607,29 +610,29 @@
                 margin-left: 3%;
             }
 
-            .mensaje-emergente{
+            .mensaje-emergente {
                 margin-top: 5%;
             }
 
-            .datos-personales{
+            .datos-personales {
                 display: flex;
                 flex-direction: row;
             }
 
-            .btn-detalles{
+            .btn-detalles {
                 display: flex;
                 justify-content: space-between;
             }
 
-            .cajon1{
+            .cajon1 {
                 width: 35%;
             }
 
-            .cajon2{
+            .cajon2 {
                 width: 65%;
             }
 
-            .info-personal{
+            .info-personal {
                 display: flex;
                 flex-direction: row;
             }
@@ -651,7 +654,7 @@
                 width: 45%;
             }
 
-            .btn-detalles{
+            .btn-detalles {
                 display: flex;
                 justify-content: space-between;
             }
@@ -701,18 +704,19 @@
                 width: 100%;
             }
 
-            #departamento{
+            #departamento {
                 font-size: 18px;
             }
 
-            .card-deck{
+            .card-deck {
                 display: flex;
                 width: 100%;
                 flex-direction: row;
             }
 
-            .card-datos{
-                width: 33%; margin:10px;
+            .card-datos {
+                width: 33%;
+                margin: 10px;
             }
 
         }
@@ -723,25 +727,25 @@
                 justify-content: center;
             }
 
-            .mensaje-emergente{
+            .mensaje-emergente {
                 margin-top: 5%;
             }
 
-            .info-personal{
+            .info-personal {
                 display: flex;
                 flex-direction: row;
             }
 
-            .btn-detalles{
+            .btn-detalles {
                 display: flex;
                 justify-content: space-between;
             }
 
-            #titulo{
+            #titulo {
                 font-size: 22px;
             }
 
-            #departamento{
+            #departamento {
                 font-size: 18px;
             }
 
@@ -758,14 +762,15 @@
                 font-size: 22px;
             }
 
-            .card-deck{
+            .card-deck {
                 display: flex;
                 width: 100%;
                 flex-direction: row;
             }
 
-            .card-datos{
-                width: 33%; margin:10px;
+            .card-datos {
+                width: 33%;
+                margin: 10px;
             }
 
             .inp-busqueda {
@@ -831,7 +836,8 @@
 </head>
 <body>
 <div id="app">
-    <nav class="navbar navbar-expand-lg navbar-light" style=" background-color: #f6f0d2; padding-right: 2%; padding-left: 2%">
+    <nav class="navbar navbar-expand-lg navbar-light"
+         style=" background-color: #f6f0d2; padding-right: 2%; padding-left: 2%">
         <div class="container-fluid">
             @if(auth()->user())
                 <a class="navbar-brand m-lg-3" href="{{ url('/home') }}" style="display: flex; align-items: center">
@@ -878,8 +884,10 @@
                                     Pedidos
                                 </a>
                                 <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="{{route('totalPedidos', "")}}">Ver pedidos</a></li>
-                                    <li><a class="dropdown-item" href="{{route('papeleraPedidos', "")}}">Papelera de pedidos</a></li>
+                                    <li><a class="dropdown-item" href="{{route('totalPedidos', "")}}">Ver pedidos</a>
+                                    </li>
+                                    <li><a class="dropdown-item" href="{{route('papeleraPedidos', "")}}">Papelera de
+                                            pedidos</a></li>
                                     <li><a class="dropdown-item" href="{{route('listDates')}}">Ver plazos de pedidos</a>
                                     </li>
                                     <li><a class="dropdown-item" href="{{route('fechaPedidos')}}">Añadir plazo de
@@ -922,9 +930,12 @@
                                     Informes
                                 </a>
                                 <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="{{ route('informes') }}">Informes generales</a></li>
-                                    <li><a class="dropdown-item" href="{{ route('informesProfesor') }}">Informes según profesor</a></li>
-                                    <li><a class="dropdown-item" href="{{ route('informesMes') }}">Informes según mes</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('informes') }}">Informes generales</a>
+                                    </li>
+                                    <li><a class="dropdown-item" href="{{ route('informesProfesor') }}">Informes según
+                                            profesor</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('informesMes') }}">Informes según
+                                            mes</a></li>
                                 </ul>
                             </li>
                         </ul>
@@ -932,68 +943,114 @@
                 @endif
             @endguest
             @auth
-                <ul class="navbar-nav menu-admin nombre">
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle active d-flex justify-content-center align-items-center"
-                           role="button" data-toggle="dropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
-                                 class="bi bi-person-fill" viewBox="0 0 16 16"
-                                 style="margin-left: 5px; margin-right: 3px">
-                                <path
-                                    d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3Zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/>
-                            </svg>
-                            {{ Auth::user()->nombre . " " . Auth::user()->apellidos }}
-                        </a>
-                        <ul class="dropdown-menu">
-                            @if(auth()->user()->hasRole('profesor'))
-                                <li>
-                                    <a class="dropdown-item" style="cursor: default; pointer-events: none;">
-                                        Presupuesto:
-                                        @if($presupuesto == null)
-                                            <br><span class="budget-amount ">Aún no tienes presupuesto</span>
-                                        @else
-                                            <span class="budget-amount">{{$presupuesto->presupuestoTotal}} €</span>
-                                        @endif
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" href="{{ route('misPedidos', Auth::user()->id) }}">
-                                        Mis pedidos
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" href="{{route('papeleraPedidosProfesor', Auth::user()->id)}}">
-                                        Papelera de pedidos
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" href="{{ route('perfil', Auth::user()->id) }}">
-                                        Perfil
-                                    </a>
-                                </li>
-                            @endif
-                            <li>
-                                <a class="dropdown-item btn-salir" href="{{ route('logout') }}"
-                                   onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                    Salir
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-                                         fill="currentColor"
-                                         class="bi bi-box-arrow-right" viewBox="0 0 16 16">
-                                        <path fill-rule="evenodd"
-                                              d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0v2z"/>
-                                        <path fill-rule="evenodd"
-                                              d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"/>
+                @if(auth()->user()->hasRole('profesor'))
+                    <ul class="navbar-nav menu-admin nombre">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle active d-flex justify-content-center align-items-center"
+                               role="button" data-toggle="dropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                                     class="bi bi-person-fill" viewBox="0 0 16 16"
+                                     style="margin-left: 5px; margin-right: 3px">
+                                    <path
+                                        d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3Zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/>
+                                </svg>
+                                {{ Auth::user()->nombre . " " . Auth::user()->apellidos }}
+                            </a>
+                            <ul class="dropdown-menu">
+                                @if(auth()->user()->hasRole('profesor'))
+                                    <li>
+                                        <a class="dropdown-item" style="cursor: default; pointer-events: none;">
+                                            Presupuesto:
+                                            @if($presupuesto == null)
+                                                <br><span class="budget-amount ">Aún no tienes presupuesto</span>
+                                            @else
+                                                <span class="budget-amount">{{$presupuesto->presupuestoTotal}} €</span>
+                                            @endif
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="{{ route('misPedidos', Auth::user()->id) }}">
+                                            Mis pedidos
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item"
+                                           href="{{route('papeleraPedidosProfesor', Auth::user()->id)}}">
+                                            Papelera de pedidos
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="{{ route('perfil', Auth::user()->id) }}">
+                                            Perfil
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item btn-salir" href="{{ route('logout') }}"
+                                           onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                            Salir
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                                 fill="currentColor"
+                                                 class="bi bi-box-arrow-right" viewBox="0 0 16 16">
+                                                <path fill-rule="evenodd"
+                                                      d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0v2z"/>
+                                                <path fill-rule="evenodd"
+                                                      d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"/>
+                                            </svg>
+                                            <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                                  class="d-none">
+                                                @csrf
+                                            </form>
+                                        </a>
+                                    </li>
+                                @endif
+                            </ul>
+                        </li>
+                    </ul>
+                @endif
+                @if(auth()->user()->hasRole('admin') || auth()->user()->hasRole('gestor'))
+                        <ul class="navbar-nav menu-admin nombre">
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle active d-flex justify-content-center align-items-center"
+                                   role="button" data-toggle="dropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                                         class="bi bi-person-fill" viewBox="0 0 16 16"
+                                         style="margin-left: 5px; margin-right: 3px">
+                                        <path
+                                            d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3Zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/>
                                     </svg>
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST"
-                                          class="d-none">
-                                        @csrf
-                                    </form>
+                                    {{ Auth::user()->nombre . " " . Auth::user()->apellidos }}
                                 </a>
+                                <ul class="dropdown-menu">
+                                        <li>
+                                            <a class="dropdown-item"
+                                               style="cursor: default; pointer-events: none;">
+                                                Día actual: {{Carbon\Carbon::now()->format('d/m/Y')}}
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item btn-salir" href="{{ route('logout') }}"
+                                               onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                                Salir
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                                     fill="currentColor"
+                                                     class="bi bi-box-arrow-right" viewBox="0 0 16 16">
+                                                    <path fill-rule="evenodd"
+                                                          d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0v2z"/>
+                                                    <path fill-rule="evenodd"
+                                                          d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"/>
+                                                </svg>
+                                                <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                                      class="d-none">
+                                                    @csrf
+                                                </form>
+                                            </a>
+                                        </li>
+                                </ul>
                             </li>
-
                         </ul>
-                    </li>
-                </ul>
+
+                    
+                @endif
             @endauth
         </div>
     </nav>
@@ -1012,7 +1069,6 @@
                 class="btn btn-link btn-floating btn-lg text-dark m-1"
                 href="{{route('autores')}}"
                 style="font-size: 14px; text-decoration: none">Autores</a>
-
 
 
         </div>
